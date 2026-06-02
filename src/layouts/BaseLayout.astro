@@ -26,6 +26,15 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content="/assets/home-hero-sunrise-20260602.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    {Astro.url.pathname === '/' && (
+      <link
+        rel="preload"
+        as="image"
+        href="/assets/home-hero-sunrise-20260602.webp"
+        type="image/webp"
+        fetchpriority="high"
+      />
+    )}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
