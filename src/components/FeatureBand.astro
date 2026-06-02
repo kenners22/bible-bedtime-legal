@@ -1,0 +1,81 @@
+---
+const features = [
+  {
+    title: 'Daily Scriptures',
+    description: 'Uplifting verses and reflections delivered to your inbox.',
+    href: '/daily-scriptures/',
+    icon: '/assets/icon-book-20260602.png',
+  },
+  {
+    title: 'Bible Stories',
+    description: 'Timeless stories that speak to your heart.',
+    href: '/bible-stories/',
+    icon: '/assets/icon-book-20260602.png',
+  },
+  {
+    title: 'Devotionals',
+    description: 'Practical readings to help you grow in faith.',
+    href: '/devotionals/',
+    icon: '/assets/icon-cross-20260602.png',
+  },
+  {
+    title: "Children's Stories",
+    description: 'Personalised bedtime stories for your kids.',
+    href: '/childrens-stories/',
+    icon: '/assets/icon-people-20260602.png',
+  },
+];
+---
+<section aria-label="What we offer" class="relative -mt-12 lg:-mt-20">
+  <!-- Top wave: cream above, navy below -->
+  <svg
+    class="block w-full h-[70px] sm:h-[90px] lg:h-[110px] -mb-px"
+    viewBox="0 0 1440 110"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M0,90 C220,10 480,10 720,55 C960,100 1220,100 1440,40 L1440,110 L0,110 Z"
+      fill="#06142a"
+    />
+  </svg>
+
+  <div class="bg-navy">
+    <div class="max-w-page mx-auto px-6 md:px-10 py-12 lg:py-16">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 text-center">
+        {features.map((feature) => (
+          <li class="flex flex-col items-center">
+            <img
+              src={feature.icon}
+              alt=""
+              width="96"
+              height="96"
+              class="w-20 h-20 lg:w-24 lg:h-24 mb-5 object-contain"
+            />
+            <h3 class="font-sans font-semibold text-xl lg:text-2xl text-cream">
+              <a href={feature.href} class="hover:text-gold-light transition-colors">
+                {feature.title}
+              </a>
+            </h3>
+            <p class="mt-3 text-cream/75 text-[15px] leading-relaxed max-w-[22ch]">
+              {feature.description}
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bottom wave: navy above, cream below -->
+  <svg
+    class="block w-full h-[70px] sm:h-[90px] lg:h-[110px] -mt-px"
+    viewBox="0 0 1440 110"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M0,20 C220,100 480,100 720,55 C960,10 1220,10 1440,70 L1440,0 L0,0 Z"
+      fill="#06142a"
+    />
+  </svg>
+</section>
