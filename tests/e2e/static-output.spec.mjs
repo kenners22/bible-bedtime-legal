@@ -15,12 +15,16 @@ const knownDeadLinks = new Set([
 
 const requiredAssets = [
   '/assets/home-hero-sunrise-20260602.png',
+  '/assets/home-hero-sunrise-20260602.webp',
   '/assets/childrens-stories-hero-20260602.png',
+  '/assets/childrens-stories-hero-20260602.webp',
   '/assets/bible-bedtime-logo-20260520.png',
+  '/assets/bible-bedtime-logo-20260520.webp',
   '/assets/icon-book-20260602.png',
   '/assets/icon-cross-20260602.png',
   '/assets/icon-people-20260602.png',
   '/assets/leaf-decoration-20260602.png',
+  '/assets/leaf-decoration-20260602.webp',
 ];
 
 const fontPages = [
@@ -115,8 +119,7 @@ test.describe('static output contract', () => {
 
     for (const relativePath of fontPages) {
       const html = fs.readFileSync(path.join(dist, relativePath), 'utf8');
-      const fontHref = html.match(/<link\s+href=["'](https:\/\/fonts\.googleapis\.com\/css2[^"']+)["'][^>]*rel=["']stylesheet["'][^>]*>/i)?.[1]
-        ?? html.match(/<link\s+rel=["']stylesheet["'][^>]*href=["'](https:\/\/fonts\.googleapis\.com\/css2[^"']+)["'][^>]*>/i)?.[1]
+      const fontHref = html.match(/<link\s+[^>]*href=["'](https:\/\/fonts\.googleapis\.com\/css2[^"']+)["'][^>]*>/i)?.[1]
         ?? '';
 
       if (!fontHref.includes('Cormorant+Garamond') || !fontHref.includes('family=Inter')) {

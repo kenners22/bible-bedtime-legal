@@ -52,17 +52,19 @@ test.describe('rendered pages', () => {
     }
   }
 
-  test('home hero keeps desktop left-edge fade and navy wave overlap', async ({ page }) => {
+  test('home hero keeps desktop left-edge fade and wave clear of CTAs', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await gotoLocal(page, '/');
 
     const maskImage = await page.locator('.hero-photo').evaluate((element) => getComputedStyle(element).maskImage);
     const heroBox = await page.locator('.hero-photo').boundingBox();
+    const ctaBox = await page.locator('main a[href="/daily-scriptures/"]').first().boundingBox();
     const featureBox = await page.locator('section[aria-label="What we offer"]').boundingBox();
 
     expect(maskImage).toContain('linear-gradient');
     expect(maskImage).toMatch(/(to right|90deg)/);
-    expect(featureBox.y).toBeLessThan(heroBox.y + heroBox.height);
+    expect(featureBox.y).toBeLessThanOrEqual(heroBox.y + heroBox.height + 24);
+    expect(featureBox.y).toBeGreaterThan(ctaBox.y + ctaBox.height + 40);
   });
 
   test('Astro pages share the same header and footer chrome', async ({ page }) => {
@@ -83,7 +85,7 @@ test.describe('rendered pages', () => {
     for (const snapshot of snapshots) {
       expect(snapshot.header, snapshot.route).toBe(snapshots[0].header);
       expect(snapshot.footer, snapshot.route).toBe(snapshots[0].footer);
-      expect(snapshot.logo, snapshot.route).toBe('/assets/bible-bedtime-logo-20260520.png');
+      expect(snapshot.logo, snapshot.route).toBe('/assets/bible-bedtime-logo-20260520.webp');
       expect(snapshot.navLinks, snapshot.route).toEqual([
         '/bible-stories/',
         '/daily-scriptures/',
