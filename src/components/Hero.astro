@@ -1,0 +1,53 @@
+---
+---
+<section class="relative bg-cream overflow-hidden">
+  <div class="max-w-[1536px] mx-auto pl-6 md:pl-10 lg:pl-[120px] pr-0 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 items-start pt-8 pb-16 lg:pt-9 lg:pb-24">
+    <div class="lg:col-span-6 relative z-10 lg:pr-4">
+      <h1 class="font-serif font-medium text-navy leading-[1.08] tracking-normal text-[40px] sm:text-[52px] lg:text-[54px] xl:text-[58px] 2xl:text-[62px] max-w-[600px]">
+        Faith for Today.<br />
+        Peace for Tonight.<br />
+        Hope for Tomorrow.
+      </h1>
+      <p class="mt-7 max-w-[500px] text-navy/80 text-lg lg:text-[19px] leading-relaxed">
+        Daily scriptures, devotionals, and timeless Bible stories to guide your heart and mind.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-6">
+        <a href="/daily-scriptures/" class="btn-gold rounded-lg px-7 py-4 text-[17px]">
+          Start Free Daily Scriptures
+        </a>
+        <a href="/bible-stories/" class="btn-outline rounded-lg px-7 py-4 text-[17px]">
+          Explore Bible Stories
+        </a>
+      </div>
+
+      <span aria-hidden="true" class="absolute top-8 left-[76%] text-gold/55 text-xl">✦</span>
+      <span aria-hidden="true" class="absolute top-20 -left-10 text-gold/45 text-lg">✦</span>
+      <span aria-hidden="true" class="absolute top-36 -left-16 text-gold/45 text-base">✦</span>
+      <span aria-hidden="true" class="absolute top-24 right-4 text-gold/45 text-sm">✦</span>
+    </div>
+
+    <div class="lg:col-span-6 relative pr-6 md:pr-0 self-stretch flex items-start">
+      <div class="hero-photo relative overflow-hidden rounded-[28px] lg:rounded-none lg:rounded-tl-[120px] lg:rounded-bl-[120px] w-full lg:w-[calc(100%+150px)] lg:-mr-[150px]">
+        <img
+          src="/assets/home-hero-sunrise-20260602.webp"
+          alt="A woman in a cream knit jumper sitting on a hillside at sunrise, holding a coffee mug with an open Bible in her lap, golden light spilling over distant mountains"
+          width="1600"
+          height="1067"
+          class="block w-full h-auto lg:h-[430px] xl:h-[450px] object-cover object-[58%_50%]"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Soft fade on the left edge of the hero photo on desktop so the
+     image melts into the cream rather than starting on a hard line. */
+  @media (min-width: 1024px) {
+    .hero-photo {
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.18) 10%, rgba(0, 0, 0, 0.72) 24%, #000 38%, #000 100%);
+              mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.18) 10%, rgba(0, 0, 0, 0.72) 24%, #000 38%, #000 100%);
+    }
+  }
+</style>

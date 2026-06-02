@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Terms of Service | Bible Bedtime';
+const description = 'Bible Bedtime Terms of Service governing use of our gentle Bible story videos, devotionals, and bedtime reflections.';
+---
+<BaseLayout title={title} description={description}>
+  <Header />
+  <main class="bg-cream">
+    <article class="max-w-3xl mx-auto px-6 md:px-10 py-16 lg:py-20 prose prose-navy">
+      <h1 class="font-serif font-medium text-navy text-4xl sm:text-5xl">Terms of Service</h1>
+      <p class="text-navy/60 text-sm mt-2">Last updated: May 15, 2026</p>
+
+      <p class="mt-6 text-navy/80 text-lg leading-relaxed">Bible Bedtime shares gentle Bible story videos and bedtime reflections through official Bible Bedtime social media channels.</p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Use of Content</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">Bible Bedtime videos, descriptions, images, and related materials are provided for personal viewing and reflection. You may not falsely represent yourself as Bible Bedtime or use Bible Bedtime content in a way that suggests sponsorship, endorsement, or ownership without permission.</p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Official Channels</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">Bible Bedtime posts through its own official social media profiles. We do not provide a public posting, publishing, or account-management service for third-party accounts.</p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">No Professional Advice</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">Bible Bedtime content is devotional and reflective in nature. It is not medical, legal, financial, or professional advice.</p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Platform Terms</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">Use of Bible Bedtime content on TikTok, YouTube, Facebook, or any other platform is also subject to that platform's own terms and policies.</p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Changes</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">These terms may be updated from time to time. Continued use of Bible Bedtime content after updates means you accept the updated terms.</p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Contact</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">For questions about these terms, contact Bible Bedtime through the official TikTok profile: <a class="text-navy underline hover:text-gold-deep" href="https://www.tiktok.com/@biblebedtimestories22">@biblebedtimestories22</a>.</p>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

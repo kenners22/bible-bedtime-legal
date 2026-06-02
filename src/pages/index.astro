@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import FeatureBand from '../components/FeatureBand.astro';
+import VerseOfTheDay from '../components/VerseOfTheDay.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Bible Bedtime — Faith for Today. Peace for Tonight. Hope for Tomorrow.';
+const description = 'Bible Bedtime delivers daily scriptures, devotionals, timeless Bible stories, and personalised bedtime stories for children — faith-filled moments that bring peace to your day and night.';
+---
+<BaseLayout title={title} description={description}>
+  <Header />
+  <main>
+    <Hero />
+    <FeatureBand />
+    <VerseOfTheDay />
+  </main>
+  <Footer />
+</BaseLayout>
