@@ -203,41 +203,11 @@
     .blob {
       position: absolute;
       inset: 0;
-      background: linear-gradient(160deg, #1b2c5b 0%, #0d1730 60%, #060c1c 100%);
       border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
       overflow: hidden;
       box-shadow: 0 30px 60px rgba(12, 23, 52, 0.35);
+      background: #0d1730;
     }
-
-    .moon {
-      position: absolute;
-      top: 18%;
-      right: 22%;
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 65% 40%, #fde8ad 0%, #f5c66b 55%, #d09b3a 100%);
-      box-shadow: 0 0 30px rgba(245, 198, 107, 0.6);
-    }
-
-    .sky-star {
-      position: absolute;
-      background: #ffe9a8;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      box-shadow: 0 0 6px #fde2a0;
-    }
-    .sky-star.big { width: 6px; height: 6px; }
-    .sky-star.tiny { width: 2px; height: 2px; opacity: 0.7; }
-
-    .sky-star.a { top: 12%; left: 22%; }
-    .sky-star.b { top: 28%; left: 60%; }
-    .sky-star.c { top: 18%; left: 80%; }
-    .sky-star.d { top: 38%; left: 18%; }
-    .sky-star.e { top: 8%; left: 55%; }
-    .sky-star.f { top: 46%; left: 72%; }
-    .sky-star.g { top: 22%; left: 38%; }
 
     .child-photo {
       position: absolute;
@@ -246,26 +216,6 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
-      mix-blend-mode: normal;
-      border-radius: inherit;
-    }
-
-    .child-photo-placeholder {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 65%;
-      background:
-        radial-gradient(120% 60% at 50% 100%, rgba(245, 198, 107, 0.35) 0%, transparent 60%),
-        linear-gradient(to top, rgba(255, 232, 173, 0.25), transparent);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 18px;
-      color: rgba(255,255,255,0.7);
-      font-size: 12px;
-      text-align: center;
     }
 
     /* Bottom cream wave under hero */
@@ -446,20 +396,9 @@
         </div>
       </div>
 
-      <div class="hero-visual" aria-hidden="true">
+      <div class="hero-visual">
         <div class="blob">
-          <div class="moon"></div>
-          <span class="sky-star a big"></span>
-          <span class="sky-star b"></span>
-          <span class="sky-star c"></span>
-          <span class="sky-star d tiny"></span>
-          <span class="sky-star e"></span>
-          <span class="sky-star f tiny"></span>
-          <span class="sky-star g big"></span>
-          <!-- Replace this block with a real <img class="child-photo" src="..." alt="..."> when the photo is supplied -->
-          <div class="child-photo-placeholder">
-            <span>child-reading-tablet photo<br>(placeholder)</span>
-          </div>
+          <img class="child-photo" src="../assets/childrens-stories-hero-20260602.png" alt="Child in cosy pyjamas reading a tablet in bed with two teddy bears, against a starry night sky with a crescent moon">
         </div>
       </div>
 
