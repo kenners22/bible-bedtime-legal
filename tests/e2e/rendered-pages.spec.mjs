@@ -42,7 +42,9 @@ test.describe('rendered pages', () => {
 
         expect(overflow.scrollWidth).toBeLessThanOrEqual(overflow.clientWidth + 1);
 
-        if (viewport.width !== 1440) {
+        // Baselines are only rewritten on demand (UPDATE_BASELINE=1 npm test),
+        // never as a side effect of a normal run.
+        if (viewport.width !== 1440 && process.env.UPDATE_BASELINE) {
           await page.screenshot({
             path: path.join(baselineDir, `${safeName(route)}-${viewport.width}.png`),
             fullPage: true,
