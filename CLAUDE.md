@@ -21,15 +21,22 @@ UPDATE_BASELINE=1 npm test  # additionally refresh tests/baseline/*.png screensh
 | --------------------- | ----------------------------------- | ----- |
 | `/`                   | `src/pages/index.astro`             | Hero, navy wave band, verse of the day |
 | `/childrens-stories/` | `src/pages/childrens-stories.astro` | Personalised kids' stories landing |
+| `/bible-stories/`     | `src/pages/bible-stories.astro`     | Bible story collections landing |
+| `/daily-scriptures/`  | `src/pages/daily-scriptures.astro`  | Daily verse landing; primary "Start Free" target |
+| `/devotionals/`       | `src/pages/devotionals.astro`       | Devotionals landing |
+| `/about/`             | `src/pages/about.astro`             | About / mission |
+| `/childrens-emails/`  | `src/pages/childrens-emails.astro`  | Personalised kids' story signup landing |
 | `/terms/`, `/privacy/`| `src/pages/{terms,privacy}.astro`   | Legal |
 | `/app/`               | `public/app/index.html`             | Legacy static — don't rewrite |
 | `/platform-info/`     | `public/platform-info/index.html`   | TikTok-approved page — preserve unchanged |
 | `/callback/`          | `public/callback/index.html`        | TikTok OAuth callback — don't touch |
 | `/tiktok*.txt`        | `public/**/tiktok*.txt`             | TikTok verification — **never delete** |
 
-Known placeholder nav links (intentionally dead until pages are built, and
-asserted as such in `tests/e2e/static-output.spec.mjs`): `/bible-stories/`,
-`/daily-scriptures/`, `/devotionals/`, `/about/`, `/childrens-emails/`.
+All six former placeholder nav links now resolve to real pages, so
+`knownDeadLinks` in `tests/e2e/static-output.spec.mjs` is empty. The
+landing-page CTAs point to `/app/` for signup (there is no email-capture
+backend in this repo yet). `@astrojs/sitemap` generates
+`dist/sitemap-index.xml`; `public/robots.txt` references it.
 
 ## Hard boundaries
 

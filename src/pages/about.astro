@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'About | Bible Bedtime';
+const description = 'Bible Bedtime brings daily scriptures, devotionals and personalised bedtime stories into the rhythm of family life — faith-filled moments for your day and night.';
+
+const values = [
+  {
+    title: 'Gentle by design',
+    description: 'Calm words, warm tone, and a quiet pace — made for the end of the day.',
+  },
+  {
+    title: 'Faithful to Scripture',
+    description: 'Stories and reflections that stay true to the heart of the Bible.',
+  },
+  {
+    title: 'Made for families',
+    description: 'Something for grown-ups and something for children, side by side.',
+  },
+];
+---
+<BaseLayout title={title} description={description}>
+  <Header />
+  <main>
+    <section class="relative bg-cream overflow-hidden">
+      <div class="max-w-page mx-auto px-6 md:px-10 pt-10 pb-14 lg:pt-16 lg:pb-20 max-w-3xl">
+        <p class="text-navy/70 font-semibold tracking-wide uppercase text-sm">About</p>
+        <h1 class="mt-4 font-serif font-medium text-navy leading-[1.05] tracking-tight text-[40px] sm:text-[52px] lg:text-[60px]">
+          Faith for Today.<br />Peace for Tonight.
+        </h1>
+        <p class="mt-6 text-navy/75 text-lg leading-relaxed">
+          Bible Bedtime began with a simple wish: to make space for God’s Word in the
+          everyday — a verse with your morning coffee, a devotional in a spare moment, a
+          gentle story at the close of the day.
+        </p>
+        <p class="mt-4 text-navy/75 text-lg leading-relaxed">
+          We bring daily scriptures, short devotionals, timeless Bible stories and
+          personalised bedtime stories for children together in one calm place, so faith
+          can grow at the pace of family life.
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="values-heading" class="bg-cream pb-20">
+      <div class="max-w-page mx-auto px-6 md:px-10">
+        <h2 id="values-heading" class="font-serif font-medium text-navy text-center text-3xl sm:text-4xl mb-12">
+          What We Believe
+        </h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          {values.map((value) => (
+            <li class="bg-cream-300/60 rounded-2xl p-7 flex flex-col gap-3">
+              <h3 class="font-serif font-semibold text-navy text-xl">{value.title}</h3>
+              <p class="text-navy/70 text-[15px] leading-relaxed">{value.description}</p>
+            </li>
+          ))}
+        </ul>
+        <div class="mt-12 text-center">
+          <a href="/app/" class="btn bg-navy text-cream rounded-md px-7 py-4 text-[15px] hover:bg-navy-deep">
+            Start Free
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Verse" class="bg-navy text-cream py-6 text-center">
+      <p class="font-serif italic text-base sm:text-lg">
+        <span aria-hidden="true" class="text-gold mr-2">☾</span>
+        &ldquo;Come to me, all you who are weary and burdened, and I will give you rest.&rdquo;
+        <span class="text-gold font-semibold not-italic ml-2">— Matthew 11:28</span>
+      </p>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

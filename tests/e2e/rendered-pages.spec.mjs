@@ -9,7 +9,17 @@ const root = path.resolve(import.meta.dirname, '../..');
 const baselineDir = path.join(root, 'tests/baseline');
 const localOrigin = 'http://127.0.0.1:18765';
 
-const astroRoutes = ['/', '/childrens-stories/', '/terms/', '/privacy/'];
+const astroRoutes = [
+  '/',
+  '/childrens-stories/',
+  '/bible-stories/',
+  '/daily-scriptures/',
+  '/devotionals/',
+  '/about/',
+  '/childrens-emails/',
+  '/terms/',
+  '/privacy/',
+];
 const allRoutes = [...astroRoutes, '/app/', '/platform-info/', '/callback/'];
 const viewports = [
   { width: 375, height: 900 },
