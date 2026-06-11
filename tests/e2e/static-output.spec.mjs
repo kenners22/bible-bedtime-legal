@@ -5,13 +5,9 @@ import path from 'node:path';
 const root = path.resolve(import.meta.dirname, '../..');
 const dist = path.join(root, 'dist');
 
-const knownDeadLinks = new Set([
-  '/bible-stories/',
-  '/daily-scriptures/',
-  '/devotionals/',
-  '/about/',
-  '/childrens-emails/',
-]);
+// Every former placeholder route now has a real page. Add a route here only
+// if the nav links to it before its page exists.
+const knownDeadLinks = new Set([]);
 
 const requiredAssets = [
   '/assets/home-hero-sunrise-20260602.png',
