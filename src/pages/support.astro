@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const title = 'Support | Bible Bedtime';
+const description = 'Support for the Bible Bedtime app: subscriptions and restore purchases, stories or Daily Scripture not loading, audio playback, and how to get in touch.';
+---
+<BaseLayout title={title} description={description}>
+  <Header />
+  <main class="bg-cream">
+    <article class="max-w-3xl mx-auto px-6 md:px-10 py-16 lg:py-20">
+      <h1 class="font-serif font-medium text-navy text-4xl sm:text-5xl">Support</h1>
+      <p class="text-navy/60 text-sm mt-2">Last updated: June 12, 2026</p>
+
+      <p class="mt-6 text-navy/80 text-lg leading-relaxed">Bible Bedtime is built for calm Bible story listening and daily scripture reflection. If something is not working as expected, the checks below resolve the most common issues.</p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Premium or subscription issues</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">Open the Premium screen and tap Restore Purchases. Make sure you are signed in with the same Apple ID used for the subscription. Subscriptions can be managed or cancelled at any time in your Apple account settings.</p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Stories or Daily Scripture not loading</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">Check your internet connection, then close and reopen the app. Bible Bedtime keeps the last successful content feed where possible, so previously loaded content should remain available even if the network is temporarily unavailable.</p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Audio not playing</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">Check your device volume, silent mode, Bluetooth output, and network connection. If the issue continues, restart the app and try a free story such as Genesis first.</p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Privacy and terms</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">Read the <a class="underline text-navy" href="/privacy/">Privacy Policy</a> and <a class="underline text-navy" href="/terms/">Terms of Service</a>.</p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Contact</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">For support, contact Bible Bedtime through the official social profile: <a class="underline text-navy" href="https://www.tiktok.com/@biblebedtimestories22">@biblebedtimestories22 on TikTok</a>.</p>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>
