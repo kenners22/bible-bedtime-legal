@@ -105,9 +105,57 @@ test.describe('static output contract', () => {
     expect([...confirmedKnownDeadLinks].sort()).toEqual([...knownDeadLinks].sort());
   });
 
+  test('Meta Ads OAuth callback is a fixed local PKCE bridge', () => {
+    const html = fs.readFileSync(path.join(dist, 'meta-ads-oauth/index.html'), 'utf8');
+
+    expect(html).toContain('http://127.0.0.1:64321/callback');
+    expect(html).toContain("params.get('state')?.trim()");
+    expect(html).toContain("params.get('code')?.trim()");
+    expect(html).toContain("params.get('error')?.trim()");
+    expect(html).toContain('Boolean(code) !== Boolean(error)');
+    expect(html).toContain("window.history.replaceState(null, '', window.location.pathname)");
+    expect(html).toContain('const allowedParams = [');
+    expect(html).toContain('window.location.replace(destination.toString())');
+    expect(html).not.toContain('destination.search = window.location.search');
+    expect(html).not.toMatch(/params\.get\(['"](?:redirect|return|next|url)/i);
+    expect(html).not.toContain('localStorage');
+    expect(html).not.toContain('sessionStorage');
+  });
+
   test('required hero, logo, and feature assets exist in dist', () => {
     const missing = requiredAssets.filter((assetPath) => !fs.existsSync(path.join(dist, assetPath)));
     expect(missing).toEqual([]);
+  });
+
+  test('Meta Ads OAuth callback forwards only allowed parameters to the fixed local endpoint', async ({ page }) => {
+    let callbackUrl = '';
+    await page.route('http://127.0.0.1:64321/**', async (route) => {
+      callbackUrl = route.request().url();
+      await route.fulfill({ status: 200, body: 'local callback' });
+    });
+
+    await page.goto('/meta-ads-oauth/?code=abc%2B123&state=s1&redirect=https%3A%2F%2Fevil.example');
+    await expect.poll(() => callbackUrl).not.toBe('');
+
+    const callback = new URL(callbackUrl);
+    expect(`${callback.origin}${callback.pathname}`).toBe('http://127.0.0.1:64321/callback');
+    expect(callback.searchParams.get('code')).toBe('abc+123');
+    expect(callback.searchParams.get('state')).toBe('s1');
+    expect(callback.searchParams.has('redirect')).toBe(false);
+  });
+
+  test('Meta Ads OAuth callback scrubs rejected responses without forwarding them', async ({ page }) => {
+    let callbackCalled = false;
+    await page.route('http://127.0.0.1:64321/**', async (route) => {
+      callbackCalled = true;
+      await route.fulfill({ status: 200, body: 'unexpected callback' });
+    });
+
+    await page.goto('/meta-ads-oauth/?code=secret-without-state');
+    await expect(page).toHaveURL('http://127.0.0.1:18765/meta-ads-oauth/');
+    await expect(page.locator('#message')).toContainText('No valid Meta authorization response');
+    expect(await page.textContent('body')).not.toContain('secret-without-state');
+    expect(callbackCalled).toBe(false);
   });
 
   test('required pages include a loadable Google Fonts stylesheet', async () => {
