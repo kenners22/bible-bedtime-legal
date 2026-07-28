@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
+  <title>Bible Bedtime Meta Ads Authorization</title>
+  <meta name="description" content="Secure Meta Ads OAuth callback bridge for the Bible Bedtime local management workflow.">
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { margin: 0; padding: 40px 20px; background: #f8f7f3; color: #1f2933; }
+    main { max-width: 720px; margin: 0 auto; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #171717; color: #f5f1e8; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Completing Meta Ads authorization</h1>
+    <p id="message">Returning securely to Hermes on this Mac…</p>
+  </main>
+  <script>
+    (() => {
+      const params = new URLSearchParams(window.location.search);
+      const message = document.getElementById('message');
+      const code = params.get('code')?.trim() ?? '';
+      const error = params.get('error')?.trim() ?? '';
+      const state = params.get('state')?.trim() ?? '';
+      const hasOneResponse = Boolean(code) !== Boolean(error);
+
+      // Remove OAuth values from the visible URL and this browser-history entry
+      // before validating or displaying any fallback message.
+      if (window.location.search) {
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+
+      if (!state || !hasOneResponse) {
+        message.textContent = 'No valid Meta authorization response was received. You can close this tab.';
+        return;
+      }
+
+      const destination = new URL('http://127.0.0.1:64321/callback');
+      const allowedParams = [
+        'code',
+        'state',
+        'error',
+        'error_reason',
+        'error_description',
+        'error_code',
+        'error_subcode',
+      ];
+
+      for (const name of allowedParams) {
+        for (const value of params.getAll(name)) {
+          destination.searchParams.append(name, value);
+        }
+      }
+
+      window.location.replace(destination.toString());
+    })();
+  </script>
+</body>
+</html>
