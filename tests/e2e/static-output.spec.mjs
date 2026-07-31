@@ -26,6 +26,7 @@ const requiredAssets = [
 const fontPages = [
   'index.html',
   'childrens-stories/index.html',
+  'download/index.html',
   'terms/index.html',
   'privacy/index.html',
   'app/index.html',
@@ -120,6 +121,20 @@ test.describe('static output contract', () => {
     expect(html).not.toMatch(/params\.get\(['"](?:redirect|return|next|url)/i);
     expect(html).not.toContain('localStorage');
     expect(html).not.toContain('sessionStorage');
+  });
+
+  test('maintained Astro pages never route users to the protected legacy app page', () => {
+    const maintainedPages = listFiles(dist, (filePath) => (
+      filePath.endsWith('.html')
+      && !filePath.endsWith(path.join('app', 'index.html'))
+      && !filePath.endsWith(path.join('platform-info', 'index.html'))
+      && !filePath.endsWith(path.join('callback', 'index.html'))
+    ));
+    const offenders = maintainedPages.filter((filePath) => (
+      /<a\b[^>]*\shref=["']\/app\/["'][^>]*>/i.test(fs.readFileSync(filePath, 'utf8'))
+    ));
+
+    expect(offenders.map((filePath) => path.relative(dist, filePath))).toEqual([]);
   });
 
   test('required hero, logo, and feature assets exist in dist', () => {
