@@ -1,37 +1,67 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
 
 const title = 'Privacy Policy | Bible Bedtime';
-const description = 'Bible Bedtime Privacy Policy explaining what information is accessed when official publishing accounts are connected.';
+const description = 'How the Bible Bedtimes iPhone app, website, and owner-operated publishing workflow handle information.';
 ---
 <BaseLayout title={title} description={description}>
   <Header />
   <main class="bg-cream">
     <article class="max-w-3xl mx-auto px-6 md:px-10 py-16 lg:py-20">
       <h1 class="font-serif font-medium text-navy text-4xl sm:text-5xl">Privacy Policy</h1>
-      <p class="text-navy/60 text-sm mt-2">Last updated: May 15, 2026</p>
+      <p class="text-navy/60 text-sm mt-2">Last updated: July 31, 2026</p>
 
-      <p class="mt-6 text-navy/80 text-lg leading-relaxed">Bible Bedtime shares Bible story videos and bedtime reflections through official social media channels. This policy explains what information may be accessed when the account owner connects an official publishing account.</p>
+      <p class="mt-6 text-navy/80 text-lg leading-relaxed">
+        This policy covers the Bible Bedtimes iPhone app, biblebedtime.uk, and the private workflow used by the Bible Bedtime account owner to publish official social content.
+      </p>
 
-      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Information We Access</h2>
-      <p class="mt-3 text-navy/80 leading-relaxed">When the Bible Bedtime account owner authorizes an official social platform connection, that platform may provide basic account information such as account ID, avatar, and display name, depending on approved permissions. This information is used only to confirm the authorized account and support publishing to the official Bible Bedtime profile.</p>
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">The iPhone App</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        The app does not require an account and does not include advertising, cross-app tracking, or third-party analytics SDKs. Bible Bedtimes does not receive your saved items, listening history, story progress, Nightly Rhythm, reminder time, or Daily Log activity. Those records are stored locally on your iPhone.
+      </p>
 
-      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Publishing Data</h2>
-      <p class="mt-3 text-navy/80 leading-relaxed">Approved Bible Bedtime video files and associated posting metadata may be sent to official social platforms for publishing. The workflow is not used to access or publish to unrelated accounts.</p>
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Content Delivery</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        The app requests Bible story, artwork, audio, video, and Daily Scripture files from Bible Bedtime’s content service. Hosting and network providers may process ordinary technical request data, such as an IP address, to deliver and protect those files. Bible Bedtime does not use that delivery data to track you across apps or websites, build an advertising profile, or connect it to your on-device activity.
+      </p>
 
-      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Storage</h2>
-      <p class="mt-3 text-navy/80 leading-relaxed">OAuth tokens and configuration files are stored privately on the account owner's local system or approved automation environment. Secrets are not intentionally published or shared in public chat, documentation, or source files.</p>
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Purchases</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        Premium subscriptions are purchased and managed through Apple’s StoreKit service. Apple processes payment and Apple Account information under Apple’s privacy policy. The app receives only the entitlement information needed to unlock Premium; Bible Bedtimes does not receive your full payment-card details.
+      </p>
 
-      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Sharing</h2>
-      <p class="mt-3 text-navy/80 leading-relaxed">Bible Bedtime does not sell personal information. Data is shared with social platforms only as necessary to authorize the account and publish approved Bible Bedtime content.</p>
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Notifications</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        If you choose to enable a daily reminder, the app asks iOS for permission and schedules the reminder locally on your device. The app does not register a remote push-notification token with Bible Bedtime.
+      </p>
 
-      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Retention</h2>
-      <p class="mt-3 text-navy/80 leading-relaxed">Authorization tokens and related records are retained only as long as needed to operate the Bible Bedtime publishing workflow. Access can be revoked through TikTok account or app settings.</p>
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Website</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        The public website does not offer user accounts. Its hosting providers may process ordinary server request data needed to serve and secure the site. Links to Apple and social platforms take you to services governed by their own privacy policies.
+      </p>
 
-      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Contact</h2>
-      <p class="mt-3 text-navy/80 leading-relaxed">For privacy questions, contact Bible Bedtime through the official TikTok profile: <a class="text-navy underline hover:text-gold-deep" href="https://www.tiktok.com/@biblebedtimestories22">@biblebedtimestories22</a>.</p>
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Official Social Publishing</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        When the Bible Bedtime account owner authorizes an official social-platform connection, that platform may provide basic profile and authorization information. Approved videos and posting metadata may then be sent to the official Bible Bedtime account. This private owner workflow is not available to app users and is not used to access unrelated accounts.
+      </p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Storage and Sharing</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        Owner publishing tokens are kept in the owner’s local system or approved private automation environment and retained only while needed. Bible Bedtime does not sell personal information. Information is shared only with service providers as needed to deliver the website and app content, process Apple purchases, or publish approved official content.
+      </p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Your Choices</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        You can remove local app records by deleting the app, manage notification permission in iOS Settings, manage subscriptions in your Apple Account, and revoke an official social connection in that platform’s settings.
+      </p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Changes and Contact</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        We may update this policy when the product or its services change. For privacy questions, contact Bible Bedtime through the official TikTok profile:
+        <a class="text-navy underline hover:text-gold-deep" href="https://www.tiktok.com/@biblebedtimestories22">@biblebedtimestories22</a>.
+      </p>
     </article>
   </main>
   <Footer />

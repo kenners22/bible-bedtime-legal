@@ -1,4 +1,5 @@
 ---
+import { APP_STORE_URL } from '../lib/app-store';
 ---
 <section class="relative bg-cream overflow-hidden">
   <div class="max-w-[1536px] mx-auto pl-6 md:pl-10 lg:pl-[120px] pr-0 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 items-start pt-8 pb-16 lg:pt-9 lg:pb-24">
@@ -12,8 +13,12 @@
         Daily scriptures, devotionals, and timeless Bible stories to guide your heart and mind.
       </p>
       <div class="mt-8 flex flex-wrap gap-6">
-        <a href="/daily-scriptures/" class="btn-gold rounded-lg px-7 py-4 text-[17px]">
-          Start Free Daily Scriptures
+        <a
+          href={APP_STORE_URL}
+          class="btn-gold rounded-lg px-7 py-4 text-[17px]"
+          aria-label="Get Bible Bedtimes on the App Store"
+        >
+          Start Free Tonight
         </a>
         <a href="/bible-stories/" class="btn-outline rounded-lg px-7 py-4 text-[17px]">
           Explore Bible Stories

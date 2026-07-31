@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { APP_STORE_URL } from '../lib/app-store';
+
+const title = 'Bible Bedtimes for iPhone | Start Free Tonight';
+const description = 'Get Bible Bedtimes for iPhone and start tonight with a complete free Scripture teaching and three complete free Bible stories.';
+---
+<BaseLayout title={title} description={description}>
+  <Header />
+  <main class="bg-cream">
+    <section class="max-w-5xl mx-auto px-6 md:px-10 py-16 lg:py-24">
+      <div class="max-w-3xl">
+        <p class="text-navy/80 font-semibold tracking-[0.16em] uppercase text-sm">Bible Bedtimes for iPhone</p>
+        <h1 class="font-serif font-medium text-navy text-4xl sm:text-5xl lg:text-6xl leading-tight mt-4">
+          Let Scripture be the last voice you hear tonight.
+        </h1>
+        <p class="mt-6 text-navy/80 text-lg leading-relaxed">
+          Start with tonight’s complete Scripture passage and calm teaching, free with no subscription required.
+          You can also listen to three complete Bible stories from beginning to end.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-5">
+          <a
+            href={APP_STORE_URL}
+            class="btn-gold rounded-lg px-7 py-4 text-[17px]"
+            aria-label="Get Bible Bedtimes on the App Store"
+          >
+            Get on the App Store
+          </a>
+          <span class="text-navy/60 text-sm">Free to download · Premium subscription available</span>
+        </div>
+      </div>
+
+      <div class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <article class="rounded-3xl bg-white/55 border border-navy/10 p-6">
+          <h2 class="font-serif font-semibold text-navy text-2xl">Complete free Tonight</h2>
+          <p class="mt-3 text-navy/75 leading-relaxed">Read the full daily passage and teaching, then mark your Daily Log complete.</p>
+        </article>
+        <article class="rounded-3xl bg-white/55 border border-navy/10 p-6">
+          <h2 class="font-serif font-semibold text-navy text-2xl">Three free stories</h2>
+          <p class="mt-3 text-navy/75 leading-relaxed">Listen to Creation and Eden, Joseph, and Jesus Calms the Storm end-to-end.</p>
+        </article>
+        <article class="rounded-3xl bg-white/55 border border-navy/10 p-6">
+          <h2 class="font-serif font-semibold text-navy text-2xl">Private by design</h2>
+          <p class="mt-3 text-navy/75 leading-relaxed">Your saved items, listening history, story progress, and Nightly Rhythm stay on your iPhone.</p>
+        </article>
+      </div>
+
+      <div class="mt-12 max-w-3xl border-t border-navy/10 pt-8">
+        <h2 class="font-serif font-medium text-navy text-3xl">Premium when you want more</h2>
+        <p class="mt-3 text-navy/75 leading-relaxed">
+          Premium adds the full story and video library, offline downloads, all-night listening,
+          and the Daily Teaching archive, prayers, and closing lines. Eligible customers can start
+          with Apple’s one-month introductory offer; renewal terms and local pricing appear before purchase.
+        </p>
+        <p class="mt-5 text-navy/65 text-sm leading-relaxed">
+          Requires iOS 17 or later. Purchases and subscription management are handled by Apple.
+          See our <a class="underline hover:text-gold-deep" href="/privacy/">Privacy Policy</a>
+          and <a class="underline hover:text-gold-deep" href="/terms/">Terms of Service</a>.
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

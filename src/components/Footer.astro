@@ -1,4 +1,6 @@
 ---
+import { APP_STORE_URL } from '../lib/app-store';
+
 const year = new Date().getFullYear();
 ---
 <footer class="bg-navy-deep text-cream/80">
@@ -14,7 +16,8 @@ const year = new Date().getFullYear();
         <li><a href="/daily-scriptures/" class="hover:text-cream">Daily Scriptures</a></li>
         <li><a href="/devotionals/" class="hover:text-cream">Devotionals</a></li>
         <li><a href="/childrens-stories/" class="hover:text-cream">Children's Stories</a></li>
-        <li><a href="/app/" class="hover:text-cream">App</a></li>
+        <li><a href="/download/" class="hover:text-cream">iPhone App</a></li>
+        <li><a href={APP_STORE_URL} class="hover:text-cream">View on the App Store</a></li>
       </ul>
     </nav>
     <nav aria-label="Footer legal links">

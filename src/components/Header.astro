@@ -1,10 +1,12 @@
 ---
+import { APP_STORE_URL } from '../lib/app-store';
+
 const navLinks = [
   { label: 'Bible Stories', href: '/bible-stories/' },
   { label: 'Daily Scriptures', href: '/daily-scriptures/' },
   { label: 'Devotionals', href: '/devotionals/' },
   { label: "Children's Stories", href: '/childrens-stories/' },
-  { label: 'App', href: '/app/' },
+  { label: 'App', href: '/download/' },
   { label: 'About', href: '/about/' },
 ];
 ---
@@ -30,10 +32,11 @@ const navLinks = [
     </nav>
 
     <a
-      href="/daily-scriptures/"
+      href={APP_STORE_URL}
       class="btn-gold rounded-lg px-6 py-3.5 text-base shrink-0"
+      aria-label="Get Bible Bedtimes on the App Store"
     >
-      Start Free
+      Get the App
     </a>
   </div>
 
