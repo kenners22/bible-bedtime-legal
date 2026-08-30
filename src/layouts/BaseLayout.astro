@@ -5,13 +5,14 @@ interface Props {
   title: string;
   description: string;
   canonical?: string;
+  lang?: string;
 }
 
-const { title, description, canonical } = Astro.props;
+const { title, description, canonical, lang = 'en' } = Astro.props;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

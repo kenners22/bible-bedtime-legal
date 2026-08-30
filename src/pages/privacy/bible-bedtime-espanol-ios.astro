@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const title = 'Política de privacidad de Bible Bedtime Español para iOS';
+const description = 'Cómo Bible Bedtime Español para iPhone y iPad trata los datos, las compras, las descargas y los recordatorios.';
+const canonical = 'https://biblebedtime.uk/privacy/bible-bedtime-espanol-ios/';
+---
+<BaseLayout title={title} description={description} canonical={canonical} lang="es-MX">
+  <Header locale="es" />
+  <main class="bg-cream">
+    <article class="max-w-3xl min-w-0 mx-auto px-6 md:px-10 py-16 lg:py-20 [overflow-wrap:anywhere]">
+      <p class="text-navy/60 text-sm font-medium">Bible Bedtime Español · iPhone y iPad</p>
+      <h1 class="font-serif font-medium text-navy text-4xl sm:text-5xl mt-2">Política de privacidad</h1>
+      <p class="text-navy/60 text-sm mt-3">Fecha de entrada en vigor: 30 de agosto de 2026</p>
+
+      <p class="mt-7 text-navy/80 text-lg leading-relaxed">
+        Esta política se aplica únicamente a la app <strong>Bible Bedtime Español</strong>
+        para iOS y iPadOS, con identificador de paquete
+        <code class="text-[0.9em] break-all">uk.biblebedtime.espanol</code>. Signpost Digital Ltd
+        es responsable de esta app.
+      </p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Resumen</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        No necesitas crear una cuenta. La app no contiene publicidad, no realiza
+        seguimiento y no crea perfiles personales. No usamos SDK de analítica ni
+        de informes de fallos. La versión publicada no tiene configurado ningún
+        destino de telemetría y, por tanto, no envía eventos de uso.
+      </p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Datos que permanecen en tu dispositivo</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        La app guarda localmente las preferencias de apariencia, historias
+        guardadas, progreso y posición de reproducción, temporizador, estado de
+        acceso Premium y los audios que decidas descargar. No enviamos esos datos
+        a Signpost Digital Ltd. Puedes borrar las descargas desde la app; al
+        desinstalarla se eliminan también sus preferencias y archivos locales.
+      </p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Contenido, alojamiento y registros técnicos</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        Para mostrar historias, audio, video, miniaturas y Enseñanza diaria, la
+        app solicita contenido mediante HTTPS desde nuestro servicio separado
+        <code class="text-[0.9em] break-all">contenido-es.biblebedtime.uk</code>. La app no
+        añade a esas solicitudes tu nombre, correo, cuenta, identificador
+        publicitario ni historial de escucha.
+      </p>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        Como ocurre con cualquier servicio web, los proveedores de alojamiento y
+        red pueden procesar datos técnicos necesarios para entregar, proteger y
+        mantener el contenido, como dirección IP, fecha y hora, recurso solicitado
+        y datos básicos del dispositivo o la conexión. No utilizamos esos datos
+        para publicidad, seguimiento entre apps, perfiles de usuario ni para
+        relacionarlos con una cuenta de la app. Bible Bedtime Español no mantiene
+        una base de datos de usuarios ni un sistema de analítica de producto.
+      </p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Suscripciones y pagos</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        Las suscripciones Premium se ofrecen mediante Apple StoreKit. Apple
+        procesa el pago y administra la cuenta de Apple. La app recibe de Apple
+        el producto, estado y vigencia necesarios para comprobar el acceso; no
+        recibe el número completo de tarjeta ni los datos bancarios. El
+        tratamiento de Apple está sujeto a la
+        <a class="text-navy underline hover:text-gold-deep" href="https://www.apple.com/legal/privacy/">Política de privacidad de Apple</a>.
+      </p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Recordatorios</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        Los recordatorios nocturnos son opcionales. Solo se programan después de
+        que concedas permiso y se gestionan localmente mediante las notificaciones
+        del dispositivo. La app no registra un token de notificaciones remotas ni
+        utiliza un servicio propio de notificaciones push.
+      </p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Menores</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        La app puede usarse en familia, pero no pide nombres, edad, fecha de
+        nacimiento, ubicación ni datos de contacto de menores. Las compras y
+        permisos deben gestionarse con los controles familiares y de cuenta de
+        Apple correspondientes.
+      </p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Tus opciones y solicitudes</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        Bible Bedtime Español no crea una cuenta de usuario que podamos borrar.
+        Puedes eliminar los datos locales borrando las descargas o desinstalando
+        la app, y puedes administrar o cancelar una suscripción desde tu cuenta de
+        Apple. Para una pregunta de privacidad, una solicitud relacionada con tus
+        datos o ayuda, utiliza nuestra
+        <a class="text-navy underline hover:text-gold-deep" href="/support/">página oficial de soporte</a>.
+      </p>
+
+      <h2 class="font-serif font-medium text-navy text-2xl mt-10">Cambios</h2>
+      <p class="mt-3 text-navy/80 leading-relaxed">
+        Actualizaremos esta política antes de introducir analítica, publicidad,
+        cuentas, notificaciones remotas u otro cambio material en el tratamiento
+        de datos. La fecha de entrada en vigor mostrada arriba indica la versión
+        vigente.
+      </p>
+    </article>
+  </main>
+  <Footer locale="es" />
+</BaseLayout>

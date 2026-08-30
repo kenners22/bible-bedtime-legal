@@ -1,29 +1,35 @@
 ---
+interface Props {
+  locale?: 'en' | 'es';
+}
+
+const { locale = 'en' } = Astro.props;
+const isSpanish = locale === 'es';
 const year = new Date().getFullYear();
 ---
 <footer class="bg-navy-deep text-cream/80">
   <div class="max-w-page mx-auto px-6 md:px-10 py-10 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
     <div>
       <p class="font-serif font-semibold text-lg text-cream">Bible Bedtime</p>
-      <p class="mt-2 text-cream/65">Gentle Bible stories, daily scriptures, and devotionals for every season of life.</p>
+      <p class="mt-2 text-cream/65">{isSpanish ? 'Historias bíblicas serenas, Escritura diaria y devocionales para cada etapa de la vida.' : 'Gentle Bible stories, daily scriptures, and devotionals for every season of life.'}</p>
     </div>
-    <nav aria-label="Footer site links">
-      <p class="font-semibold text-cream mb-3">Explore</p>
+    <nav aria-label={isSpanish ? 'Enlaces del sitio' : 'Footer site links'}>
+      <p class="font-semibold text-cream mb-3">{isSpanish ? 'Explorar' : 'Explore'}</p>
       <ul class="space-y-2">
-        <li><a href="/bible-stories/" class="hover:text-cream">Bible Stories</a></li>
-        <li><a href="/daily-scriptures/" class="hover:text-cream">Daily Scriptures</a></li>
-        <li><a href="/devotionals/" class="hover:text-cream">Devotionals</a></li>
-        <li><a href="/childrens-stories/" class="hover:text-cream">Children's Stories</a></li>
+        <li><a href="/bible-stories/" class="hover:text-cream">{isSpanish ? 'Historias bíblicas' : 'Bible Stories'}</a></li>
+        <li><a href="/daily-scriptures/" class="hover:text-cream">{isSpanish ? 'Escrituras diarias' : 'Daily Scriptures'}</a></li>
+        <li><a href="/devotionals/" class="hover:text-cream">{isSpanish ? 'Devocionales' : 'Devotionals'}</a></li>
+        <li><a href="/childrens-stories/" class="hover:text-cream">{isSpanish ? 'Historias infantiles' : "Children's Stories"}</a></li>
         <li><a href="/app/" class="hover:text-cream">App</a></li>
       </ul>
     </nav>
-    <nav aria-label="Footer legal links">
-      <p class="font-semibold text-cream mb-3">More</p>
+    <nav aria-label={isSpanish ? 'Enlaces legales' : 'Footer legal links'}>
+      <p class="font-semibold text-cream mb-3">{isSpanish ? 'Más' : 'More'}</p>
       <ul class="space-y-2">
-        <li><a href="/about/" class="hover:text-cream">About</a></li>
-        <li><a href="/terms/" class="hover:text-cream">Terms</a></li>
-        <li><a href="/privacy/" class="hover:text-cream">Privacy</a></li>
-        <li><a href="/platform-info/" class="hover:text-cream">Platform info</a></li>
+        <li><a href="/about/" class="hover:text-cream">{isSpanish ? 'Acerca de' : 'About'}</a></li>
+        <li><a href="/terms/" class="hover:text-cream">{isSpanish ? 'Términos' : 'Terms'}</a></li>
+        <li><a href="/privacy/bible-bedtime-espanol-ios/" class="hover:text-cream">{isSpanish ? 'Privacidad de la app' : 'Privacy'}</a></li>
+        <li><a href="/support/" class="hover:text-cream">{isSpanish ? 'Ayuda' : 'Support'}</a></li>
       </ul>
     </nav>
   </div>
