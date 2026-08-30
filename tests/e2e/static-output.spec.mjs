@@ -28,6 +28,7 @@ const fontPages = [
   'childrens-stories/index.html',
   'terms/index.html',
   'privacy/index.html',
+  'privacy/bible-bedtime-espanol-ios/index.html',
   'app/index.html',
   'platform-info/index.html',
 ];
@@ -125,6 +126,19 @@ test.describe('static output contract', () => {
   test('required hero, logo, and feature assets exist in dist', () => {
     const missing = requiredAssets.filter((assetPath) => !fs.existsSync(path.join(dist, assetPath)));
     expect(missing).toEqual([]);
+  });
+
+  test('Spanish iOS privacy page is app-specific and does not inherit the social OAuth policy', () => {
+    const html = fs.readFileSync(path.join(dist, 'privacy/bible-bedtime-espanol-ios/index.html'), 'utf8');
+
+    expect(html).toContain('<html lang="es-MX">');
+    expect(html).toContain('uk.biblebedtime.espanol');
+    expect(html).toContain('contenido-es.biblebedtime.uk');
+    expect(html).toContain('StoreKit');
+    expect(html).toContain('No usamos SDK de analítica');
+    expect(html).toContain('https://biblebedtime.uk/privacy/bible-bedtime-espanol-ios/');
+    expect(html).not.toContain('OAuth tokens');
+    expect(html).not.toContain('official TikTok profile');
   });
 
   test('Meta Ads OAuth callback forwards only allowed parameters to the fixed local endpoint', async ({ page }) => {

@@ -19,7 +19,9 @@ const astroRoutes = [
   '/childrens-emails/',
   '/terms/',
   '/privacy/',
+  '/privacy/bible-bedtime-espanol-ios/',
 ];
+const englishChromeRoutes = astroRoutes.filter((route) => route !== '/privacy/bible-bedtime-espanol-ios/');
 const allRoutes = [...astroRoutes, '/app/', '/platform-info/', '/callback/'];
 const viewports = [
   { width: 375, height: 900 },
@@ -82,7 +84,7 @@ test.describe('rendered pages', () => {
   test('Astro pages share the same header and footer chrome', async ({ page }) => {
     const snapshots = [];
 
-    for (const route of astroRoutes) {
+    for (const route of englishChromeRoutes) {
       await gotoLocal(page, route);
       snapshots.push({
         route,

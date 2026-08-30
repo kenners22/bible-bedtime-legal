@@ -1,16 +1,31 @@
 ---
-const navLinks = [
-  { label: 'Bible Stories', href: '/bible-stories/' },
-  { label: 'Daily Scriptures', href: '/daily-scriptures/' },
-  { label: 'Devotionals', href: '/devotionals/' },
-  { label: "Children's Stories", href: '/childrens-stories/' },
-  { label: 'App', href: '/app/' },
-  { label: 'About', href: '/about/' },
-];
+interface Props {
+  locale?: 'en' | 'es';
+}
+
+const { locale = 'en' } = Astro.props;
+const isSpanish = locale === 'es';
+const navLinks = isSpanish
+  ? [
+      { label: 'Historias bíblicas', href: '/bible-stories/' },
+      { label: 'Escrituras diarias', href: '/daily-scriptures/' },
+      { label: 'Devocionales', href: '/devotionals/' },
+      { label: 'Historias infantiles', href: '/childrens-stories/' },
+      { label: 'App', href: '/app/' },
+      { label: 'Acerca de', href: '/about/' },
+    ]
+  : [
+      { label: 'Bible Stories', href: '/bible-stories/' },
+      { label: 'Daily Scriptures', href: '/daily-scriptures/' },
+      { label: 'Devotionals', href: '/devotionals/' },
+      { label: "Children's Stories", href: '/childrens-stories/' },
+      { label: 'App', href: '/app/' },
+      { label: 'About', href: '/about/' },
+    ];
 ---
 <header class="bg-cream">
   <div class="max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 py-7 flex items-center justify-between gap-6">
-    <a href="/" class="flex items-center gap-4 shrink-0 group" aria-label="Bible Bedtime home">
+    <a href="/" class="flex items-center gap-4 shrink-0 group" aria-label={isSpanish ? 'Inicio de Bible Bedtime' : 'Bible Bedtime home'}>
       <img
         src="/assets/bible-bedtime-logo-20260520.webp"
         alt=""
@@ -23,7 +38,7 @@ const navLinks = [
       </span>
     </a>
 
-    <nav aria-label="Primary" class="hidden lg:flex items-center gap-9 text-[16px] font-medium text-navy/90">
+    <nav aria-label={isSpanish ? 'Principal' : 'Primary'} class="hidden lg:flex items-center gap-9 text-[16px] font-medium text-navy/90">
       {navLinks.map((link) => (
         <a href={link.href} class="hover:text-navy transition-colors">{link.label}</a>
       ))}
@@ -33,11 +48,11 @@ const navLinks = [
       href="/daily-scriptures/"
       class="btn-gold rounded-lg px-6 py-3.5 text-base shrink-0"
     >
-      Start Free
+      {isSpanish ? 'Empieza gratis' : 'Start Free'}
     </a>
   </div>
 
-  <nav aria-label="Primary mobile" class="lg:hidden border-t border-navy/10">
+  <nav aria-label={isSpanish ? 'Principal móvil' : 'Primary mobile'} class="lg:hidden border-t border-navy/10">
     <div class="max-w-page mx-auto px-6 py-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-navy/80">
       {navLinks.map((link) => (
         <a href={link.href} class="hover:text-navy transition-colors">{link.label}</a>
