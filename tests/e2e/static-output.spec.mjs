@@ -141,6 +141,23 @@ test.describe('static output contract', () => {
     expect(html).not.toContain('official TikTok profile');
   });
 
+  test('English app acquisition links point to the verified iOS listing while legacy /app remains intact', () => {
+    const listing = 'https://apps.apple.com/gb/app/bible-bedtimes/id6773492861';
+    const home = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
+    const download = fs.readFileSync(path.join(dist, 'download/index.html'), 'utf8');
+    const legacy = fs.readFileSync(path.join(dist, 'app/index.html'), 'utf8');
+    const spanishPrivacy = fs.readFileSync(path.join(dist, 'privacy/bible-bedtime-espanol-ios/index.html'), 'utf8');
+
+    expect(home).toContain(listing);
+    expect(home).toContain('href="/download/"');
+    expect(download).toContain(listing);
+    expect(download).toContain('Three complete stories');
+    expect(download).not.toMatch(/Android|5-star|free trial/i);
+    expect(download).toContain("this.src='/assets/bible-bedtime-logo-20260520.webp'");
+    expect(legacy).toContain('Open TikTok');
+    expect(spanishPrivacy).toContain('Empieza gratis');
+  });
+
   test('Meta Ads OAuth callback forwards only allowed parameters to the fixed local endpoint', async ({ page }) => {
     let callbackUrl = '';
     await page.route('http://127.0.0.1:64321/**', async (route) => {

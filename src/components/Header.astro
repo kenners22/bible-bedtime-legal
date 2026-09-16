@@ -19,7 +19,7 @@ const navLinks = isSpanish
       { label: 'Daily Scriptures', href: '/daily-scriptures/' },
       { label: 'Devotionals', href: '/devotionals/' },
       { label: "Children's Stories", href: '/childrens-stories/' },
-      { label: 'App', href: '/app/' },
+      { label: 'App', href: '/download/' },
       { label: 'About', href: '/about/' },
     ];
 ---
@@ -51,13 +51,13 @@ const navLinks = isSpanish
     </nav>
 
     <a
-      href="/daily-scriptures/"
+      href={isSpanish ? '/daily-scriptures/' : 'https://apps.apple.com/gb/app/bible-bedtimes/id6773492861'}
       class:list={[
         'btn-gold rounded-lg py-3.5 text-base shrink-0',
         isSpanish ? 'px-4 sm:px-6' : 'px-6',
       ]}
     >
-      {isSpanish ? 'Empieza gratis' : 'Start Free'}
+      {isSpanish ? 'Empieza gratis' : <><span class="sm:hidden">Get app</span><span class="hidden sm:inline">Get the app</span></>}
     </a>
   </div>
 

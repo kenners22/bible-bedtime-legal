@@ -17,6 +17,7 @@ const astroRoutes = [
   '/devotionals/',
   '/about/',
   '/childrens-emails/',
+  '/download/',
   '/terms/',
   '/privacy/',
   '/privacy/bible-bedtime-espanol-ios/',
@@ -72,13 +73,23 @@ test.describe('rendered pages', () => {
 
     const maskImage = await page.locator('.hero-photo').evaluate((element) => getComputedStyle(element).maskImage);
     const heroBox = await page.locator('.hero-photo').boundingBox();
-    const ctaBox = await page.locator('main a[href="/daily-scriptures/"]').first().boundingBox();
+    const ctaBox = await page.locator('main a[href="https://apps.apple.com/gb/app/bible-bedtimes/id6773492861"]').first().boundingBox();
     const featureBox = await page.locator('section[aria-label="What we offer"]').boundingBox();
 
     expect(maskImage).toContain('linear-gradient');
     expect(maskImage).toMatch(/(to right|90deg)/);
     expect(featureBox.y).toBeLessThanOrEqual(heroBox.y + heroBox.height + 24);
     expect(featureBox.y).toBeGreaterThan(ctaBox.y + ctaBox.height + 40);
+  });
+
+  test('download preview falls back to the exact local logo if Apple artwork is unavailable', async ({ page }) => {
+    await page.route('https://is1-ssl.mzstatic.com/**', (route) => route.abort());
+    await gotoLocal(page, '/download/');
+
+    const preview = page.locator('main img').first();
+    await expect(preview).toHaveAttribute('src', '/assets/bible-bedtime-logo-20260520.webp');
+    await expect(preview).toHaveAttribute('alt', 'Bible Bedtime moon and book logo');
+    await expect(preview).toBeVisible();
   });
 
   test('Astro pages share the same header and footer chrome', async ({ page }) => {
@@ -105,10 +116,10 @@ test.describe('rendered pages', () => {
         '/daily-scriptures/',
         '/devotionals/',
         '/childrens-stories/',
-        '/app/',
+        '/download/',
         '/about/',
       ]);
-      expect(snapshot.startFreeHref, snapshot.route).toBe('/daily-scriptures/');
+      expect(snapshot.startFreeHref, snapshot.route).toBe('https://apps.apple.com/gb/app/bible-bedtimes/id6773492861');
     }
   });
 

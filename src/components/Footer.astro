@@ -20,7 +20,7 @@ const year = new Date().getFullYear();
         <li><a href="/daily-scriptures/" class="hover:text-cream">{isSpanish ? 'Escrituras diarias' : 'Daily Scriptures'}</a></li>
         <li><a href="/devotionals/" class="hover:text-cream">{isSpanish ? 'Devocionales' : 'Devotionals'}</a></li>
         <li><a href="/childrens-stories/" class="hover:text-cream">{isSpanish ? 'Historias infantiles' : "Children's Stories"}</a></li>
-        <li><a href="/app/" class="hover:text-cream">App</a></li>
+        <li><a href={isSpanish ? '/app/' : '/download/'} class="hover:text-cream">App</a></li>
       </ul>
     </nav>
     <nav aria-label={isSpanish ? 'Enlaces legales' : 'Footer legal links'}>
