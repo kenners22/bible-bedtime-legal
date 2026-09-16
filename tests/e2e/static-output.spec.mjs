@@ -25,7 +25,8 @@ const requiredAssets = [
 
 const fontPages = [
   'index.html',
-  'childrens-stories/index.html',
+  'daily-scriptures/index.html',
+  'download/index.html',
   'terms/index.html',
   'privacy/index.html',
   'privacy/bible-bedtime-espanol-ios/index.html',
@@ -156,6 +157,26 @@ test.describe('static output contract', () => {
     expect(download).toContain("this.src='/assets/bible-bedtime-logo-20260520.webp'");
     expect(legacy).toContain('Open TikTok');
     expect(spanishPrivacy).toContain('Empieza gratis');
+  });
+
+  test('retired children bedtime routes and offers are absent from published pages', () => {
+    expect(fs.existsSync(path.join(dist, 'childrens-stories/index.html'))).toBe(false);
+    expect(fs.existsSync(path.join(dist, 'childrens-emails/index.html'))).toBe(false);
+
+    const htmlFiles = listFiles(dist, (filePath) => filePath.endsWith('.html'));
+    for (const filePath of htmlFiles) {
+      const html = fs.readFileSync(filePath, 'utf8');
+      expect(html, filePath).not.toMatch(/childrens-(?:stories|emails)|personalised bedtime stories for children|Children's Stories/i);
+    }
+  });
+
+  test('Daily Scriptures shows an app-sourced sample, not a fabricated live verse', () => {
+    const html = fs.readFileSync(path.join(dist, 'daily-scriptures/index.html'), 'utf8');
+    expect(html).toContain('A sample from the app');
+    expect(html).toContain('Psalm 23:1');
+    expect(html).toContain('The LORD is my shepherd; I shall not want.');
+    expect(html).toContain('This is an example, not today’s live passage.');
+    expect(html).toContain('href="/download/"');
   });
 
   test('Meta Ads OAuth callback forwards only allowed parameters to the fixed local endpoint', async ({ page }) => {

@@ -11,12 +11,10 @@ const localOrigin = 'http://127.0.0.1:18765';
 
 const astroRoutes = [
   '/',
-  '/childrens-stories/',
   '/bible-stories/',
   '/daily-scriptures/',
   '/devotionals/',
   '/about/',
-  '/childrens-emails/',
   '/download/',
   '/terms/',
   '/privacy/',
@@ -115,7 +113,6 @@ test.describe('rendered pages', () => {
         '/bible-stories/',
         '/daily-scriptures/',
         '/devotionals/',
-        '/childrens-stories/',
         '/download/',
         '/about/',
       ]);
