@@ -74,7 +74,7 @@ test.describe('rendered pages', () => {
       await page.setViewportSize(viewport);
       await gotoLocal(page, '/');
 
-      const cta = page.locator('main a[href^="https://apps.apple.com/gb/app/bible-bedtimes/id6773492861"]').first();
+      const cta = page.locator('main a[href^="https://apps.apple.com/app/apple-store/id6773492861?pt=128800181"]').first();
       const ctaBox = await cta.boundingBox();
       expect(ctaBox.y + ctaBox.height).toBeLessThanOrEqual(viewport.height);
 
@@ -120,7 +120,7 @@ test.describe('rendered pages', () => {
         '/download/',
         '/about/',
       ]);
-      expect(snapshot.startFreeHref, snapshot.route).toBe('https://apps.apple.com/gb/app/bible-bedtimes/id6773492861?pt=128800181&ct=site_header&mt=8');
+      expect(snapshot.startFreeHref, snapshot.route).toBe('https://apps.apple.com/app/apple-store/id6773492861?pt=128800181&ct=site_header&mt=8');
     }
   });
 
