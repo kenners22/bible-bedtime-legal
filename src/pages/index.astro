@@ -5,7 +5,8 @@ import Hero from '../components/Hero.astro';
 import VerseOfTheDay from '../components/VerseOfTheDay.astro';
 import Footer from '../components/Footer.astro';
 
-const appStore = 'https://apps.apple.com/gb/app/bible-bedtimes/id6773492861';
+import { APP_STORE_LISTING, appStoreLink } from '../lib/appstore';
+import { guides } from '../data/guides';
 const title = 'Bible Bedtimes — Calm Bible Stories & Daily Scripture for iPhone and iPad';
 const description = 'Fall asleep to peaceful Bible stories and end the day with tonight’s Scripture and Daily Teaching. Free to download for iPhone and iPad, with three complete stories free.';
 
@@ -92,7 +93,7 @@ const appJsonLd = {
   operatingSystem: 'iOS, iPadOS',
   applicationCategory: 'LifestyleApplication',
   url: 'https://biblebedtime.uk/',
-  installUrl: appStore,
+  installUrl: APP_STORE_LISTING,
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
 };
 ---
@@ -147,7 +148,7 @@ const appJsonLd = {
             <p class="eyebrow">Inside the app</p>
             <h2 id="inside-heading" class="mt-4 text-4xl md:text-[56px] leading-[1.05] font-medium">Made for the last<br class="hidden sm:block" /> hour of the day.</h2>
           </div>
-          <a href={appStore} class="btn-gold rounded-full px-6 py-3.5">Download free</a>
+          <a href={appStoreLink('site_home_gallery')} class="btn-gold rounded-full px-6 py-3.5">Download free</a>
         </div>
       </div>
       <ul class="screens mt-12 flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-px-6 md:scroll-px-10 px-6 md:px-10 pb-6 max-w-page mx-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/70 rounded-lg" aria-label="App screens" tabindex="0">
@@ -179,7 +180,7 @@ const appJsonLd = {
             </li>
           ))}
         </ul>
-        <a href="/bible-stories/" class="mt-10 inline-flex items-center gap-2 text-gold-light font-semibold hover:text-gold">Explore the Bible stories <span aria-hidden="true">→</span></a>
+        <a href="/bible-sleep-stories/" class="mt-10 inline-flex items-center gap-2 text-gold-light font-semibold hover:text-gold">See all the Bible sleep stories <span aria-hidden="true">→</span></a>
       </div>
     </section>
 
@@ -203,6 +204,24 @@ const appJsonLd = {
     </section>
 
     <VerseOfTheDay />
+
+    <section aria-labelledby="guides-heading" class="pb-20 md:pb-24">
+      <div class="max-w-page mx-auto px-6 md:px-10">
+        <p class="eyebrow">For the evening</p>
+        <h2 id="guides-heading" class="mt-4 text-4xl md:text-5xl font-medium">Scripture and prayer for bedtime.</h2>
+        <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {guides.map((g) => (
+            <li>
+              <a href={g.href} class="panel block h-full p-6 hover:border-gold/40 transition-colors">
+                <span class="font-serif text-2xl text-cream">{g.title}</span>
+                <span class="mt-2 block text-[15px] leading-relaxed text-cream/65">{g.blurb}</span>
+                <span aria-hidden="true" class="mt-4 block text-gold">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
 
     <section aria-labelledby="faq-heading" class="pb-20 md:pb-28">
       <div class="max-w-3xl mx-auto px-6 md:px-10">
@@ -230,7 +249,7 @@ const appJsonLd = {
         <h2 id="cta-heading" class="mt-4 text-4xl md:text-[60px] leading-[1.05] font-medium">End the day with Scripture.</h2>
         <p class="mt-5 mx-auto max-w-xl text-lg text-cream/75">Download Bible Bedtimes free on iPhone and iPad and start with tonight’s passage.</p>
         <div class="mt-9 flex flex-wrap justify-center gap-4">
-          <a href={appStore} class="btn-gold rounded-full px-8 py-4 text-lg">Download on the App Store</a>
+          <a href={appStoreLink('site_home_final')} class="btn-gold rounded-full px-8 py-4 text-lg">Download on the App Store</a>
           <a href="/download/" class="btn-outline rounded-full px-8 py-4 text-lg">About the app</a>
         </div>
       </div>

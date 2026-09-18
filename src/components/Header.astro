@@ -3,6 +3,8 @@ interface Props {
   locale?: 'en' | 'es';
 }
 
+import { appStoreLink } from '../lib/appstore';
+
 const { locale = 'en' } = Astro.props;
 const isSpanish = locale === 'es';
 const navLinks = isSpanish
@@ -49,7 +51,7 @@ const navLinks = isSpanish
     </nav>
 
     <a
-      href={isSpanish ? '/daily-scriptures/' : 'https://apps.apple.com/gb/app/bible-bedtimes/id6773492861'}
+      href={isSpanish ? '/daily-scriptures/' : appStoreLink('site_header')}
       class:list={[
         'btn-gold rounded-full py-3 text-[15px] shrink-0',
         isSpanish ? 'px-4 sm:px-6' : 'px-6',
