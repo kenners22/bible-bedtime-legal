@@ -155,7 +155,7 @@ test.describe('static output contract', () => {
   });
 
   test('English app acquisition links point to the verified iOS listing while legacy /app remains intact', () => {
-    const listing = 'https://apps.apple.com/gb/app/bible-bedtimes/id6773492861';
+    const listing = 'https://apps.apple.com/app/apple-store/id6773492861?pt=128800181';
     const home = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
     const download = fs.readFileSync(path.join(dist, 'download/index.html'), 'utf8');
     const legacy = fs.readFileSync(path.join(dist, 'app/index.html'), 'utf8');
@@ -180,11 +180,11 @@ test.describe('static output contract', () => {
       const hrefs = [...html.matchAll(/href="(https:\/\/apps\.apple\.com\/[^"]+)"/g)].map((m) => m[1].replaceAll('&amp;', '&'));
       for (const href of hrefs) {
         const url = new URL(href);
-        expect(url.pathname, filePath).toBe('/gb/app/bible-bedtimes/id6773492861');
+        expect(url.pathname, filePath).toBe('/app/apple-store/id6773492861');
         expect(url.searchParams.get('pt'), `${filePath} ${href}`).toBe('128800181');
         expect(url.searchParams.get('mt'), `${filePath} ${href}`).toBe('8');
         const ct = url.searchParams.get('ct');
-        expect(ct, `${filePath} ${href}`).toMatch(/^site_[a-z0-9_]{1,35}$/);
+        expect(ct, `${filePath} ${href}`).toMatch(/^site_[a-z0-9_]{1,25}$/);
         campaigns.add(ct);
       }
     }
