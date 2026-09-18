@@ -16,6 +16,18 @@ export default {
           deep: '#04101f',
           ink: '#03090e',
         },
+        // App surfaces, from bible-bedtime-ios BBTheme.swift (premiumNavy /
+        // premiumNavyLight) so the site reads as the same product as the app.
+        night: {
+          DEFAULT: '#101a2a',
+          raised: '#1a2a42',
+          deep: '#0a111d',
+        },
+        parchment: {
+          DEFAULT: '#f4e8d8',
+          dim: '#eadbc8',
+          ink: '#1f140a',
+        },
         gold: {
           DEFAULT: '#d4a14a',
           light: '#e2b66a',

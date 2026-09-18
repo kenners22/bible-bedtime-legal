@@ -2,19 +2,243 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
-import FeatureBand from '../components/FeatureBand.astro';
 import VerseOfTheDay from '../components/VerseOfTheDay.astro';
 import Footer from '../components/Footer.astro';
 
-const title = 'Bible Bedtime — Faith for Today. Peace for Tonight. Hope for Tomorrow.';
-const description = 'Bible Bedtime brings peaceful Bible stories, daily Scripture and teaching together in the Bible Bedtimes app for quiet reflection.';
+const appStore = 'https://apps.apple.com/gb/app/bible-bedtimes/id6773492861';
+const title = 'Bible Bedtimes — Calm Bible Stories & Daily Scripture for iPhone and iPad';
+const description = 'Fall asleep to peaceful Bible stories and end the day with tonight’s Scripture and Daily Teaching. Free to download for iPhone and iPad, with three complete stories free.';
+
+const facts = [
+  { title: 'Three stories free', text: 'Complete stories, with no subscription needed.' },
+  { title: 'Tonight’s Scripture', text: 'The King James passage and Daily Teaching, free.' },
+  { title: 'Sleep timer', text: 'Audio, video and a sleep timer in one place.' },
+  { title: 'iPhone + iPad', text: 'The same calm app on both.' },
+];
+
+const rhythm = [
+  {
+    step: '01 · READ',
+    title: 'Tonight’s Scripture',
+    text: 'Open the app to the evening’s passage and a gentle teaching that stays close to the text.',
+    img: '/assets/app/02-daily-teaching.webp',
+    alt: 'Daily Teaching screen with a King James passage and teaching',
+  },
+  {
+    step: '02 · LISTEN',
+    title: 'A story, softly told',
+    text: 'Choose a Bible story to listen to or watch, from Genesis to the Gospels.',
+    img: '/assets/app/04-genesis-detail.webp',
+    alt: 'Story screen for Genesis — Creation and Eden with a Play Story button',
+  },
+  {
+    step: '03 · REST',
+    title: 'Let the night settle',
+    text: 'Set the sleep timer, dim the screen and let the story carry you to sleep.',
+    img: '/assets/app/05-now-playing.webp',
+    alt: 'Now Playing screen with audio controls, sleep timer and save buttons',
+  },
+];
+
+const screens = [
+  { img: '/assets/app/01-tonight.webp', label: 'Tonight', caption: 'A calmer way to end the day', alt: 'Tonight screen' },
+  { img: '/assets/app/02-daily-teaching.webp', label: 'Daily Scripture', caption: 'Scripture for tonight', alt: 'Daily Teaching screen' },
+  { img: '/assets/app/03-library.webp', label: 'Bible Stories', caption: 'Stories for quiet evenings', alt: 'Bible Stories library screen' },
+  { img: '/assets/app/04-genesis-detail.webp', label: 'Genesis', caption: 'Begin with Genesis', alt: 'Genesis story screen' },
+  { img: '/assets/app/05-now-playing.webp', label: 'Now Playing', caption: 'Listen your way', alt: 'Now Playing screen' },
+  { img: '/assets/app/06-offline-audio.webp', label: 'Premium offline audio', caption: 'Take the story offline', alt: 'Daniel in the Lions’ Den story screen with a downloaded audio option' },
+];
+
+const freeStories = [
+  { img: '/assets/app/story-genesis.webp', title: 'Genesis — Creation and Eden', ref: 'Genesis 1–3' },
+  { img: '/assets/app/story-joseph.webp', title: 'Joseph — The Coat and the Promise', ref: 'Genesis 37–50' },
+  { img: '/assets/app/story-storm.webp', title: 'Jesus Calms the Storm', ref: 'Mark 4:35–41' },
+];
+
+const premium = [
+  'The full and growing Bible story library',
+  'Story audio downloads for offline listening',
+  'Preview any story with a two-minute sample first',
+];
+
+const faqs = [
+  {
+    q: 'Is Bible Bedtimes free?',
+    a: 'Yes, it is free to download. Three complete stories, plus tonight’s Scripture passage and Daily Teaching, are free. An optional Premium subscription opens the full library, and Apple shows the price and renewal terms before you subscribe.',
+  },
+  {
+    q: 'Which Bible translation does the app use?',
+    a: 'Daily Scripture passages are from the King James Version, followed by that evening’s Daily Teaching.',
+  },
+  {
+    q: 'Does it work on iPad?',
+    a: 'Yes. Bible Bedtimes is available for both iPhone and iPad from the App Store.',
+  },
+  {
+    q: 'Can I listen offline?',
+    a: 'Premium members can download story audio to listen without a connection, which helps if you like to keep your phone in airplane mode at night.',
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+const appJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MobileApplication',
+  name: 'Bible Bedtimes',
+  operatingSystem: 'iOS, iPadOS',
+  applicationCategory: 'LifestyleApplication',
+  url: 'https://biblebedtime.uk/',
+  installUrl: appStore,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+};
 ---
 <BaseLayout title={title} description={description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(appJsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  </Fragment>
   <Header />
   <main>
     <Hero />
-    <FeatureBand />
+
+    <section aria-label="At a glance" class="border-y border-white/[0.08] bg-night-deep/60">
+      <ul class="max-w-page mx-auto px-6 md:px-10 py-8 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-7">
+        {facts.map((f) => (
+          <li>
+            <p class="font-serif text-xl text-gold-light">{f.title}</p>
+            <p class="mt-1 text-sm leading-relaxed text-cream/65">{f.text}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section aria-labelledby="rhythm-heading" class="py-20 md:py-28">
+      <div class="max-w-page mx-auto px-6 md:px-10">
+        <div class="max-w-2xl">
+          <p class="eyebrow">One evening rhythm</p>
+          <h2 id="rhythm-heading" class="mt-4 text-4xl md:text-[56px] leading-[1.05] font-medium">Read. Listen. Rest.</h2>
+          <p class="mt-5 text-lg leading-relaxed text-cream/75">Bible Bedtimes keeps the evening simple: one passage, one story and a quiet way to fall asleep.</p>
+        </div>
+        <ol class="mt-14 grid gap-6 md:grid-cols-3">
+          {rhythm.map((r) => (
+            <li class="panel overflow-hidden flex flex-col">
+              <div class="px-7 pt-7">
+                <p class="eyebrow">{r.step}</p>
+                <h3 class="mt-3 text-2xl md:text-[28px] font-medium">{r.title}</h3>
+                <p class="mt-3 text-[15px] leading-relaxed text-cream/70">{r.text}</p>
+              </div>
+              <div class="mt-8 h-[300px] overflow-hidden flex justify-center">
+                <img src={r.img} alt={r.alt} width="460" height="988" loading="lazy" decoding="async" class="w-[62%] h-auto self-start drop-shadow-2xl" />
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section id="inside" aria-labelledby="inside-heading" class="bg-night-deep py-20 md:py-28 scroll-mt-20">
+      <div class="max-w-page mx-auto px-6 md:px-10">
+        <div class="flex flex-wrap items-end justify-between gap-6">
+          <div class="max-w-2xl">
+            <p class="eyebrow">Inside the app</p>
+            <h2 id="inside-heading" class="mt-4 text-4xl md:text-[56px] leading-[1.05] font-medium">Made for the last<br class="hidden sm:block" /> hour of the day.</h2>
+          </div>
+          <a href={appStore} class="btn-gold rounded-full px-6 py-3.5">Download free</a>
+        </div>
+      </div>
+      <ul class="screens mt-12 flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-px-6 md:scroll-px-10 px-6 md:px-10 pb-6 max-w-page mx-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/70 rounded-lg" aria-label="App screens" tabindex="0">
+        {screens.map((s) => (
+          <li class="snap-start shrink-0 w-[220px] sm:w-[250px]">
+            <img src={s.img} alt={s.alt} width="460" height="988" loading="lazy" decoding="async" class="w-full h-auto drop-shadow-2xl" />
+            <p class="mt-5 eyebrow">{s.label}</p>
+            <p class="mt-1 font-serif text-xl text-cream">{s.caption}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <section aria-labelledby="free-heading" class="py-20 md:py-28">
+      <div class="max-w-page mx-auto px-6 md:px-10">
+        <div class="max-w-2xl">
+          <p class="eyebrow">Free to listen</p>
+          <h2 id="free-heading" class="mt-4 text-4xl md:text-[56px] leading-[1.05] font-medium">Three complete stories. Free.</h2>
+          <p class="mt-5 text-lg leading-relaxed text-cream/75">Listen to real bedtime stories before you ever think about Premium.</p>
+        </div>
+        <ul class="mt-12 grid gap-6 sm:grid-cols-3">
+          {freeStories.map((s) => (
+            <li class="panel overflow-hidden">
+              <img src={s.img} alt="" width="800" height="450" loading="lazy" decoding="async" class="aspect-video w-full object-cover" />
+              <div class="p-6">
+                <p class="eyebrow">{s.ref}</p>
+                <h3 class="mt-2 text-2xl font-medium">{s.title}</h3>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <a href="/bible-stories/" class="mt-10 inline-flex items-center gap-2 text-gold-light font-semibold hover:text-gold">Explore the Bible stories <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section aria-labelledby="premium-heading" class="bg-night-deep py-20 md:py-28">
+      <div class="max-w-page mx-auto px-6 md:px-10 grid gap-14 lg:grid-cols-2 items-center">
+        <div>
+          <p class="eyebrow">Premium</p>
+          <h2 id="premium-heading" class="mt-4 text-4xl md:text-[56px] leading-[1.05] font-medium">Stories that keep the night flowing.</h2>
+          <ul class="mt-8 space-y-4">
+            {premium.map((p) => (
+              <li class="flex gap-3 text-lg text-cream/80"><span aria-hidden="true" class="mt-1 text-gold">✦</span>{p}</li>
+            ))}
+          </ul>
+          <p class="mt-8 text-sm text-cream/60">Premium is optional. Apple shows any eligible offer, the price and renewal terms before you subscribe.</p>
+        </div>
+        <div class="flex justify-center gap-5">
+          <img src="/assets/app/03-library.webp" alt="Bible Stories library showing free stories and Premium stories with two-minute samples" width="460" height="988" loading="lazy" decoding="async" class="w-[46%] max-w-[250px] h-auto drop-shadow-2xl" />
+          <img src="/assets/app/06-offline-audio.webp" alt="Premium story screen with a downloaded audio option" width="460" height="988" loading="lazy" decoding="async" class="w-[46%] max-w-[250px] h-auto mt-12 drop-shadow-2xl" />
+        </div>
+      </div>
+    </section>
+
     <VerseOfTheDay />
+
+    <section aria-labelledby="faq-heading" class="pb-20 md:pb-28">
+      <div class="max-w-3xl mx-auto px-6 md:px-10">
+        <p class="eyebrow">Questions</p>
+        <h2 id="faq-heading" class="mt-4 text-4xl md:text-5xl font-medium">The useful details.</h2>
+        <div class="mt-10 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+          {faqs.map((f, i) => (
+            <details class="group py-5" open={i === 0}>
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-serif text-xl md:text-2xl text-cream">
+                {f.q}
+                <span aria-hidden="true" class="text-gold transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+              </summary>
+              <p class="mt-3 text-cream/75 leading-relaxed">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="cta-heading" class="relative isolate overflow-hidden border-t border-gold/20">
+      <img src="/assets/app/hero-shepherd-dusk-900.webp" alt="" width="720" height="405" loading="lazy" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-40" />
+      <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/80 to-night/50"></div>
+      <div class="max-w-page mx-auto px-6 md:px-10 py-20 md:py-28 text-center">
+        <p class="eyebrow">Ready for tonight</p>
+        <h2 id="cta-heading" class="mt-4 text-4xl md:text-[60px] leading-[1.05] font-medium">End the day with Scripture.</h2>
+        <p class="mt-5 mx-auto max-w-xl text-lg text-cream/75">Download Bible Bedtimes free on iPhone and iPad and start with tonight’s passage.</p>
+        <div class="mt-9 flex flex-wrap justify-center gap-4">
+          <a href={appStore} class="btn-gold rounded-full px-8 py-4 text-lg">Download on the App Store</a>
+          <a href="/download/" class="btn-outline rounded-full px-8 py-4 text-lg">About the app</a>
+        </div>
+      </div>
+    </section>
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  .screens { scrollbar-width: thin; scrollbar-color: rgba(212, 161, 74, 0.4) transparent; }
+</style>

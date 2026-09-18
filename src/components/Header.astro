@@ -21,9 +21,9 @@ const navLinks = isSpanish
       { label: 'About', href: '/about/' },
     ];
 ---
-<header class="bg-cream">
+<header class="relative lg:sticky top-0 z-50 bg-night/85 backdrop-blur-md border-b border-white/[0.08]">
   <div class:list={[
-    'max-w-[1400px] mx-auto md:px-10 lg:px-16 py-7 flex items-center justify-between',
+    'max-w-[1400px] mx-auto md:px-10 lg:px-16 py-4 flex items-center justify-between',
     isSpanish ? 'px-4 gap-3 sm:px-6 sm:gap-6' : 'px-6 gap-6',
   ]}>
     <a href="/" class="flex items-center gap-4 shrink-0 group" aria-label={isSpanish ? 'Inicio de Bible Bedtime' : 'Bible Bedtime home'}>
@@ -33,36 +33,36 @@ const navLinks = isSpanish
         width="52"
         height="52"
         class:list={[
-          'md:w-16 md:h-16 rounded-2xl shadow-sm shadow-navy/10',
-          isSpanish ? 'w-12 h-12 sm:w-14 sm:h-14' : 'w-14 h-14',
+          'md:w-14 md:h-14 rounded-2xl shadow-lg shadow-black/40',
+          isSpanish ? 'w-11 h-11 sm:w-12 sm:h-12' : 'w-12 h-12',
         ]}
       />
-      <span class="font-serif font-medium text-navy text-2xl md:text-[29px] leading-[1.02] tracking-normal">
+      <span class="font-serif font-medium text-cream text-[22px] md:text-[26px] leading-[1.02] tracking-normal">
         Bible<br />Bedtime
       </span>
     </a>
 
-    <nav aria-label={isSpanish ? 'Principal' : 'Primary'} class="hidden lg:flex items-center gap-9 text-[16px] font-medium text-navy/90">
+    <nav aria-label={isSpanish ? 'Principal' : 'Primary'} class="hidden lg:flex items-center gap-9 text-[15px] font-medium text-cream/75">
       {navLinks.map((link) => (
-        <a href={link.href} class="hover:text-navy transition-colors">{link.label}</a>
+        <a href={link.href} class="hover:text-gold-light transition-colors">{link.label}</a>
       ))}
     </nav>
 
     <a
       href={isSpanish ? '/daily-scriptures/' : 'https://apps.apple.com/gb/app/bible-bedtimes/id6773492861'}
       class:list={[
-        'btn-gold rounded-lg py-3.5 text-base shrink-0',
+        'btn-gold rounded-full py-3 text-[15px] shrink-0',
         isSpanish ? 'px-4 sm:px-6' : 'px-6',
       ]}
     >
-      {isSpanish ? 'Empieza gratis' : <><span class="sm:hidden">Get app</span><span class="hidden sm:inline">Get the app</span></>}
+      {isSpanish ? 'Empieza gratis' : <><span class="sm:hidden">Get app</span><span class="hidden sm:inline">Download free</span></>}
     </a>
   </div>
 
-  <nav aria-label={isSpanish ? 'Principal móvil' : 'Primary mobile'} class="lg:hidden border-t border-navy/10">
-    <div class="max-w-page mx-auto px-6 py-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-navy/80">
+  <nav aria-label={isSpanish ? 'Principal móvil' : 'Primary mobile'} class="lg:hidden border-t border-white/[0.08]">
+    <div class="max-w-page mx-auto px-6 py-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-cream/70">
       {navLinks.map((link) => (
-        <a href={link.href} class="hover:text-navy transition-colors">{link.label}</a>
+        <a href={link.href} class="hover:text-gold-light transition-colors">{link.label}</a>
       ))}
     </div>
   </nav>

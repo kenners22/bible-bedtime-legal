@@ -16,7 +16,7 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#06142a" />
+    <meta name="theme-color" content="#101a2a" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
@@ -25,7 +25,7 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={new URL('/assets/og-home-20260611.jpg', Astro.site).href} />
+    <meta property="og:image" content={new URL('/assets/og-app-20260918.jpg', Astro.site).href} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -33,7 +33,18 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
       <link
         rel="preload"
         as="image"
-        href="/assets/home-hero-sunrise-20260602.webp"
+        href="/assets/app/hero-shepherd-dusk.webp"
+        media="(min-width: 768px)"
+        type="image/webp"
+        fetchpriority="high"
+      />
+    )}
+    {Astro.url.pathname === '/' && (
+      <link
+        rel="preload"
+        as="image"
+        href="/assets/app/hero-shepherd-dusk-900.webp"
+        media="(max-width: 767px)"
         type="image/webp"
         fetchpriority="high"
       />
@@ -46,6 +57,7 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600;700&display=swap"
       onload="this.onload=null;this.rel='stylesheet'"
     />
+    <slot name="head" />
     <noscript>
       <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600;700&display=swap"

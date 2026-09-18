@@ -65,20 +65,20 @@ test.describe('rendered pages', () => {
     }
   }
 
-  test('home hero keeps desktop left-edge fade and wave clear of CTAs', async ({ page }) => {
-    await page.setViewportSize({ width: 1280, height: 900 });
-    await gotoLocal(page, '/');
+  for (const viewport of [{ width: 375, height: 812 }, { width: 1280, height: 900 }]) {
+    test(`home hero shows the App Store CTA above the fold and real app screens at ${viewport.width}px`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await gotoLocal(page, '/');
 
-    const maskImage = await page.locator('.hero-photo').evaluate((element) => getComputedStyle(element).maskImage);
-    const heroBox = await page.locator('.hero-photo').boundingBox();
-    const ctaBox = await page.locator('main a[href="https://apps.apple.com/gb/app/bible-bedtimes/id6773492861"]').first().boundingBox();
-    const featureBox = await page.locator('section[aria-label="What we offer"]').boundingBox();
+      const cta = page.locator('main a[href="https://apps.apple.com/gb/app/bible-bedtimes/id6773492861"]').first();
+      const ctaBox = await cta.boundingBox();
+      expect(ctaBox.y + ctaBox.height).toBeLessThanOrEqual(viewport.height);
 
-    expect(maskImage).toContain('linear-gradient');
-    expect(maskImage).toMatch(/(to right|90deg)/);
-    expect(featureBox.y).toBeLessThanOrEqual(heroBox.y + heroBox.height + 24);
-    expect(featureBox.y).toBeGreaterThan(ctaBox.y + ctaBox.height + 40);
-  });
+      const phone = page.locator('.hero-phones img[src="/assets/app/01-tonight.webp"]');
+      await expect(phone).toBeVisible();
+      expect(await phone.evaluate((img) => img.complete && img.naturalWidth > 0)).toBe(true);
+    });
+  }
 
   test('download preview falls back to the exact local logo if Apple artwork is unavailable', async ({ page }) => {
     await page.route('https://is1-ssl.mzstatic.com/**', (route) => route.abort());
