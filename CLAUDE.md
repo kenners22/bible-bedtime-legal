@@ -41,10 +41,14 @@ separate social/TikTok purpose. `@astrojs/sitemap` generates
 
 - Never delete or rename anything under `public/` — especially `tiktok*.txt`
   files, `/platform-info/`, `/callback/`, and `CNAME` (`biblebedtime.uk`).
-- Brand decisions are user-approved and locked: navy `#06142a`, cream
-  `#f7eddc`, gold `#d4a14a`; Cormorant Garamond headings, Inter body
-  (tokens in `tailwind.config.mjs`). Don't change colours, fonts, the
-  stacked "Bible / Bedtime" wordmark, or the hero layout.
+- Brand (Andy, 2026-09-18): the site must look like the Bible Bedtimes app,
+  as gritwod.app does for GRIT. Night-navy surfaces from the app's
+  `BBTheme.swift` (`night` #101a2a / `night-raised` #1a2a42), parchment
+  cards (#f4e8d8), gold #d4a14a accents, Cormorant Garamond headings and
+  Inter body (tokens in `tailwind.config.mjs`). Keep the stacked
+  "Bible / Bedtime" wordmark and logo.
+- App screens in `public/assets/app/` are cropped from the live App Store
+  screenshots. Refresh them when the listing changes; never draw fake UI.
 - `dist/.nojekyll` and `dist/CNAME` must survive every build (tested).
 
 ## Testing

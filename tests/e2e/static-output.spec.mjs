@@ -21,6 +21,18 @@ const requiredAssets = [
   '/assets/icon-people-20260602.png',
   '/assets/leaf-decoration-20260602.png',
   '/assets/leaf-decoration-20260602.webp',
+  '/assets/og-app-20260918.jpg',
+  '/assets/app/hero-shepherd-dusk.webp',
+  '/assets/app/hero-shepherd-dusk-900.webp',
+  '/assets/app/01-tonight.webp',
+  '/assets/app/02-daily-teaching.webp',
+  '/assets/app/03-library.webp',
+  '/assets/app/04-genesis-detail.webp',
+  '/assets/app/05-now-playing.webp',
+  '/assets/app/06-offline-audio.webp',
+  '/assets/app/story-genesis.webp',
+  '/assets/app/story-joseph.webp',
+  '/assets/app/story-storm.webp',
 ];
 
 const fontPages = [

@@ -1,54 +1,69 @@
 ---
+const appStore = 'https://apps.apple.com/gb/app/bible-bedtimes/id6773492861';
 ---
-<section class="relative bg-cream overflow-hidden">
-  <div class="max-w-[1536px] mx-auto pl-6 md:pl-10 lg:pl-[120px] pr-0 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0 items-start pt-8 pb-16 lg:pt-9 lg:pb-24">
-    <div class="lg:col-span-6 relative z-10 lg:pr-4">
-      <h1 class="font-serif font-medium text-navy leading-[1.08] tracking-normal text-[40px] sm:text-[52px] lg:text-[54px] xl:text-[58px] 2xl:text-[62px] max-w-[600px]">
-        Faith for Today.<br />
-        Peace for Tonight.<br />
-        Hope for Tomorrow.
-      </h1>
-      <p class="mt-7 max-w-[500px] text-navy/80 text-lg lg:text-[19px] leading-relaxed">
-        Daily scriptures, devotionals, and timeless Bible stories to guide your heart and mind.
-      </p>
-      <div class="mt-8 flex flex-wrap gap-6">
-        <a href="https://apps.apple.com/gb/app/bible-bedtimes/id6773492861" class="btn-gold rounded-lg px-7 py-4 text-[17px]">
-          Download on the App Store
-        </a>
-        <a href="/bible-stories/" class="btn-outline rounded-lg px-7 py-4 text-[17px]">
-          Explore Bible Stories
-        </a>
-      </div>
-      <p class="mt-3 text-sm text-navy/70">Free to download for iPhone and iPad. Optional Premium in the app.</p>
+<section class="relative isolate overflow-hidden">
+  <picture>
+    <source media="(max-width: 767px)" srcset="/assets/app/hero-shepherd-dusk-900.webp" />
+    <img
+      src="/assets/app/hero-shepherd-dusk.webp"
+      alt=""
+      width="1600"
+      height="900"
+      fetchpriority="high"
+      class="absolute inset-0 -z-20 h-full w-full object-cover object-[35%_50%]"
+    />
+  </picture>
+  <!-- Night-navy wash, as on the App Store screenshots: art glows through at the top, settles into the app navy. -->
+  <div aria-hidden="true" class="hero-wash absolute inset-0 -z-10"></div>
 
-      <span aria-hidden="true" class="absolute top-8 left-[76%] text-gold/55 text-xl">✦</span>
-      <span aria-hidden="true" class="absolute top-20 -left-10 text-gold/45 text-lg">✦</span>
-      <span aria-hidden="true" class="absolute top-36 -left-16 text-gold/45 text-base">✦</span>
-      <span aria-hidden="true" class="absolute top-24 right-4 text-gold/45 text-sm">✦</span>
+  <div class="max-w-page mx-auto px-6 md:px-10 pt-14 pb-16 md:pt-20 lg:pt-24 lg:pb-24 grid gap-14 lg:grid-cols-[1.05fr_0.95fr] items-center">
+    <div>
+      <p class="eyebrow">Bible Bedtimes for iPhone and iPad</p>
+      <h1 class="mt-5 font-serif font-medium leading-[1.02] text-[46px] sm:text-[64px] lg:text-[76px] max-w-[640px]">
+        A calmer way<br />
+        <span class="text-gold-light">to end the day.</span>
+      </h1>
+      <p class="mt-6 max-w-[540px] text-lg md:text-xl leading-relaxed text-cream/80">
+        Peaceful Bible stories, tonight’s Scripture passage and a gentle Daily Teaching, together in one quiet app.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a href={appStore} class="btn-gold rounded-full px-7 py-4 text-[17px]">Download on the App Store</a>
+        <a href="#inside" class="btn-outline rounded-full px-7 py-4 text-[17px]">See inside the app</a>
+      </div>
+      <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-cream/70">
+        <li class="flex items-center gap-2"><span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-gold"></span>Free to download</li>
+        <li class="flex items-center gap-2"><span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-gold"></span>Three complete stories free</li>
+        <li class="flex items-center gap-2"><span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-gold"></span>Optional Premium</li>
+      </ul>
     </div>
 
-    <div class="lg:col-span-6 relative pr-6 md:pr-0 self-stretch flex items-start">
-      <div class="hero-photo relative overflow-hidden rounded-[28px] lg:rounded-none lg:rounded-tl-[120px] lg:rounded-bl-[120px] w-full lg:w-[calc(100%+150px)] lg:-mr-[150px]">
-        <img
-          src="/assets/home-hero-sunrise-20260602.webp"
-          alt="A woman in a cream knit jumper sitting on a hillside at sunrise, holding a coffee mug with an open Bible in her lap, golden light spilling over distant mountains"
-          width="1600"
-          height="1067"
-          class="block w-full h-auto lg:h-[430px] xl:h-[450px] object-cover object-[58%_50%]"
-          fetchpriority="high"
-        />
-      </div>
+    <div class="hero-phones relative mx-auto w-full max-w-[460px] h-[520px] sm:h-[600px]">
+      <img
+        src="/assets/app/02-daily-teaching.webp"
+        alt="Bible Bedtimes Daily Teaching screen with a King James passage and the day’s teaching"
+        width="460"
+        height="988"
+        fetchpriority="low"
+        class="absolute right-0 top-10 w-[62%] rotate-[4deg] opacity-90 drop-shadow-2xl"
+      />
+      <img
+        src="/assets/app/01-tonight.webp"
+        alt="Bible Bedtimes Tonight screen with tonight’s Scripture card and a free Genesis video"
+        width="460"
+        height="988"
+        class="absolute left-0 top-0 w-[66%] -rotate-[3deg] drop-shadow-2xl"
+      />
     </div>
   </div>
 </section>
 
 <style>
-  /* Soft fade on the left edge of the hero photo on desktop so the
-     image melts into the cream rather than starting on a hard line. */
-  @media (min-width: 1024px) {
-    .hero-photo {
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.18) 10%, rgba(0, 0, 0, 0.72) 24%, #000 38%, #000 100%);
-              mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.18) 10%, rgba(0, 0, 0, 0.72) 24%, #000 38%, #000 100%);
-    }
+  .hero-wash {
+    background:
+      linear-gradient(90deg, rgba(16, 26, 42, 0.94) 0%, rgba(16, 26, 42, 0.78) 45%, rgba(16, 26, 42, 0.55) 100%),
+      linear-gradient(180deg, rgba(16, 26, 42, 0) 55%, #101a2a 100%);
+  }
+  .hero-phones img {
+    filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.5));
   }
 </style>
