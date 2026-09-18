@@ -1,0 +1,72 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import Verse from '../components/Verse.astro';
+
+const faqs = [
+  {
+    q: 'Which psalm is best to read before sleep?',
+    a: 'Psalm 4 is traditionally read as an evening psalm and ends with “I will both lay me down in peace, and sleep”. Psalm 121 and Psalm 91 are also traditional night-time psalms because they speak of God keeping watch.',
+  },
+  {
+    q: 'Is Psalm 91 a psalm for protection at night?',
+    a: 'Yes. Psalm 91 speaks directly of not being afraid “for the terror by night” and of resting under the shadow of the Almighty, which is why many people read it at bedtime.',
+  },
+  {
+    q: 'How long does it take to read a psalm at bedtime?',
+    a: 'Most of the psalms here take one to three minutes to read slowly. Psalm 131 is only three verses long, which makes it ideal on a very tired night.',
+  },
+  {
+    q: 'Can I listen to the psalms instead of reading them?',
+    a: 'Yes. The Bible Bedtimes app includes calm narrated episodes built around Psalm 23 and Psalm 91 for Premium listeners, alongside three complete Bible stories that are free.',
+  },
+];
+---
+<GuideLayout
+  title="Psalms for Sleep (KJV) — 7 Evening Psalms for Peace and Rest | Bible Bedtime"
+  description="Seven psalms for sleep in the King James Version, including Psalm 4, 23, 91 and 121, with a short note on each and a simple way to read them before bed."
+  eyebrow="Scripture for bedtime"
+  heading="Psalms for sleep: seven evening psalms"
+  intro="The Psalms were written to be prayed, and several of them were written for the night. Here are seven to read slowly before bed, in the King James Version, with a short note on each."
+  crumb="Psalms for sleep"
+  campaign="site_guide_psalms_sleep"
+  faqs={faqs}
+>
+  <p>You do not need to read all seven. Pick the one that fits your evening, read it once to understand it and a second time to pray it. If a single line stays with you, that is enough to carry into sleep.</p>
+
+  <h2>1. Psalm 4 — the evening psalm</h2>
+  <p>Psalm 4 moves from distress to quiet. David asks to be heard, tells himself to “commune with your own heart upon your bed, and be still”, and ends in rest.</p>
+  <Verse ref="Psalms 4" numbers />
+
+  <h2>2. Psalm 23 — the Shepherd</h2>
+  <p>The best-loved psalm of all, and a gentle one to fall asleep with. Notice the pace: green pastures, still waters, a restored soul, and a table prepared even in hard places.</p>
+  <Verse ref="Psalms 23" numbers />
+
+  <h2>3. Psalm 91 — under the shadow</h2>
+  <p>For nights when fear is the problem. Psalm 91 names “the terror by night” and answers it with the image of shelter under God’s wings.</p>
+  <Verse ref="Psalms 91:1-6" numbers />
+
+  <h2>4. Psalm 121 — he that keepeth thee</h2>
+  <p>A short psalm with one repeated idea: you are kept. The God who watches over you “shall neither slumber nor sleep”, so you can.</p>
+  <Verse ref="Psalms 121" numbers />
+
+  <h2>5. Psalm 131 — like a weaned child</h2>
+  <p>Only three verses, and perfect for an exhausted night. It is a psalm about letting go of things too great for us and settling like a child with its mother.</p>
+  <Verse ref="Psalms 131" numbers />
+
+  <h2>6. Psalm 139 — the darkness is not dark to thee</h2>
+  <p>For anyone who finds the dark unsettling. These verses say there is nowhere, not even the night, where God is absent.</p>
+  <Verse ref="Psalms 139:7-12" numbers />
+
+  <h2>7. Psalm 62 — my soul waiteth</h2>
+  <p>Two verses for the end of a draining day, when you need to stop striving and wait.</p>
+  <Verse ref="Psalms 62:1-2" numbers />
+
+  <h2>How to read a psalm before bed</h2>
+  <ul class="bullets">
+    <li><strong>Dim the room first.</strong> Read by a low lamp or a printed page rather than a bright screen if you can.</li>
+    <li><strong>Read it twice.</strong> The first time to follow it, the second time slowly, as your own prayer.</li>
+    <li><strong>Stop at the line that catches you.</strong> Repeat it as you breathe out and let the rest go.</li>
+    <li><strong>End with a short prayer.</strong> Our <a class="inline" href="/bedtime-prayers-for-adults/">bedtime prayers for adults</a> are written to follow a psalm.</li>
+  </ul>
+  <p>For single verses rather than whole psalms, see our <a class="inline" href="/bible-verses-for-sleep/">Bible verses for sleep</a>.</p>
+</GuideLayout>

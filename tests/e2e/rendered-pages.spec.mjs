@@ -16,6 +16,10 @@ const astroRoutes = [
   '/devotionals/',
   '/about/',
   '/download/',
+  '/bible-sleep-stories/',
+  '/bible-verses-for-sleep/',
+  '/psalms-for-sleep/',
+  '/bedtime-prayers-for-adults/',
   '/terms/',
   '/privacy/',
   '/privacy/bible-bedtime-espanol-ios/',
@@ -70,7 +74,7 @@ test.describe('rendered pages', () => {
       await page.setViewportSize(viewport);
       await gotoLocal(page, '/');
 
-      const cta = page.locator('main a[href="https://apps.apple.com/gb/app/bible-bedtimes/id6773492861"]').first();
+      const cta = page.locator('main a[href^="https://apps.apple.com/gb/app/bible-bedtimes/id6773492861"]').first();
       const ctaBox = await cta.boundingBox();
       expect(ctaBox.y + ctaBox.height).toBeLessThanOrEqual(viewport.height);
 
@@ -116,7 +120,7 @@ test.describe('rendered pages', () => {
         '/download/',
         '/about/',
       ]);
-      expect(snapshot.startFreeHref, snapshot.route).toBe('https://apps.apple.com/gb/app/bible-bedtimes/id6773492861');
+      expect(snapshot.startFreeHref, snapshot.route).toBe('https://apps.apple.com/gb/app/bible-bedtimes/id6773492861?pt=128800181&ct=site_header&mt=8');
     }
   });
 

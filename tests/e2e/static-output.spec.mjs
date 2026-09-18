@@ -171,6 +171,45 @@ test.describe('static output contract', () => {
     expect(spanishPrivacy).toContain('Empieza gratis');
   });
 
+  test('every English App Store link is a tracked campaign link with a placement token', () => {
+    const htmlFiles = listFiles(dist, (filePath) => filePath.endsWith('.html'))
+      .filter((filePath) => !/[\\/](app|platform-info|callback|meta-ads-oauth|privacy[\\/]bible-bedtime-espanol-ios)[\\/]/.test(filePath));
+    const campaigns = new Set();
+    for (const filePath of htmlFiles) {
+      const html = fs.readFileSync(filePath, 'utf8');
+      const hrefs = [...html.matchAll(/href="(https:\/\/apps\.apple\.com\/[^"]+)"/g)].map((m) => m[1].replaceAll('&amp;', '&'));
+      for (const href of hrefs) {
+        const url = new URL(href);
+        expect(url.pathname, filePath).toBe('/gb/app/bible-bedtimes/id6773492861');
+        expect(url.searchParams.get('pt'), `${filePath} ${href}`).toBe('128800181');
+        expect(url.searchParams.get('mt'), `${filePath} ${href}`).toBe('8');
+        const ct = url.searchParams.get('ct');
+        expect(ct, `${filePath} ${href}`).toMatch(/^site_[a-z0-9_]{1,35}$/);
+        campaigns.add(ct);
+      }
+    }
+    for (const ct of ['site_header', 'site_home_hero', 'site_home_final', 'site_download_top', 'site_guide_sleep_stories', 'site_guide_verses_sleep', 'site_guide_psalms_sleep', 'site_guide_prayers']) {
+      expect(campaigns.has(ct), ct).toBe(true);
+    }
+  });
+
+  test('search guides are linked from the footer, carry FAQ + breadcrumb schema and quote KJV text', () => {
+    const guides = ['bible-sleep-stories', 'bible-verses-for-sleep', 'psalms-for-sleep', 'bedtime-prayers-for-adults'];
+    const home = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
+    for (const slug of guides) {
+      const html = fs.readFileSync(path.join(dist, `${slug}/index.html`), 'utf8');
+      expect(home, slug).toContain(`href="/${slug}/"`);
+      expect(html, slug).toContain('"@type":"FAQPage"');
+      expect(html, slug).toContain('"@type":"BreadcrumbList"');
+      expect(html.match(/<h1[\s>]/g), slug).toHaveLength(1);
+    }
+    const verses = fs.readFileSync(path.join(dist, 'bible-verses-for-sleep/index.html'), 'utf8');
+    expect(verses).toContain('I will both lay me down in peace, and sleep: for thou, LORD, only makest me dwell in safety.');
+    const stories = fs.readFileSync(path.join(dist, 'bible-sleep-stories/index.html'), 'utf8');
+    expect(stories).toContain('Genesis — Creation and Eden');
+    expect(stories).not.toMatch(/Android|5-star|free trial/i);
+  });
+
   test('retired children bedtime routes and offers are absent from published pages', () => {
     expect(fs.existsSync(path.join(dist, 'childrens-stories/index.html'))).toBe(false);
     expect(fs.existsSync(path.join(dist, 'childrens-emails/index.html'))).toBe(false);
