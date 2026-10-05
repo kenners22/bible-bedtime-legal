@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bible Bedtime | Gentle Bible stories for quiet evenings</title>
+  <meta name="description" content="Bible Bedtime creates gentle Bible story videos and bedtime reflections for calm evening listening across TikTok, YouTube, and Facebook.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #06142a;
+      --muted: #5a6485;
+      --line: #ead8b8;
+      --paper: #fbeed3;
+      --cream: #f7eddc;
+      --gold: #d4a14a;
+      --blue: #06142a;
+      --sage: #6d7f65;
+    }
+
+    h1, h2, h3, .brand span { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.6;
+    }
+
+    a { color: #1f5f9d; }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: #fffdf7;
+    }
+
+    .nav {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand img {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+    }
+
+    .links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 14px;
+    }
+
+    .links a { text-decoration: none; color: var(--ink); }
+
+    main { overflow: hidden; }
+
+    .hero {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 70px 24px 58px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 16px;
+      color: var(--sage);
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(42px, 8vw, 82px);
+      line-height: .98;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 660px;
+      margin: 24px 0 0;
+      font-size: 20px;
+      color: var(--muted);
+    }
+
+    .actions {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: 8px;
+      border: 1px solid var(--blue);
+      color: #fff;
+      background: var(--blue);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .button.secondary {
+      color: var(--blue);
+      background: transparent;
+    }
+
+    .hero-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px;
+    }
+
+    .hero-card img {
+      display: block;
+      width: 100%;
+      max-width: 220px;
+      margin: 0 auto 24px;
+      border-radius: 24px;
+    }
+
+    .hero-card dl {
+      margin: 0;
+      display: grid;
+      gap: 16px;
+    }
+
+    .hero-card dt {
+      font-weight: 800;
+      color: var(--blue);
+    }
+
+    .hero-card dd {
+      margin: 4px 0 0;
+      color: var(--muted);
+    }
+
+    section {
+      border-top: 1px solid var(--line);
+      background: #fffdf7;
+    }
+
+    section.alt { background: var(--paper); }
+
+    .section-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 54px 24px;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: 32px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .grid {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: #fffaf1;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    .card a {
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    .steps {
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      counter-reset: step;
+    }
+
+    .steps li {
+      counter-increment: step;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffaf1;
+    }
+
+    .steps li::before {
+      content: counter(step);
+      width: 34px;
+      height: 34px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #16130b;
+      font-weight: 900;
+    }
+
+    .steps strong { display: block; margin-bottom: 4px; }
+    .steps span { color: var(--muted); }
+
+    .notice {
+      margin-top: 28px;
+      padding: 18px 20px;
+      border-left: 4px solid var(--gold);
+      background: #fffaf1;
+      color: var(--muted);
+    }
+
+    footer {
+      background: var(--ink);
+      color: #f7f0df;
+    }
+
+    footer .section-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding-top: 34px;
+      padding-bottom: 34px;
+    }
+
+    footer a { color: #f7f0df; }
+
+    @media (max-width: 800px) {
+      .nav, .links { align-items: flex-start; }
+      .nav { flex-direction: column; }
+      .hero { grid-template-columns: 1fr; padding-top: 44px; }
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 46px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="./" aria-label="Bible Bedtime home">
+        <img src="../assets/bible-bedtime-logo-20260520.png" alt="Bible Bedtime moon and book logo">
+        <span>Bible Bedtime</span>
+      </a>
+      <div class="links">
+        <a href="#stories">Stories</a>
+        <a href="#process">Process</a>
+        <a href="../terms/">Terms</a>
+        <a href="../privacy/">Privacy</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <div class="hero">
+        <div>
+          <p class="eyebrow">Gentle Bible stories for quiet evenings</p>
+          <h1>Bible Bedtime</h1>
+          <p>Calm, narrated Bible story videos and short reflections created for evening listening, family wind-down time, and peaceful social viewing.</p>
+          <div class="actions">
+            <a class="button" href="https://www.tiktok.com/@biblebedtimestories22">Open TikTok</a>
+            <a class="button secondary" href="https://www.youtube.com/channel/UCFBfyj25p5cqW8aGfa-Y-VQ">Open YouTube</a>
+          </div>
+        </div>
+        <aside class="hero-card" aria-label="Bible Bedtime summary">
+          <img src="../assets/bible-bedtime-logo-20260520.png" alt="Bible Bedtime logo">
+          <dl>
+            <div>
+              <dt>Format</dt>
+              <dd>Short-form bedtime reflections and longer narrated Bible episodes.</dd>
+            </div>
+            <div>
+              <dt>Audience</dt>
+              <dd>Viewers looking for gentle Bible storytelling, calm narration, and reflective evening content.</dd>
+            </div>
+            <div>
+              <dt>Official account</dt>
+              <dd><a href="https://www.tiktok.com/@biblebedtimestories22">@biblebedtimestories22</a></dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <section id="stories" class="alt">
+      <div class="section-inner">
+        <h2>What Bible Bedtime publishes</h2>
+        <p class="lead">The project turns scripture-based story scripts into slow, warm video episodes. Each story is prepared privately, reviewed, and only then posted through the official Bible Bedtime channels.</p>
+        <div class="grid">
+          <article class="card">
+            <h3>Story episodes</h3>
+            <p>Longer narrated videos such as Genesis, Noah, David and Goliath, and Jericho, designed with calm pacing and gentle visual treatment.</p>
+          </article>
+          <article class="card">
+            <h3>Short reflections</h3>
+            <p>Vertical clips for TikTok, YouTube Shorts, and Reels using approved story moments, captions, and platform-ready metadata.</p>
+          </article>
+          <article class="card">
+            <h3>Manual review gates</h3>
+            <p>Videos are checked before public posting for file quality, pacing, caption safety, and approval by the account owner.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="section-inner">
+        <h2>How each story is made</h2>
+        <p class="lead">Bible Bedtime is built around calm, scripture-based storytelling. Every public video starts as a prepared story, moves through narration and editing, and is checked before it appears on an official channel.</p>
+        <ol class="steps">
+          <li>
+            <div>
+              <strong>Story selected</strong>
+              <span>We choose Bible stories and reflections that suit quiet evening listening and gentle family viewing.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Narration and visuals prepared</strong>
+              <span>Each episode uses warm narration, soft pacing, and simple visual treatment so the story can be heard without rush.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Short and long versions created</strong>
+              <span>Stories may be shaped into longer YouTube episodes and shorter clips for TikTok, Shorts, and Reels.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Final review before posting</strong>
+              <span>Videos are checked for quality, tone, captions, and suitability before they are published.</span>
+            </div>
+          </li>
+        </ol>
+        <div class="notice">
+          Bible Bedtime posts only through its own official social channels. We do not offer a public publishing service for other creators or unrelated accounts.
+        </div>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="section-inner">
+        <h2>Official links</h2>
+        <div class="grid">
+          <article class="card">
+            <h3>TikTok</h3>
+            <p><a href="https://www.tiktok.com/@biblebedtimestories22">https://www.tiktok.com/@biblebedtimestories22</a></p>
+          </article>
+          <article class="card">
+            <h3>YouTube</h3>
+            <p><a href="https://www.youtube.com/channel/UCFBfyj25p5cqW8aGfa-Y-VQ">Bible Bedtime YouTube channel</a></p>
+          </article>
+          <article class="card">
+            <h3>Policies</h3>
+            <p><a href="../terms/">Terms of Service</a> and <a href="../privacy/">Privacy Policy</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="section-inner">
+      <span>Bible Bedtime</span>
+      <span><a href="../terms/">Terms</a> &nbsp; <a href="../privacy/">Privacy</a></span>
+    </div>
+  </footer>
+</body>
+</html>

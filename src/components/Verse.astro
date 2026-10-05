@@ -1,0 +1,22 @@
+---
+import kjv from '../data/kjv.json';
+
+interface Props {
+  ref: keyof typeof kjv;
+  numbers?: boolean;
+}
+
+const { ref, numbers = false } = Astro.props;
+const passage = kjv[ref];
+if (!passage) throw new Error(`Missing KJV passage: ${ref}`);
+---
+<figure class="parchment-card px-6 py-6 sm:px-8 sm:py-7">
+  <blockquote class="font-serif text-[21px] sm:text-[23px] leading-relaxed text-parchment-ink/90">
+    {numbers
+      ? passage.verses.map((v) => (
+          <span><sup class="mr-1 font-sans text-[11px] font-semibold text-[#7a4f16]">{v.v}</sup>{v.t} </span>
+        ))
+      : <>&ldquo;{passage.text}&rdquo;</>}
+  </blockquote>
+  <figcaption class="mt-4 text-sm font-semibold tracking-wide text-[#7a4f16]">{passage.reference} · KJV</figcaption>
+</figure>

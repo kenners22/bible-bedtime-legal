@@ -1,0 +1,106 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import catalog from '../data/catalog-snapshot.json';
+
+type Story = (typeof catalog.stories)[number];
+const minutes = (s: Story) => Math.round(s.durationSeconds / 60);
+const isNT = (s: Story) => /^(Matthew|Mark|Luke|John)\b/.test(s.reference);
+const isLong = (s: Story) => s.durationSeconds >= 3000;
+
+const free = catalog.stories.filter((s) => s.access === 'free');
+const long = catalog.stories.filter((s) => s.access !== 'free' && isLong(s));
+const psalms = catalog.stories.filter((s) => s.access !== 'free' && !isLong(s) && s.reference.startsWith('Psalm'));
+const nt = catalog.stories.filter((s) => s.access !== 'free' && !isLong(s) && isNT(s));
+const ot = catalog.stories.filter((s) => s.access !== 'free' && !isLong(s) && !isNT(s) && !s.reference.startsWith('Psalm'));
+const total = catalog.stories.length;
+
+const groups = [
+  { id: 'hour-long', title: 'Hour-long listens', note: 'Several stories woven into one long, unbroken listen for nights when you want the voice to keep going.', stories: long },
+  { id: 'old-testament', title: 'Old Testament stories', note: 'From the patriarchs to the exile: courage, waiting and God’s faithfulness.', stories: ot },
+  { id: 'new-testament', title: 'New Testament stories', note: 'The life and teaching of Jesus, told gently.', stories: nt },
+  { id: 'psalms', title: 'Psalms', note: 'Two of the best-loved psalms, unfolded slowly.', stories: psalms },
+];
+
+const faqs = [
+  {
+    q: 'What is a Bible sleep story?',
+    a: 'A Bible sleep story is a calm, unhurried retelling of a passage of Scripture, read in a soft voice at a slow pace so you can listen with your eyes closed and drift off. It stays with the Bible account rather than inventing new plots.',
+  },
+  {
+    q: 'Are Bible sleep stories for adults or children?',
+    a: 'The stories in Bible Bedtimes are written for adults and families winding down together. They are gentle enough for anyone, but the pace and language are designed for grown-up listeners.',
+  },
+  {
+    q: 'Can I listen to Bible sleep stories for free?',
+    a: `Yes. Three complete stories are free in the Bible Bedtimes app: ${free.map((s) => s.title).join(', ')}. The rest of the ${total}-story library is part of the optional Premium subscription, and you can hear a two-minute sample of any story first.`,
+  },
+  {
+    q: 'Is there a sleep timer?',
+    a: 'Yes. The app has a sleep timer so the story can stop on its own once you have fallen asleep.',
+  },
+  {
+    q: 'Can I listen offline?',
+    a: 'Premium members can download story audio to listen without a connection, which is useful if you keep your phone in airplane mode overnight.',
+  },
+];
+---
+<GuideLayout
+  title={`Bible Sleep Stories for Adults — ${total} Calm Stories to Fall Asleep To | Bible Bedtime`}
+  description={`Fall asleep to calm Bible stories. ${total} gentle retellings from Genesis to the Gospels, including hour-long listens, with a sleep timer. Three complete stories are free.`}
+  eyebrow="Bible stories to fall asleep to"
+  heading="Bible sleep stories for adults"
+  intro={`Calm, faithful retellings of Scripture, read slowly so you can close your eyes and listen. There are ${total} stories in Bible Bedtimes, from Creation to the road to Emmaus, and three of them are free.`}
+  crumb="Bible sleep stories"
+  campaign="site_guide_sleep_stories"
+  faqs={faqs}
+>
+  <p>Many people find it easier to fall asleep listening than reading. A Bible sleep story gives your mind something good to rest on: a familiar account, told at a gentle pace, with no cliffhangers and nothing to stay awake for. Each story below is built around a passage you can look up and read for yourself.</p>
+
+  <h2>Why listen to Bible stories at night?</h2>
+  <ul class="bullets">
+    <li><strong>It quiets a busy mind.</strong> Following a story leaves less room for replaying the day.</li>
+    <li><strong>It ends the day with Scripture.</strong> The last thing you hear is the faithfulness of God, not the news.</li>
+    <li><strong>You can close your eyes.</strong> No screen to read, and a sleep timer stops the audio when you drift off.</li>
+    <li><strong>It is familiar in a good way.</strong> Knowing how the story ends is part of what makes it restful.</li>
+  </ul>
+
+  <h2 id="free">Three complete stories, free</h2>
+  <p>Start with these. They are complete, not samples, and need no subscription.</p>
+  <ul class="mt-6 grid gap-4">
+    {free.map((s) => (
+      <li class="panel p-5 sm:p-6">
+        <p class="eyebrow">{s.reference} · {minutes(s)} min · Free</p>
+        <h3 class="!mt-2">{s.title}</h3>
+        <p class="mt-2 text-cream/75 leading-relaxed">{s.description}</p>
+      </li>
+    ))}
+  </ul>
+
+  {groups.map((g) => (
+    <section id={g.id} class="scroll-mt-24">
+      <h2>{g.title}</h2>
+      <p>{g.note}</p>
+      <ul class="mt-6 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+        {g.stories.map((s) => (
+          <li class="py-5">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <h3 class="!mt-0 !text-[22px]">{s.title}</h3>
+              <span class="text-sm text-cream/60">{s.reference} · {minutes(s)} min</span>
+            </div>
+            <p class="mt-2 text-cream/70 leading-relaxed">{s.description}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+  <p class="!mt-6 text-sm text-cream/60">Premium stories include a two-minute sample you can play before deciding on Premium. The library grows over time; this list reflects the app catalogue on 18 September 2026.</p>
+
+  <h2>How to fall asleep to a Bible story</h2>
+  <ul class="bullets">
+    <li><strong>Set the sleep timer first</strong> so you are not reaching for your phone later.</li>
+    <li><strong>Turn the brightness down</strong> and put the phone face down once the story starts.</li>
+    <li><strong>Pick a story you already know.</strong> Familiar stories are easier to relax into than new ones.</li>
+    <li><strong>On restless nights, choose an hour-long listen</strong> so the voice carries on while you settle.</li>
+  </ul>
+  <p>Prefer to read? Try our <a class="inline" href="/psalms-for-sleep/">psalms for sleep</a> or <a class="inline" href="/bible-verses-for-sleep/">Bible verses for sleep</a>.</p>
+</GuideLayout>

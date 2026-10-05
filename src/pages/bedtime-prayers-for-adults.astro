@@ -1,0 +1,127 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import Verse from '../components/Verse.astro';
+
+const prayers = [
+  {
+    id: 'peace',
+    title: 'A prayer for peace before sleep',
+    text: [
+      'Lord, the day is done, and I give it back to you.',
+      'What went well, I thank you for. What went wrong, I leave with you.',
+      'Quiet my thoughts and slow my heart.',
+      'Let me lie down in peace and sleep, because you alone keep me safe. Amen.',
+    ],
+  },
+  {
+    id: 'anxiety',
+    title: 'A prayer for an anxious mind',
+    text: [
+      'Father, my mind will not stop turning over tomorrow.',
+      'You tell me to be anxious for nothing and to bring you everything, so here it is: the worries I can name and the ones I cannot.',
+      'I cast this care on you, because you care for me.',
+      'Guard my heart and mind with your peace tonight, the peace I cannot explain. Amen.',
+    ],
+  },
+  {
+    id: 'protection',
+    title: 'A prayer for protection through the night',
+    text: [
+      'Lord, you neither slumber nor sleep.',
+      'Watch over this house and everyone in it.',
+      'Keep us under the shadow of your wings, from every danger and every fear.',
+      'Let us wake refreshed and ready to serve you. Amen.',
+    ],
+  },
+  {
+    id: 'thanks',
+    title: 'A prayer of thanks at the end of the day',
+    text: [
+      'Thank you, Lord, for the gifts of today, noticed and unnoticed:',
+      'for food and shelter, for the people I love, for strength to work and for this moment of rest.',
+      'Forgive me where I fell short, and help me to begin again tomorrow.',
+      'Your mercies are new every morning. Amen.',
+    ],
+  },
+  {
+    id: 'awake',
+    title: 'A prayer when you cannot sleep',
+    text: [
+      'Lord, it is late and I am still awake.',
+      'Instead of fighting it, I will remember you here, in the night watches.',
+      'Be near me in the dark. Rest my body even if my mind is slow to follow.',
+      'I trust you with the hours that are left. Amen.',
+    ],
+  },
+  {
+    id: 'loved-ones',
+    title: 'A prayer for the people you love',
+    text: [
+      'Father, I bring before you the people on my heart tonight.',
+      'Those who are tired, give them rest. Those who are unwell, comfort and heal them. Those who are far from you, draw them near.',
+      'Keep them safe while they sleep, and hold them when I cannot. Amen.',
+    ],
+  },
+];
+
+const faqs = [
+  {
+    q: 'What is a good short prayer before bed?',
+    a: '“Lord, I will lie down in peace and sleep, for you alone keep me safe. Amen.” It is drawn from Psalm 4:8 and is short enough to remember when you are tired.',
+  },
+  {
+    q: 'How do I pray when I am too tired to think?',
+    a: 'Use a single line of Scripture as your prayer, such as Psalm 4:8 or 1 Peter 5:7, and repeat it slowly. God does not need long words, and a short honest prayer is still prayer.',
+  },
+  {
+    q: 'Should I pray before or after reading the Bible at night?',
+    a: 'Either works, but many people find it easiest to read a short passage first and then pray from it. The Bible Bedtimes app gives you one King James passage and a Daily Teaching each evening for this.',
+  },
+  {
+    q: 'Can I use these prayers with my spouse or family?',
+    a: 'Yes. They are written in the first person but work just as well said together. Change “I” to “we” and take turns reading a line each.',
+  },
+];
+---
+<GuideLayout
+  title="Bedtime Prayers for Adults — 6 Short Prayers Before Sleep | Bible Bedtime"
+  description="Six short bedtime prayers for adults: for peace, an anxious mind, protection through the night, thanks, sleepless nights and loved ones, each rooted in Scripture."
+  eyebrow="Prayer for bedtime"
+  heading="Bedtime prayers for adults"
+  intro="Six short prayers for the end of the day, each rooted in a line of Scripture. Pray one as it is, or use it as a starting point for your own words."
+  crumb="Bedtime prayers for adults"
+  campaign="site_guide_prayers"
+  faqs={faqs}
+>
+  <p>Evening prayer has a long history among Christians: David spoke of lifting his hands in prayer “as the evening sacrifice”. It does not have to be long. A few honest sentences, said slowly, are often the best way to hand the day back to God and let sleep come.</p>
+  <Verse ref="Psalms 141:2" />
+
+  <nav aria-label="Prayers on this page" class="panel mt-10 p-6">
+    <p class="eyebrow">On this page</p>
+    <ol class="mt-3 space-y-1.5 text-cream/80">
+      {prayers.map((p, i) => <li><a class="inline" href={`#${p.id}`}>{i + 1}. {p.title}</a></li>)}
+    </ol>
+  </nav>
+
+  {prayers.map((p, i) => (
+    <section id={p.id} class="scroll-mt-24">
+      <h2>{i + 1}. {p.title}</h2>
+      <div class="mt-5 border-l-2 border-gold/60 pl-5 sm:pl-7 font-serif text-[21px] sm:text-[23px] leading-relaxed text-cream/90">
+        {p.text.map((line) => <p class="mt-2 first:mt-0">{line}</p>)}
+      </div>
+    </section>
+  ))}
+
+  <h2>A blessing to end with</h2>
+  <p>This blessing from the book of Numbers is one of the oldest in Scripture. Say it over yourself, or over the people you love.</p>
+  <Verse ref="Numbers 6:24-26" />
+
+  <h2>A simple pattern for evening prayer</h2>
+  <ul class="bullets">
+    <li><strong>Read.</strong> Start with one verse or a short psalm. Try our <a class="inline" href="/psalms-for-sleep/">psalms for sleep</a>.</li>
+    <li><strong>Remember.</strong> Look back over the day: where you saw God’s kindness, and where you need forgiveness.</li>
+    <li><strong>Release.</strong> Name what you are worried about and hand it over, one thing at a time.</li>
+    <li><strong>Rest.</strong> End with a short line you can repeat as you fall asleep, such as Psalm 4:8.</li>
+  </ul>
+  <p>Looking for more Scripture to pray? Our <a class="inline" href="/bible-verses-for-sleep/">Bible verses for sleep</a> are grouped by the kind of night you are having.</p>
+</GuideLayout>

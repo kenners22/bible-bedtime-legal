@@ -1,0 +1,30 @@
+---
+import { appStoreLink } from '../lib/appstore';
+
+interface Props {
+  campaign: string;
+  heading?: string;
+  text?: string;
+  image?: string;
+  imageAlt?: string;
+}
+
+const {
+  campaign,
+  heading = 'Let the app read to you tonight',
+  text = 'Bible Bedtimes brings calm Bible stories, tonight’s King James passage and a gentle Daily Teaching together, with a sleep timer. Free to download, with three complete stories free.',
+  image = '/assets/app/01-tonight.webp',
+  imageAlt = 'Bible Bedtimes Tonight screen',
+} = Astro.props;
+---
+<aside class="panel my-14 overflow-hidden grid gap-6 sm:grid-cols-[1fr_auto] items-center">
+  <div class="px-7 pt-7 sm:py-8 sm:pl-9">
+    <p class="eyebrow">Bible Bedtimes for iPhone and iPad</p>
+    <p class="mt-3 font-serif text-2xl sm:text-3xl text-cream">{heading}</p>
+    <p class="mt-3 text-cream/75 leading-relaxed">{text}</p>
+    <a href={appStoreLink(campaign)} class="btn-gold mt-6 rounded-full px-6 py-3.5">Download free on the App Store</a>
+  </div>
+  <div class="h-[240px] sm:h-[280px] overflow-hidden flex justify-center sm:pr-9 sm:pt-8">
+    <img src={image} alt={imageAlt} width="460" height="988" loading="lazy" decoding="async" class="w-[150px] sm:w-[170px] h-auto self-start drop-shadow-2xl" />
+  </div>
+</aside>
