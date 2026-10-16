@@ -8,7 +8,8 @@
     "build": "astro build",
     "test": "npm run build && playwright test",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "indexnow": "node scripts/indexnow-submit.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.0",
