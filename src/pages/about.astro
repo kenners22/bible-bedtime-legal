@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { SITE, WEBSITE_ID, abs, organization } from '../lib/site';
 
 const title = 'About | Bible Bedtime';
 const description = 'Bible Bedtime brings daily Scripture, thoughtful teaching and peaceful Bible stories into the rhythm of everyday life.';
@@ -20,8 +21,22 @@ const values = [
     description: 'Scripture and storytelling at a gentle pace, whenever you need a quiet moment.',
   },
 ];
+
+const aboutJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: title,
+  description,
+  url: abs('/about/'),
+  inLanguage: 'en',
+  isPartOf: { '@type': 'WebSite', '@id': WEBSITE_ID, name: SITE.name, url: SITE.url },
+  mainEntity: organization,
+};
 ---
 <BaseLayout title={title} description={description}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(aboutJsonLd)} />
+  </Fragment>
   <Header />
   <main>
     <section class="relative bg-night overflow-hidden">

@@ -210,6 +210,56 @@ test.describe('static output contract', () => {
     expect(stories).not.toMatch(/Android|5-star|free trial/i);
   });
 
+  test('meta descriptions are 160 characters or fewer', () => {
+    const decode = (text) => text.replace(/&amp;/g, '&').replace(/&#39;|&#x27;/g, "'").replace(/&quot;/g, '"');
+    const tooLong = listFiles(dist, (filePath) => filePath.endsWith('.html'))
+      .map((filePath) => {
+        const html = fs.readFileSync(filePath, 'utf8');
+        const description = decode(html.match(/<meta\s+name=["']description["'][^>]*content=["']([^"']+)["']/i)?.[1] ?? '');
+        return { page: path.relative(dist, filePath), length: [...description].length };
+      })
+      .filter((d) => d.length > 160);
+    expect(tooLong).toEqual([]);
+  });
+
+  test('llms.txt follows the llmstxt.org shape and links only to real pages', () => {
+    const text = fs.readFileSync(path.join(dist, 'llms.txt'), 'utf8');
+    const lines = text.split('\n');
+    expect(lines[0]).toBe('# Bible Bedtime');
+    expect(lines[2]).toMatch(/^> \S/);
+    expect(text).toMatch(/^## /m);
+    const links = [...text.matchAll(/^- \[[^\]]+\]\((https:\/\/[^)]+)\)/gm)].map((m) => m[1]);
+    expect(links.length).toBeGreaterThan(10);
+    const missing = links
+      .filter((url) => url.startsWith('https://biblebedtime.uk/'))
+      .filter((url) => !distPathForHref(new URL(url).pathname));
+    expect(missing).toEqual([]);
+    expect(text).not.toMatch(/Android|5-star|free trial/i);
+  });
+
+  test('home and About carry WebSite, Organization, app and AboutPage schema', () => {
+    const jsonLd = (file) =>
+      [...fs.readFileSync(path.join(dist, file), 'utf8').matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)]
+        .flatMap((m) => {
+          const data = JSON.parse(m[1]);
+          return data['@graph'] ?? [data];
+        });
+    const homeTypes = jsonLd('index.html').map((d) => d['@type']);
+    for (const type of ['WebSite', 'Organization', 'MobileApplication', 'FAQPage']) expect(homeTypes, type).toContain(type);
+    const about = jsonLd('about/index.html').find((d) => d['@type'] === 'AboutPage');
+    expect(about?.mainEntity?.['@type']).toBe('Organization');
+    expect(about?.mainEntity?.sameAs).toContain('https://apps.apple.com/gb/app/bible-bedtimes/id6773492861');
+  });
+
+  test('sitemap lastmod, when present, is a real past date', () => {
+    const xml = fs.readFileSync(path.join(dist, 'sitemap-0.xml'), 'utf8');
+    for (const [, value] of xml.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)) {
+      const date = new Date(value);
+      expect(Number.isNaN(date.getTime()), value).toBe(false);
+      expect(date.getTime(), value).toBeLessThanOrEqual(Date.now());
+    }
+  });
+
   test('retired children bedtime routes and offers are absent from published pages', () => {
     expect(fs.existsSync(path.join(dist, 'childrens-stories/index.html'))).toBe(false);
     expect(fs.existsSync(path.join(dist, 'childrens-emails/index.html'))).toBe(false);
