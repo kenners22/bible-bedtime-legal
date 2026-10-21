@@ -32,8 +32,8 @@ const jsonLd = [
     image: new URL('/assets/og-app-20260918.jpg', Astro.site).href,
     datePublished: '2026-09-18',
     dateModified: '2026-09-18',
-    author: { '@type': 'Organization', name: 'Bible Bedtime', url: 'https://biblebedtime.uk/' },
-    publisher: { '@type': 'Organization', name: 'Bible Bedtime', logo: { '@type': 'ImageObject', url: 'https://biblebedtime.uk/assets/bible-bedtime-logo-20260520.png' } },
+    author: { '@type': 'Organization', '@id': 'https://biblebedtime.uk/#organization', name: 'Bible Bedtime', url: 'https://biblebedtime.uk/' },
+    publisher: { '@type': 'Organization', '@id': 'https://biblebedtime.uk/#organization', name: 'Bible Bedtime', logo: { '@type': 'ImageObject', url: 'https://biblebedtime.uk/assets/bible-bedtime-logo-20260520.png' } },
   },
   {
     '@context': 'https://schema.org',

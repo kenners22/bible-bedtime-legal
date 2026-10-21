@@ -7,8 +7,9 @@ import Footer from '../components/Footer.astro';
 
 import { APP_STORE_LISTING, appStoreLink } from '../lib/appstore';
 import { guides } from '../data/guides';
+import { SITE, WEBSITE_ID, ORGANIZATION_ID, organization } from '../lib/site';
 const title = 'Bible Bedtimes — Calm Bible Stories & Daily Scripture for iPhone and iPad';
-const description = 'Fall asleep to peaceful Bible stories and end the day with tonight’s Scripture and Daily Teaching. Free to download for iPhone and iPad, with three complete stories free.';
+const description = 'Fall asleep to peaceful Bible stories and end the day with tonight’s Scripture and Daily Teaching. Free on iPhone and iPad, with three complete stories free.';
 
 const facts = [
   { title: 'Three stories free', text: 'Complete stories, with no subscription needed.' },
@@ -86,20 +87,39 @@ const faqJsonLd = {
   '@type': 'FAQPage',
   mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 };
-const appJsonLd = {
+const siteJsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'MobileApplication',
-  name: 'Bible Bedtimes',
-  operatingSystem: 'iOS, iPadOS',
-  applicationCategory: 'LifestyleApplication',
-  url: 'https://biblebedtime.uk/',
-  installUrl: APP_STORE_LISTING,
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': WEBSITE_ID,
+      name: SITE.name,
+      url: SITE.url,
+      inLanguage: 'en',
+      description,
+      publisher: { '@id': ORGANIZATION_ID },
+    },
+    organization,
+    {
+      '@type': 'MobileApplication',
+      name: SITE.appName,
+      description,
+      operatingSystem: 'iOS, iPadOS',
+      applicationCategory: 'LifestyleApplication',
+      url: SITE.url,
+      installUrl: APP_STORE_LISTING,
+      sameAs: [APP_STORE_LISTING],
+      image: SITE.logo,
+      inLanguage: 'en',
+      publisher: { '@id': ORGANIZATION_ID },
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+    },
+  ],
 };
 ---
 <BaseLayout title={title} description={description}>
   <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify(appJsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(siteJsonLd)} />
     <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
   </Fragment>
   <Header />
