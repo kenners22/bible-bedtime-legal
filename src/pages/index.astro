@@ -52,9 +52,9 @@ const screens = [
 ];
 
 const freeStories = [
-  { img: '/assets/app/story-genesis.webp', title: 'Genesis — Creation and Eden', ref: 'Genesis 1–3' },
-  { img: '/assets/app/story-joseph.webp', title: 'Joseph — The Coat and the Promise', ref: 'Genesis 37–50' },
-  { img: '/assets/app/story-storm.webp', title: 'Jesus Calms the Storm', ref: 'Mark 4:35–41' },
+  { img: '/assets/app/story-genesis.webp', title: 'Genesis — Creation and Eden', ref: 'Genesis 1–3', href: '/stories/genesis-creation-and-eden/' },
+  { img: '/assets/app/story-joseph.webp', title: 'Joseph — The Coat and the Promise', ref: 'Genesis 37–50', href: '/stories/joseph-coat-and-promise/' },
+  { img: '/assets/app/story-storm.webp', title: 'Jesus Calms the Storm', ref: 'Mark 4:35–41', href: '/stories/jesus-calms-the-storm/' },
 ];
 
 const premium = [
@@ -66,19 +66,19 @@ const premium = [
 const faqs = [
   {
     q: 'Is Bible Bedtimes free?',
-    a: 'Yes, it is free to download. Three complete stories, plus tonight’s Scripture passage and Daily Teaching, are free. An optional Premium subscription opens the full library, and Apple shows the price and renewal terms before you subscribe.',
+    a: 'Yes, it is free to download on iPhone and iPad. Three complete Bible stories, plus tonight’s Scripture passage and Daily Teaching, are free. An optional Premium subscription opens the full story library and offline listening, and Apple shows the price and renewal terms before you subscribe.',
+  },
+  {
+    q: 'What is Bible Bedtimes?',
+    a: 'Bible Bedtimes is an iPhone and iPad app of calm Bible stories to fall asleep to, from Genesis to the Gospels. Each evening it also gives you a King James Scripture passage and a short Daily Teaching, and a sleep timer stops the audio once you have drifted off.',
   },
   {
     q: 'Which Bible translation does the app use?',
-    a: 'Daily Scripture passages are from the King James Version, followed by that evening’s Daily Teaching.',
-  },
-  {
-    q: 'Does it work on iPad?',
-    a: 'Yes. Bible Bedtimes is available for both iPhone and iPad from the App Store.',
+    a: 'The Daily Scripture passages are from the King James Version, followed by that evening’s Daily Teaching, which stays close to the text. The stories themselves are calm retellings of named passages, such as Mark 4:35–41 for Jesus calming the storm, rather than new plots.',
   },
   {
     q: 'Can I listen offline?',
-    a: 'Premium members can download story audio to listen without a connection, which helps if you like to keep your phone in airplane mode at night.',
+    a: 'Yes, with Premium. Premium members can download story audio and listen without a connection, which helps if you like to keep your phone in airplane mode at night. Each story page on this site shows whether that story is free or part of Premium.',
   },
 ];
 
@@ -195,12 +195,15 @@ const siteJsonLd = {
               <img src={s.img} alt="" width="800" height="450" loading="lazy" decoding="async" class="aspect-video w-full object-cover" />
               <div class="p-6">
                 <p class="eyebrow">{s.ref}</p>
-                <h3 class="mt-2 text-2xl font-medium">{s.title}</h3>
+                <h3 class="mt-2 text-2xl font-medium"><a href={s.href} class="hover:text-gold-light">{s.title}</a></h3>
               </div>
             </li>
           ))}
         </ul>
-        <a href="/bible-sleep-stories/" class="mt-10 inline-flex items-center gap-2 text-gold-light font-semibold hover:text-gold">See all the Bible sleep stories <span aria-hidden="true">→</span></a>
+        <div class="mt-10 flex flex-wrap gap-x-8 gap-y-3">
+          <a href="/bible-sleep-stories/" class="inline-flex items-center gap-2 text-gold-light font-semibold hover:text-gold">See all the Bible sleep stories <span aria-hidden="true">→</span></a>
+          <a href="/stories/" class="inline-flex items-center gap-2 text-gold-light font-semibold hover:text-gold">Browse every story <span aria-hidden="true">→</span></a>
+        </div>
       </div>
     </section>
 

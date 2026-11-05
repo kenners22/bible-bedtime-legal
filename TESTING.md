@@ -29,7 +29,8 @@ font / colour decisions, and do **not** delete any `tiktok*.txt` files.
 | URL                    | Source                                       | Notes |
 | ---------------------- | -------------------------------------------- | ----- |
 | `/`                    | `src/pages/index.astro`                      | Homepage with hero, wave navy band, verse |
-| `/childrens-stories/`  | `src/pages/childrens-stories.astro`          | Personalised kids' stories landing |
+| `/stories/`, `/stories/<id>/` | `src/pages/stories/` + `src/lib/stories.ts` | One page per story in `src/data/catalog-snapshot.json` |
+| `/childrens-stories/`  | `src/pages/childrens-stories.astro`          | Retired. Forwards to `/stories/` (meta refresh + canonical) |
 | `/terms/`              | `src/pages/terms.astro`                      | Legal |
 | `/privacy/`            | `src/pages/privacy.astro`                    | Legal |
 | `/app/`                | `public/app/index.html` (legacy static)      | Legacy. Don't rewrite. |

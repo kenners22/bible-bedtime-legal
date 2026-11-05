@@ -261,7 +261,12 @@ test.describe('static output contract', () => {
   });
 
   test('retired children bedtime routes and offers are absent from published pages', () => {
-    expect(fs.existsSync(path.join(dist, 'childrens-stories/index.html'))).toBe(false);
+    // /childrens-stories/ survives only as a pointer to /stories/ (Pages cannot redirect).
+    const pointer = fs.readFileSync(path.join(dist, 'childrens-stories/index.html'), 'utf8');
+    expect(pointer).toContain('<meta http-equiv="refresh" content="0; url=https://biblebedtime.uk/stories/">');
+    expect(pointer).toContain('<link rel="canonical" href="https://biblebedtime.uk/stories/">');
+    expect(pointer).not.toContain('apple-itunes-app');
+    expect(fs.readFileSync(path.join(dist, 'sitemap-0.xml'), 'utf8')).not.toContain('childrens-stories');
     expect(fs.existsSync(path.join(dist, 'childrens-emails/index.html'))).toBe(false);
 
     const htmlFiles = listFiles(dist, (filePath) => filePath.endsWith('.html'));

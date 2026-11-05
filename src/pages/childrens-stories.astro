@@ -1,0 +1,18 @@
+---
+// The old /childrens-stories/ page is retired. GitHub Pages cannot send a
+// server redirect, so this page forwards visitors and search engines to the
+// story library with an instant meta refresh and a canonical link.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { abs } from '../lib/site';
+
+const target = abs('/stories/');
+---
+<BaseLayout title="Bible Bedtime stories have moved" description="This page has moved. See every Bible Bedtime story, with its passage and length, on the stories page." canonical={target} appBanner={false}>
+  <Fragment slot="head">
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+  </Fragment>
+  <main class="max-w-xl mx-auto px-6 py-24 text-center">
+    <h1 class="font-serif font-medium text-cream text-4xl">This page has moved</h1>
+    <p class="mt-4 text-cream/75">Our stories are now at <a class="text-gold-light underline underline-offset-4" href="/stories/">biblebedtime.uk/stories</a>.</p>
+  </main>
+</BaseLayout>

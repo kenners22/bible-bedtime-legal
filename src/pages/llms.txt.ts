@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import catalog from '../data/catalog-snapshot.json';
 import { guides } from '../data/guides';
 import { SITE, abs } from '../lib/site';
+import { storyHref, lengthLabel, isFree } from '../lib/stories';
 
 /** llms.txt (llmstxt.org): a short guide to the site for AI answer tools, built from the same data as the pages. */
 export const GET: APIRoute = () => {
@@ -23,12 +24,17 @@ export const GET: APIRoute = () => {
     '## Stories and Scripture',
     '',
     `- [Bible stories](${abs('/bible-stories/')}): the story collections, from Genesis to the Gospels`,
+    `- [All stories](${abs('/stories/')}): every story in the app, with its passage, length and whether it is free`,
     `- [Daily Scriptures](${abs('/daily-scriptures/')}): a sample Scripture passage and Daily Teaching from the app`,
     `- [Devotionals](${abs('/devotionals/')}): the free Scripture passage and Daily Teaching; Premium adds prayers, closing blessings and the teaching archive`,
     '',
     '## Guides',
     '',
     ...guides.map((g) => `- [${g.title}](${abs(g.href)}): ${g.blurb}`),
+    '',
+    '## Story pages',
+    '',
+    ...stories.map((s) => `- [${s.title}](${abs(storyHref(s))}): ${s.reference}, ${lengthLabel(s)}, ${isFree(s) ? 'free' : 'Premium'}. ${s.description}`),
     '',
     '## About and help',
     '',

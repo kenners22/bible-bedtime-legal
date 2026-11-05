@@ -22,6 +22,7 @@ const SHARED = ['src/layouts', 'src/components', 'src/data', 'src/lib', 'src/sty
 
 function sourceFor(pathname) {
   const route = pathname.replace(/^\/|\/$/g, '') || 'index';
+  if (/^stories\/[^/]+$/.test(route)) return 'src/pages/stories/[id].astro';
   return [`src/pages/${route}.astro`, `src/pages/${route}/index.astro`].find((f) => fs.existsSync(f));
 }
 
@@ -39,6 +40,8 @@ export default defineConfig({
     react(),
     tailwind({ applyBaseStyles: false }),
     sitemap({
+      // /childrens-stories/ only forwards to /stories/; keep it out of the sitemap.
+      filter: (page) => !page.endsWith('/childrens-stories/'),
       serialize(item) {
         const lastmod = lastModified(new URL(item.url).pathname);
         return lastmod ? { ...item, lastmod } : item;
