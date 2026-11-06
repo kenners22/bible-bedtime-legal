@@ -1,46 +1,28 @@
 ---
 import GuideLayout from '../layouts/GuideLayout.astro';
-import catalog from '../data/catalog-snapshot.json';
+import { stories, storyHref, sections, sectionOf, isFree, minutes } from '../lib/stories';
 
-type Story = (typeof catalog.stories)[number];
-const minutes = (s: Story) => Math.round(s.durationSeconds / 60);
-const isNT = (s: Story) => /^(Matthew|Mark|Luke|John)\b/.test(s.reference);
-const isLong = (s: Story) => s.durationSeconds >= 3000;
-
-const free = catalog.stories.filter((s) => s.access === 'free');
-const long = catalog.stories.filter((s) => s.access !== 'free' && isLong(s));
-const psalms = catalog.stories.filter((s) => s.access !== 'free' && !isLong(s) && s.reference.startsWith('Psalm'));
-const nt = catalog.stories.filter((s) => s.access !== 'free' && !isLong(s) && isNT(s));
-const ot = catalog.stories.filter((s) => s.access !== 'free' && !isLong(s) && !isNT(s) && !s.reference.startsWith('Psalm'));
-const total = catalog.stories.length;
-
-const groups = [
-  { id: 'hour-long', title: 'Hour-long listens', note: 'Several stories woven into one long, unbroken listen for nights when you want the voice to keep going.', stories: long },
-  { id: 'old-testament', title: 'Old Testament stories', note: 'From the patriarchs to the exile: courage, waiting and God’s faithfulness.', stories: ot },
-  { id: 'new-testament', title: 'New Testament stories', note: 'The life and teaching of Jesus, told gently.', stories: nt },
-  { id: 'psalms', title: 'Psalms', note: 'Two of the best-loved psalms, unfolded slowly.', stories: psalms },
-];
+const free = stories.filter(isFree);
+const total = stories.length;
+// Free stories have their own list above, so the groups hold the rest.
+const groups = sections.map((g) => ({ ...g, stories: stories.filter((s) => !isFree(s) && sectionOf(s) === g.id) }));
 
 const faqs = [
   {
     q: 'What is a Bible sleep story?',
-    a: 'A Bible sleep story is a calm, unhurried retelling of a passage of Scripture, read in a soft voice at a slow pace so you can listen with your eyes closed and drift off. It stays with the Bible account rather than inventing new plots.',
+    a: 'A Bible sleep story is a calm, unhurried retelling of a passage of Scripture, read in a soft voice at a slow pace so you can listen with your eyes closed and drift off. It stays with the Bible account rather than inventing new plots, and each one names the passage it retells.',
   },
   {
     q: 'Are Bible sleep stories for adults or children?',
-    a: 'The stories in Bible Bedtimes are written for adults and families winding down together. They are gentle enough for anyone, but the pace and language are designed for grown-up listeners.',
+    a: 'The stories in Bible Bedtimes are written for adults and for families winding down together. They are gentle enough for anyone to hear, but the pace and the language are designed for grown-up listeners rather than young children, so parents may want to listen first before sharing them.',
   },
   {
     q: 'Can I listen to Bible sleep stories for free?',
-    a: `Yes. Three complete stories are free in the Bible Bedtimes app: ${free.map((s) => s.title).join(', ')}. The rest of the ${total}-story library is part of the optional Premium subscription, and you can hear a two-minute sample of any story first.`,
+    a: `Yes. Three complete stories are free in the Bible Bedtimes app: ${free.map((s) => s.title).join(', ')}. The rest of the ${total}-story library is part of the optional Premium subscription, and you can play a two-minute sample of any story first.`,
   },
   {
-    q: 'Is there a sleep timer?',
-    a: 'Yes. The app has a sleep timer so the story can stop on its own once you have fallen asleep.',
-  },
-  {
-    q: 'Can I listen offline?',
-    a: 'Premium members can download story audio to listen without a connection, which is useful if you keep your phone in airplane mode overnight.',
+    q: 'Is there a sleep timer, and can I listen offline?',
+    a: 'Yes to both. The app has a sleep timer, so the story stops on its own once you have fallen asleep. Premium members can also download story audio to listen without a connection, which helps if you keep your phone in airplane mode overnight.',
   },
 ];
 ---
@@ -70,7 +52,7 @@ const faqs = [
     {free.map((s) => (
       <li class="panel p-5 sm:p-6">
         <p class="eyebrow">{s.reference} · {minutes(s)} min · Free</p>
-        <h3 class="!mt-2">{s.title}</h3>
+        <h3 class="!mt-2"><a href={storyHref(s)} class="hover:text-gold-light">{s.title}</a></h3>
         <p class="mt-2 text-cream/75 leading-relaxed">{s.description}</p>
       </li>
     ))}
@@ -84,7 +66,7 @@ const faqs = [
         {g.stories.map((s) => (
           <li class="py-5">
             <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-              <h3 class="!mt-0 !text-[22px]">{s.title}</h3>
+              <h3 class="!mt-0 !text-[22px]"><a href={storyHref(s)} class="hover:text-gold-light">{s.title}</a></h3>
               <span class="text-sm text-cream/60">{s.reference} · {minutes(s)} min</span>
             </div>
             <p class="mt-2 text-cream/70 leading-relaxed">{s.description}</p>
@@ -93,7 +75,7 @@ const faqs = [
       </ul>
     </section>
   ))}
-  <p class="!mt-6 text-sm text-cream/60">Premium stories include a two-minute sample you can play before deciding on Premium. The library grows over time; this list reflects the app catalogue on 18 September 2026.</p>
+  <p class="!mt-6 text-sm text-cream/60">Premium stories include a two-minute sample you can play before deciding on Premium. The library grows over time; this list reflects the app catalogue on 18 September 2026. Each story has its own page with the passage, its length and a short KJV reading: see <a class="inline" href="/stories/">all {total} stories</a>.</p>
 
   <h2>How to fall asleep to a Bible story</h2>
   <ul class="bullets">

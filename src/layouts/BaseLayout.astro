@@ -6,9 +6,14 @@ interface Props {
   description: string;
   canonical?: string;
   lang?: string;
+  /** Show Safari's Smart App Banner for the English iOS app. English pages only. */
+  appBanner?: boolean;
+  noindex?: boolean;
 }
 
-const { title, description, canonical, lang = 'en' } = Astro.props;
+const { title, description, canonical, lang = 'en', appBanner = lang.startsWith('en'), noindex = false } = Astro.props;
+// Cloudflare Web Analytics: cookieless page-view counts. The token is a public beacon token.
+const cloudflareBeacon = `<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "81671c4a884c49d387b2ed2f8950cbcf"}'></script><!-- End Cloudflare Web Analytics -->`;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
 ---
 <!doctype html>
@@ -20,6 +25,8 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {appBanner && <meta name="apple-itunes-app" content="app-id=6773492861" />}
     <link rel="icon" type="image/png" href="/assets/bible-bedtime-logo-20260520.png" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -67,5 +74,6 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
   </head>
   <body>
     <slot />
+    <Fragment set:html={cloudflareBeacon} />
   </body>
 </html>

@@ -18,6 +18,7 @@ import { guides } from '../data/guides';
       <p class="font-semibold text-cream mb-3">{isSpanish ? 'Explorar' : 'Explore'}</p>
       <ul class="space-y-2">
         <li><a href="/bible-stories/" class="hover:text-gold-light">{isSpanish ? 'Historias bíblicas' : 'Bible Stories'}</a></li>
+        {!isSpanish && <li><a href="/stories/" class="hover:text-gold-light">All stories</a></li>}
         <li><a href="/daily-scriptures/" class="hover:text-gold-light">{isSpanish ? 'Escrituras diarias' : 'Daily Scriptures'}</a></li>
         <li><a href="/devotionals/" class="hover:text-gold-light">{isSpanish ? 'Devocionales' : 'Devotionals'}</a></li>
         <li><a href={isSpanish ? '/app/' : '/download/'} class="hover:text-gold-light">App</a></li>

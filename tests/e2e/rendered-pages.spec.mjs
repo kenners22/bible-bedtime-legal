@@ -20,6 +20,9 @@ const astroRoutes = [
   '/bible-verses-for-sleep/',
   '/psalms-for-sleep/',
   '/bedtime-prayers-for-adults/',
+  '/stories/',
+  '/stories/jesus-calms-the-storm/',
+  '/stories/rest-listening-and-peace-1-hour/',
   '/terms/',
   '/privacy/',
   '/privacy/bible-bedtime-espanol-ios/',
@@ -40,6 +43,7 @@ function safeName(route) {
 async function gotoLocal(page, route) {
   await page.route('https://fonts.googleapis.com/**', (requestRoute) => requestRoute.abort());
   await page.route('https://fonts.gstatic.com/**', (requestRoute) => requestRoute.abort());
+  await page.route('https://static.cloudflareinsights.com/**', (requestRoute) => requestRoute.abort());
   await page.goto(route, { waitUntil: 'domcontentloaded' });
 }
 
@@ -138,6 +142,8 @@ test.describe('rendered pages', () => {
 
 test.describe.serial('lighthouse desktop audits', () => {
   test('accessibility is at least 95 and performance is at least 90', async () => {
+    // One audit per route, run in turn: allow about ten seconds a route.
+    test.setTimeout(allRoutes.length * 10_000);
     const port = 9223;
     const browser = await chromium.launch({
       args: [`--remote-debugging-port=${port}`],
