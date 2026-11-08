@@ -1,5 +1,6 @@
 import catalog from '../data/catalog-snapshot.json';
 import kjv from '../data/kjv.json';
+import type { ProductPage } from './appstore';
 
 export type Story = (typeof catalog.stories)[number];
 export type KjvKey = keyof typeof kjv;
@@ -55,6 +56,25 @@ export function passageKey(s: Story): KjvKey | undefined {
 
 export function campaignFor(s: Story): string {
   return extras[s.id]?.ct ?? `site_st_${s.id.replace(/[^a-z0-9]+/g, '_')}`.slice(0, 30).replace(/_+$/, '');
+}
+
+// Which App Store custom product page a story page's button opens
+// (lib/appstore.ts PRODUCT_PAGES). Others use the default App Store page.
+const FAMILY_STORIES = new Set([
+  'noah-ark-and-rain',
+  'david-and-goliath',
+  'jonah-and-mercy',
+  'daniel-lions-den',
+  'jericho-the-quiet-march',
+  'through-the-sea-by-night',
+  'loaves-and-fishes',
+  'fiery-furnace',
+]);
+export function productPageFor(s: Story): ProductPage | undefined {
+  if (isPsalm(s)) return 'psalms';
+  if (isLong(s)) return 'adults';
+  if (FAMILY_STORIES.has(s.id)) return 'families';
+  return undefined;
 }
 
 export const isFree = (s: Story) => s.access === 'free';
