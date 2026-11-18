@@ -11,6 +11,7 @@ import {
   storyHref,
   passageKey,
   campaignFor,
+  productPageFor,
   isFree,
   isLong,
   sectionOf,
@@ -37,7 +38,7 @@ const passage = passageKey(story);
 const storyThemes = themes(story);
 const parts = partsOf(story);
 const related = relatedTo(story);
-const listen = appStoreLink(campaignFor(story));
+const listen = appStoreLink(campaignFor(story), productPageFor(story));
 
 const title = `${story.title} — Bible Sleep Story | Bible Bedtime`;
 const fullDescription = `${story.description} A ${length} ${free ? 'free ' : ''}audio story from ${story.reference} in the Bible Bedtimes app.`;
