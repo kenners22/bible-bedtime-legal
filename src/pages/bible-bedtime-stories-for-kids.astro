@@ -1,0 +1,71 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { stories, storyHref, isFree, minutes, FAMILY_STORIES } from '../lib/stories';
+
+// The stories the app's families page features (lib/stories.ts FAMILY_STORIES).
+const family = stories.filter((s) => FAMILY_STORIES.has(s.id));
+const free = stories.filter(isFree);
+
+const faqs = [
+  {
+    q: 'What age are these Bible stories for?',
+    a: 'Bible Bedtimes is rated 4+ on the App Store. The stories are calm and gentle, but they are written for grown-ups and families winding down together rather than for very young children on their own, so you may like to listen first. Every Premium story has a free two-minute sample.',
+  },
+  {
+    q: 'Are the stories word-for-word Bible readings?',
+    a: 'No. Each story is a calm retelling of a named passage, such as Daniel 6 for Daniel in the lions’ den, so it follows the Bible account in plain, quiet language. The Daily Scripture passage in the app is the King James text, if you want to read the verses themselves together.',
+  },
+  {
+    q: 'Can the story stop on its own when my child falls asleep?',
+    a: 'Yes. The free sleep timer stops the audio after up to 30 minutes, longer than any story on this page. With Premium you can also choose the end of the story, longer timers up to 10 hours, or All night (up to 10 hours), and download stories to play offline.',
+  },
+  {
+    q: 'Are the family stories free?',
+    a: `The ${family.length} stories on this page are part of Premium, and you can play a two-minute sample of each one free. Three complete stories are free to listen to in full: ${free.map((s) => s.title).join(', ')}. Bible Bedtimes itself is free to download on iPhone and iPad.`,
+  },
+];
+---
+<GuideLayout
+  title="Bible Bedtime Stories for Kids: Calm Stories to Listen to Together"
+  description="Calm Bible bedtime stories for kids and families to listen to together, from Noah to Daniel, with a sleep timer. Free to download on iPhone and iPad."
+  eyebrow="For families"
+  heading="Bible bedtime stories for kids"
+  intro={`${family.length} calm Bible stories that suit listening together at bedtime, from Noah’s ark to the fiery furnace. Each is a gentle retelling of a passage you can look up and read with your child.`}
+  crumb="Bible bedtime stories for kids"
+  campaign="site_kids"
+  faqs={faqs}
+  datePublished="2026-11-18"
+  ctaHeading="Listen together tonight"
+  ctaText="Calm Bible stories read aloud, with a sleep timer so the story stops once your child has drifted off. Free to download, with three complete stories free."
+>
+  <p>Bible Bedtimes is made for winding down at home. A simple way to use it: lights low, a story playing quietly, and the sleep timer set so the voice stops after your child has fallen asleep. It is not a lesson or a children’s Bible, just a calm way to end the day with Scripture.</p>
+
+  <h2>Stories that suit children</h2>
+  <p>These are well-known stories told at a gentle pace, easy to follow with your eyes closed. Each one is part of Premium, with a free two-minute sample.</p>
+  <ul class="mt-6 grid gap-3">
+    {family.map((s) => (
+      <li>
+        <a href={storyHref(s)} class="panel block px-5 py-4 hover:border-gold/40 transition-colors">
+          <span class="font-serif text-xl text-cream">{s.title}</span>
+          <span class="block text-sm text-cream/60">{s.reference} · {minutes(s)} min</span>
+          <span class="mt-1 block text-[15px] leading-relaxed text-cream/75">{s.description}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <h2>Start with the free stories</h2>
+  <p>Three complete stories are free, with no subscription: {free.map((s, i) => (
+    <>{i > 0 && (i === free.length - 1 ? ' and ' : ', ')}<a class="inline" href={storyHref(s)}>{s.title}</a></>
+  ))}. They are a good way to see whether the pace suits your family.</p>
+
+  <h2>Using the sleep timer</h2>
+  <ul class="bullets">
+    <li><strong>Free:</strong> a sleep timer of up to 30 minutes, longer than any of the stories on this page.</li>
+    <li><strong>Premium:</strong> stop at the end of the story, choose a timer of up to 10 hours, or pick All night (up to 10 hours) for continuous listening.</li>
+    <li><strong>Offline:</strong> Premium story downloads play without a connection, so the device can stay in airplane mode.</li>
+  </ul>
+
+  <h2>A note for parents</h2>
+  <p>Bible Bedtimes is rated 4+ on the App Store and works on iPhone and iPad. The stories are retold for grown-ups and families together, so you may want to listen to a sample first. For your own quiet time after the children are asleep, see the <a class="inline" href="/bible-sleep-stories/">Bible sleep stories for adults</a> and <a class="inline" href="/bedtime-prayers-for-adults/">bedtime prayers for adults</a>.</p>
+</GuideLayout>

@@ -180,6 +180,11 @@ test.describe('static output contract', () => {
       const hrefs = [...html.matchAll(/href="(https:\/\/apps\.apple\.com\/[^"]+)"/g)].map((m) => m[1].replaceAll('&amp;', '&'));
       for (const href of hrefs) {
         const url = new URL(href);
+        // The comparison page links each other app's own App Store page.
+        if (!url.pathname.endsWith('/id6773492861') && filePath.endsWith(path.join('christian-sleep-app-comparison', 'index.html'))) {
+          expect(url.pathname, href).toMatch(/^\/us\/app\/[a-z0-9-]+\/id\d+$/);
+          continue;
+        }
         expect(url.pathname, filePath).toBe('/app/apple-store/id6773492861');
         expect(url.searchParams.get('pt'), `${filePath} ${href}`).toBe('128800181');
         expect(url.searchParams.get('mt'), `${filePath} ${href}`).toBe('8');
@@ -188,17 +193,26 @@ test.describe('static output contract', () => {
         campaigns.add(ct);
       }
     }
-    for (const ct of ['site_header', 'site_home_hero', 'site_home_final', 'site_download_top', 'site_guide_sleep_stories', 'site_guide_verses_sleep', 'site_guide_psalms_sleep', 'site_guide_prayers']) {
+    for (const ct of ['site_header', 'site_home_hero', 'site_home_final', 'site_download_top', 'site_guide_sleep_stories', 'site_guide_verses_sleep', 'site_guide_psalms_sleep', 'site_guide_prayers', 'site_compare', 'site_kids']) {
       expect(campaigns.has(ct), ct).toBe(true);
     }
   });
 
   test('search guides are linked from the footer, carry FAQ + breadcrumb schema and quote KJV text', () => {
-    const guides = ['bible-sleep-stories', 'bible-verses-for-sleep', 'psalms-for-sleep', 'bedtime-prayers-for-adults'];
+    const guides = ['bible-sleep-stories', 'bible-verses-for-sleep', 'psalms-for-sleep', 'bedtime-prayers-for-adults', 'bible-bedtime-stories-for-kids', 'christian-sleep-app-comparison'];
     const home = fs.readFileSync(path.join(dist, 'index.html'), 'utf8');
+    const footer = home.match(/<footer[\s\S]*<\/footer>/)[0];
+    const llms = fs.readFileSync(path.join(dist, 'llms.txt'), 'utf8');
+    const sitemap = fs.readFileSync(path.join(dist, 'sitemap-0.xml'), 'utf8');
     for (const slug of guides) {
       const html = fs.readFileSync(path.join(dist, `${slug}/index.html`), 'utf8');
       expect(home, slug).toContain(`href="/${slug}/"`);
+      expect(footer, slug).toContain(`href="/${slug}/"`);
+      expect(llms, slug).toContain(`(https://biblebedtime.uk/${slug}/)`);
+      expect(sitemap, slug).toContain(`<loc>https://biblebedtime.uk/${slug}/</loc>`);
+      const article = [...html.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)].map((m) => JSON.parse(m[1])).find((d) => d['@type'] === 'Article');
+      expect(article?.dateModified, slug).toMatch(/^\d{4}-\d{2}-\d{2}/);
+      expect(article.dateModified >= article.datePublished, slug).toBe(true);
       expect(html, slug).toContain('"@type":"FAQPage"');
       expect(html, slug).toContain('"@type":"BreadcrumbList"');
       expect(html.match(/<h1[\s>]/g), slug).toHaveLength(1);
@@ -225,7 +239,7 @@ test.describe('static output contract', () => {
   test('llms.txt follows the llmstxt.org shape and links only to real pages', () => {
     const text = fs.readFileSync(path.join(dist, 'llms.txt'), 'utf8');
     const lines = text.split('\n');
-    expect(lines[0]).toBe('# Bible Bedtime');
+    expect(lines[0]).toBe('# Bible Bedtimes');
     expect(lines[2]).toMatch(/^> \S/);
     expect(text).toMatch(/^## /m);
     const links = [...text.matchAll(/^- \[[^\]]+\]\((https:\/\/[^)]+)\)/gm)].map((m) => m[1]);
@@ -234,7 +248,15 @@ test.describe('static output contract', () => {
       .filter((url) => url.startsWith('https://biblebedtime.uk/'))
       .filter((url) => !distPathForHref(new URL(url).pathname));
     expect(missing).toEqual([]);
-    expect(text).not.toMatch(/Android|5-star|free trial/i);
+    expect(text).not.toMatch(/Android|5-star/i);
+    expect(text).toContain('Bible Bedtimes is a different app from ‘Bedtime Bible’.');
+    expect(text).toContain('£4.99 / $4.99 a month or £34.99 / $34.99 a year, each with a 2-week free trial');
+    expect(text).toContain('Christian sleep app');
+    expect(text).toContain('All night (up to 10 hours)');
+    expect(text).toContain('Made in the UK');
+    expect(text).toContain('Contact: https://biblebedtime.uk/support/');
+    // The stories are retellings; only the Daily Scripture passage is KJV text.
+    expect(text).not.toMatch(/stories (are|in) (the )?(KJV|King James)/i);
   });
 
   test('home and About carry WebSite, Organization, app and AboutPage schema', () => {
@@ -244,8 +266,22 @@ test.describe('static output contract', () => {
           const data = JSON.parse(m[1]);
           return data['@graph'] ?? [data];
         });
-    const homeTypes = jsonLd('index.html').map((d) => d['@type']);
+    const home = jsonLd('index.html');
+    const homeTypes = home.map((d) => d['@type']);
     for (const type of ['WebSite', 'Organization', 'MobileApplication', 'FAQPage']) expect(homeTypes, type).toContain(type);
+    for (const type of ['WebSite', 'Organization']) {
+      const item = home.find((d) => d['@type'] === type);
+      expect(item.name, type).toBe('Bible Bedtimes');
+      expect(item.alternateName, type).toEqual(['Bible Bedtime', 'biblebedtime.uk']);
+    }
+    const app = home.find((d) => d['@type'] === 'MobileApplication');
+    expect(app.contentRating).toBe('4+');
+    expect(app.aggregateRating).toBeUndefined();
+    expect(app.featureList.length).toBeGreaterThan(3);
+    expect(app.screenshot.length).toBeGreaterThan(0);
+    for (const shot of app.screenshot) expect(fs.existsSync(path.join(dist, new URL(shot).pathname)), shot).toBe(true);
+    const subs = app.offers.filter((o) => o.category === 'subscription').map((o) => `${o.priceCurrency} ${o.price} ${o.priceSpecification.billingDuration}`);
+    expect(subs.sort()).toEqual(['GBP 34.99 P1Y', 'GBP 4.99 P1M', 'USD 34.99 P1Y', 'USD 4.99 P1M']);
     const about = jsonLd('about/index.html').find((d) => d['@type'] === 'AboutPage');
     expect(about?.mainEntity?.['@type']).toBe('Organization');
     expect(about?.mainEntity?.sameAs).toContain('https://apps.apple.com/gb/app/bible-bedtimes/id6773492861');

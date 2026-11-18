@@ -1,0 +1,148 @@
+---
+import GuideLayout from '../layouts/GuideLayout.astro';
+import { appStoreLink } from '../lib/appstore';
+import { NAME_NOTE, PRICE_TEXT, TRIAL_TEXT } from '../lib/site';
+import { stories, isLong } from '../lib/stories';
+
+const total = stories.length;
+const hourLong = stories.filter(isLong).length;
+const ourLink = appStoreLink('site_compare');
+
+// Everything said about the other apps comes from each app's own US App Store
+// listing (description, price and age rating), checked in November 2026.
+// Re-check before editing, and say nothing a listing does not say.
+interface App {
+  name: string;
+  developer: string;
+  href: string;
+  what: string;
+  sleep: string;
+  price: string;
+  rating: string;
+}
+
+const others: App[] = [
+  {
+    name: 'Abide: Bible Prayer Meditation',
+    developer: 'Guideposts Church Corporation',
+    href: 'https://apps.apple.com/us/app/abide-bible-prayer-meditation/id726031617',
+    what: 'A Christian meditation app. Its listing describes more than 2,000 meditations, more than 50 Bible book audio guides and audio of all chapters of the NIV Bible.',
+    sleep: 'More than 365 bedtime stories rooted in Scripture, including stories for kids, plus background music and nature sounds.',
+    price: 'Free to download, with a yearly subscription and a free trial. The listing does not state the price.',
+    rating: '4+',
+  },
+  {
+    name: 'Hallow: Prayer & Meditation',
+    developer: 'Hallow, Inc.',
+    href: 'https://apps.apple.com/us/app/hallow-prayer-meditation/id1405323394',
+    what: 'A Catholic prayer and meditation app with more than 10,000 audio-guided sessions, including Lectio Divina, the Rosary and Catholic Bible readings.',
+    sleep: 'Sleep Bible stories and Night Prayer from the Liturgy of the Hours, with downloads for offline listening.',
+    price: 'Free daily prayers. The listing gives US prices of $9.99 a month or $69.99 a year for the full app.',
+    rating: '4+',
+  },
+  {
+    name: 'Glorify: Devotional & Prayer',
+    developer: 'TUPOE LTD',
+    href: 'https://apps.apple.com/us/app/glorify-devotional-prayer/id1490587079',
+    what: 'A daily devotional and prayer app: a quote, a Bible passage and a devotional, then a guided Daily Walk with God, with courses, a journal and several Bible translations, including the KJV.',
+    sleep: 'Sleep and calming meditations based on Scripture.',
+    price: 'Free to download, with an auto-renewing subscription. The listing does not state the price.',
+    rating: '4+',
+  },
+  {
+    name: 'Calm',
+    developer: 'Calm.com, Inc.',
+    href: 'https://apps.apple.com/us/app/calm/id571800810',
+    what: 'A general app for sleep, meditation and relaxation, with breathing exercises, mindfulness programs, sleep sounds and music.',
+    sleep: 'More than 100 Sleep Stories, bedtime stories for adults read by well-known narrators, with new ones added each month.',
+    price: 'Free to download, with some programs free and an optional subscription. The listing does not state the price.',
+    rating: '4+',
+  },
+  {
+    name: 'Bedtime Bible: Christian Sleep',
+    developer: 'Godward LLC',
+    href: 'https://apps.apple.com/us/app/bedtime-bible-christian-sleep/id1672878800',
+    what: 'Reads a chapter of the Bible each night, followed by a reflection, a prayer and sleep sounds, so you work through the whole Bible one night at a time, with another chapter and a devotional each morning.',
+    sleep: 'A nightly chapter and prayer, then soothing sleep sounds.',
+    price: 'Free to download. The listing does not mention prices.',
+    rating: '12+',
+  },
+];
+
+const ours: App = {
+  name: 'Bible Bedtimes',
+  developer: 'Made in the UK, launched June 2026',
+  href: ourLink,
+  what: `Calm Bible stories read aloud: ${total} retellings of named passages from Genesis to the Gospels, episodes on Psalm 23 and Psalm 91, and tonight’s King James Scripture passage with a short Daily Teaching.`,
+  sleep: `${hourLong} hour-long stories. Premium adds sleep timers up to 10 hours, an end-of-story timer, All night (up to 10 hours) continuous listening and offline downloads.`,
+  price: `Free to download, with three complete stories, the Daily Scripture and Daily Teaching, a 30-minute sleep timer and a two-minute sample of every Premium story free. Premium is ${PRICE_TEXT}, each with a ${TRIAL_TEXT}.`,
+  rating: '4+',
+};
+
+const faqs = [
+  {
+    q: 'What is the best Christian sleep app?',
+    a: 'It depends on what helps you sleep. Abide, Hallow and Glorify centre on guided prayer and meditation, Bedtime Bible reads one Bible chapter a night, and Calm is a general sleep app. Bible Bedtimes is for calm Bible stories and Psalms read aloud, with hour-long and all-night listening.',
+  },
+  {
+    q: 'Is Bible Bedtimes the same as Bedtime Bible?',
+    a: 'No. Bible Bedtimes is a different app from ‘Bedtime Bible: Christian Sleep’, which is made by Godward LLC. Bedtime Bible reads a chapter a night through the whole Bible. Bible Bedtimes retells named Bible stories and Psalms calmly, and is made in the UK. Search the App Store for Bible Bedtimes, with an s.',
+  },
+  {
+    q: 'Are these Christian sleep apps free?',
+    a: `All six are free to download from the App Store. The listings for Abide, Hallow, Glorify and Calm describe a paid subscription alongside free content. Bible Bedtimes Premium is ${PRICE_TEXT}, each with a ${TRIAL_TEXT}, and Apple shows your local price before you subscribe.`,
+  },
+  {
+    q: 'Which Christian sleep app has stories for children?',
+    a: 'Abide’s listing mentions bedtime stories for kids. Bible Bedtimes is rated 4+, and families often listen together to stories such as Noah, David and Goliath, and Daniel in the Lions’ Den. Our page of Bible bedtime stories for kids lists the stories that suit children best.',
+  },
+];
+---
+<GuideLayout
+  title="Christian Sleep Apps Compared: Bible Bedtimes, Abide, Hallow, Glorify and Calm"
+  description="Bible Bedtimes, Abide, Hallow, Glorify, Calm and Bedtime Bible compared: what each offers for sleep and what is free, from their App Store pages."
+  eyebrow="Checked November 2026"
+  heading="Christian sleep apps compared"
+  intro="Six apps people find when they look for a Christian sleep app, set side by side. What we say about each one comes from its own App Store page, so you can check it for yourself."
+  crumb="Christian sleep apps compared"
+  campaign="site_compare"
+  faqs={faqs}
+  datePublished="2026-11-18"
+  ctaHeading="Try Bible Bedtimes tonight"
+  ctaText="Calm Bible stories and Psalms read aloud, with hour-long stories and all-night listening. Free to download, with three complete stories free."
+>
+  <h2>What makes Bible Bedtimes different</h2>
+  <ul class="bullets">
+    <li><strong>Stories and Psalms, not meditations or a reading plan.</strong> Each episode is a calm retelling of a named passage, such as <a class="inline" href="/stories/jesus-calms-the-storm/">Jesus Calms the Storm</a> (Mark 4:35–41) or <a class="inline" href="/stories/psalm-23-the-shepherd/">Psalm 23 — The Shepherd</a>, rather than a guided meditation or a chapter a night. The Daily Scripture passage is King James text; the stories are retellings, not word-for-word readings.</li>
+    <li><strong>Hour-long and all-night listening.</strong> {hourLong} hour-long stories weave several passages into one listen, and Premium’s All night (up to 10 hours) setting keeps stories playing.</li>
+    <li><strong>For families too.</strong> Rated 4+, with stories that suit listening together. See <a class="inline" href="/bible-bedtime-stories-for-kids/">Bible bedtime stories for kids</a>.</li>
+    <li><strong>A real free tier.</strong> Three complete stories, tonight’s Scripture and Daily Teaching, and a 30-minute sleep timer cost nothing.</li>
+  </ul>
+  <p>{NAME_NOTE} The similar-sounding Bedtime Bible: Christian Sleep is listed below with the others.</p>
+
+  <h2>The six apps, side by side</h2>
+  <p>App names, developers, prices and age ratings are as shown on each app’s US App Store page in November 2026. Features and prices change, so check the App Store before you subscribe.</p>
+
+  {[ours, ...others].map((app) => (
+    <section class="panel mt-6 p-6 sm:p-7" aria-labelledby={`app-${app.name.replace(/[^a-z]+/gi, '-').toLowerCase()}`}>
+      <h3 id={`app-${app.name.replace(/[^a-z]+/gi, '-').toLowerCase()}`} class="!mt-0">{app.name}</h3>
+      <div class="mt-1 text-sm text-cream/60">{app.developer}</div>
+      <dl class="mt-4 grid gap-3 text-[15px] leading-relaxed">
+        <div><dt class="font-semibold text-cream">What it is</dt><dd class="text-cream/75">{app.what}</dd></div>
+        <div><dt class="font-semibold text-cream">For sleep</dt><dd class="text-cream/75">{app.sleep}</dd></div>
+        <div><dt class="font-semibold text-cream">Price</dt><dd class="text-cream/75">{app.price}</dd></div>
+        <div><dt class="font-semibold text-cream">Age rating</dt><dd class="text-cream/75">{app.rating}</dd></div>
+      </dl>
+      <a class="inline mt-4 inline-block text-[15px]" href={app.href} rel={app === ours ? undefined : 'nofollow noopener'}>{app.name} on the App Store</a>
+    </section>
+  ))}
+
+  <h2>Which one suits you?</h2>
+  <ul class="bullets">
+    <li><strong>Guided Christian meditation:</strong> Abide, Hallow and Glorify are built around it.</li>
+    <li><strong>Catholic prayer, such as the Rosary or Night Prayer:</strong> Hallow.</li>
+    <li><strong>Reading through the whole Bible, a chapter a night:</strong> Bedtime Bible: Christian Sleep.</li>
+    <li><strong>A general sleep and relaxation app:</strong> Calm.</li>
+    <li><strong>Calm Bible stories and Psalms read aloud, all night if you like, for you or the whole family:</strong> Bible Bedtimes. Start with the <a class="inline" href="/bible-sleep-stories/">Bible sleep stories</a> or <a class="inline" href="/psalms-for-sleep/">Psalms for sleep</a>.</li>
+  </ul>
+</GuideLayout>

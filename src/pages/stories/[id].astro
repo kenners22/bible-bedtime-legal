@@ -40,7 +40,7 @@ const parts = partsOf(story);
 const related = relatedTo(story);
 const listen = appStoreLink(campaignFor(story), productPageFor(story));
 
-const title = `${story.title} — Bible Sleep Story | Bible Bedtime`;
+const title = `${story.title} — Bible Sleep Story | Bible Bedtimes`;
 const fullDescription = `${story.description} A ${length} ${free ? 'free ' : ''}audio story from ${story.reference} in the Bible Bedtimes app.`;
 const description = [...fullDescription].length <= 160 ? fullDescription : story.description;
 

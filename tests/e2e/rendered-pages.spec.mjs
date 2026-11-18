@@ -20,6 +20,8 @@ const astroRoutes = [
   '/bible-verses-for-sleep/',
   '/psalms-for-sleep/',
   '/bedtime-prayers-for-adults/',
+  '/bible-bedtime-stories-for-kids/',
+  '/christian-sleep-app-comparison/',
   '/stories/',
   '/stories/jesus-calms-the-storm/',
   '/stories/rest-listening-and-peace-1-hour/',
@@ -94,7 +96,7 @@ test.describe('rendered pages', () => {
 
     const preview = page.locator('main img').first();
     await expect(preview).toHaveAttribute('src', '/assets/bible-bedtime-logo-20260520.webp');
-    await expect(preview).toHaveAttribute('alt', 'Bible Bedtime moon and book logo');
+    await expect(preview).toHaveAttribute('alt', 'Bible Bedtimes moon and book logo');
     await expect(preview).toBeVisible();
   });
 

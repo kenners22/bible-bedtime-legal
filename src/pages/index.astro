@@ -7,14 +7,16 @@ import Footer from '../components/Footer.astro';
 
 import { APP_STORE_LISTING, appStoreLink } from '../lib/appstore';
 import { guides } from '../data/guides';
-import { SITE, WEBSITE_ID, ORGANIZATION_ID, organization } from '../lib/site';
-const title = 'Bible Bedtimes — Calm Bible Stories & Daily Scripture for iPhone and iPad';
-const description = 'Fall asleep to peaceful Bible stories and end the day with tonight’s Scripture and Daily Teaching. Free on iPhone and iPad, with three complete stories free.';
+import { SITE, WEBSITE_ID, ORGANIZATION_ID, PREMIUM, PRICE_TEXT, TRIAL_TEXT, abs, organization } from '../lib/site';
+import { stories, isLong } from '../lib/stories';
+const title = 'Bible Bedtimes: Christian Sleep App of Calm Bible Stories Read Aloud';
+const description = 'Bible Bedtimes is a Christian sleep app for iPhone and iPad: calm Bible stories read aloud, tonight’s Scripture and a Daily Teaching. Three stories free.';
+const hourLong = stories.filter(isLong).length;
 
 const facts = [
   { title: 'Three stories free', text: 'Complete stories, with no subscription needed.' },
   { title: 'Tonight’s Scripture', text: 'The King James passage and Daily Teaching, free.' },
-  { title: 'Sleep timer', text: 'Audio, video and a sleep timer in one place.' },
+  { title: 'Sleep timer', text: 'Up to 30 minutes free, or all night with Premium.' },
   { title: 'iPhone + iPad', text: 'The same calm app on both.' },
 ];
 
@@ -58,27 +60,41 @@ const freeStories = [
 ];
 
 const premium = [
-  'The full and growing Bible story library',
+  `The full Bible story library, including ${hourLong} hour-long stories`,
+  'Sleep timers up to 10 hours, end of story, and All night (up to 10 hours) listening',
   'Story audio downloads for offline listening',
-  'Preview any story with a two-minute sample first',
+];
+
+// The short facts block: what search and answer tools most often get wrong.
+const brief = [
+  { term: 'Free', detail: 'Free to download, with three complete stories, tonight’s King James Daily Scripture passage and Daily Teaching, and a sleep timer of up to 30 minutes.' },
+  { term: 'Premium', detail: `${PRICE_TEXT}, each with a ${TRIAL_TEXT}. Apple shows your local price before you subscribe.` },
+  { term: 'All night', detail: 'Premium adds sleep timers up to 10 hours, an end-of-story timer, All night (up to 10 hours) continuous listening and offline downloads.' },
+  { term: 'Hour-long stories', detail: `${hourLong} hour-long stories weave several passages into one unbroken listen.`, href: '/bible-sleep-stories/' },
+  { term: 'Psalms', detail: 'Psalm 23 and Psalm 91 episodes in Premium, with a free two-minute sample of each.', href: '/psalms-for-sleep/' },
+  { term: 'Families', detail: 'Stories such as Noah, David and Goliath, and Daniel in the Lions’ Den suit listening together. Rated 4+.', href: '/bible-bedtime-stories-for-kids/' },
 ];
 
 const faqs = [
   {
     q: 'Is Bible Bedtimes free?',
-    a: 'Yes, it is free to download on iPhone and iPad. Three complete Bible stories, plus tonight’s Scripture passage and Daily Teaching, are free. An optional Premium subscription opens the full story library and offline listening, and Apple shows the price and renewal terms before you subscribe.',
+    a: `Yes. It is free to download on iPhone and iPad, and three complete Bible stories, tonight’s King James Scripture passage, the Daily Teaching and a 30-minute sleep timer are free. Optional Premium is ${PRICE_TEXT}, each with a ${TRIAL_TEXT}. Apple shows your local price before you subscribe.`,
   },
   {
     q: 'What is Bible Bedtimes?',
-    a: 'Bible Bedtimes is an iPhone and iPad app of calm Bible stories to fall asleep to, from Genesis to the Gospels. Each evening it also gives you a King James Scripture passage and a short Daily Teaching, and a sleep timer stops the audio once you have drifted off.',
+    a: `Bible Bedtimes is a Christian sleep app for iPhone and iPad, made in the UK. It has calm Bible stories read aloud, from Genesis to the Gospels, including ${hourLong} hour-long stories and episodes on Psalm 23 and Psalm 91. Each evening it also gives you a King James Scripture passage and a short Daily Teaching.`,
   },
   {
     q: 'Which Bible translation does the app use?',
-    a: 'The Daily Scripture passages are from the King James Version, followed by that evening’s Daily Teaching, which stays close to the text. The stories themselves are calm retellings of named passages, such as Mark 4:35–41 for Jesus calming the storm, rather than new plots.',
+    a: 'The Daily Scripture passage is from the King James Version, followed by that evening’s Daily Teaching. The stories are calm retellings of named passages, such as Mark 4:35–41 for Jesus calming the storm. They follow the Bible account closely, but they are not word-for-word King James readings.',
   },
   {
-    q: 'Can I listen offline?',
-    a: 'Yes, with Premium. Premium members can download story audio and listen without a connection, which helps if you like to keep your phone in airplane mode at night. Each story page on this site shows whether that story is free or part of Premium.',
+    q: 'Can I listen all night?',
+    a: 'Yes, with Premium. Sleep timers run for up to 10 hours or to the end of the story, and All night (up to 10 hours) plays stories continuously. Premium also adds offline downloads, so your phone can stay in airplane mode. The free sleep timer runs for up to 30 minutes.',
+  },
+  {
+    q: 'Is Bible Bedtimes the same app as Bedtime Bible?',
+    a: 'No. Bible Bedtimes is a different app from ‘Bedtime Bible’, which comes from another developer. To find this one, search the App Store for Bible Bedtimes, with an s, or use the download buttons on this site. Our comparison of Christian sleep apps sets out how they differ.',
   },
 ];
 
@@ -94,6 +110,7 @@ const siteJsonLd = {
       '@type': 'WebSite',
       '@id': WEBSITE_ID,
       name: SITE.name,
+      alternateName: SITE.alternateName,
       url: SITE.url,
       inLanguage: 'en',
       description,
@@ -103,16 +120,48 @@ const siteJsonLd = {
     {
       '@type': 'MobileApplication',
       name: SITE.appName,
+      alternateName: SITE.alternateName[0],
       description,
       operatingSystem: 'iOS, iPadOS',
       applicationCategory: 'LifestyleApplication',
+      applicationSubCategory: 'Christian sleep stories',
+      contentRating: '4+',
+      featureList: [
+        'Three complete Bible stories free',
+        'Tonight’s King James Daily Scripture passage and Daily Teaching, free',
+        'Sleep timer up to 30 minutes, free',
+        `${hourLong} hour-long stories (Premium)`,
+        'Psalm 23 and Psalm 91 episodes (Premium)',
+        'Sleep timers up to 10 hours, end of story, and All night (up to 10 hours) listening (Premium)',
+        'Offline story audio downloads (Premium)',
+        'iPhone and iPad',
+      ],
+      screenshot: screens.map((sc) => abs(sc.img)),
       url: SITE.url,
       installUrl: APP_STORE_LISTING,
       sameAs: [APP_STORE_LISTING],
       image: SITE.logo,
       inLanguage: 'en',
       publisher: { '@id': ORGANIZATION_ID },
-      offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+      offers: [
+        ...(['GBP', 'USD'] as const).map((currency) => ({ '@type': 'Offer', name: 'Free download', price: '0', priceCurrency: currency })),
+        ...(['GBP', 'USD'] as const).flatMap((currency) =>
+          (['monthly', 'yearly'] as const).map((plan) => ({
+            '@type': 'Offer',
+            name: `Premium, ${plan}, with a ${TRIAL_TEXT}`,
+            category: 'subscription',
+            price: PREMIUM[plan][currency],
+            priceCurrency: currency,
+            eligibleRegion: { '@type': 'Country', name: currency === 'GBP' ? 'GB' : 'US' },
+            priceSpecification: {
+              '@type': 'UnitPriceSpecification',
+              price: PREMIUM[plan][currency],
+              priceCurrency: currency,
+              billingDuration: plan === 'monthly' ? 'P1M' : 'P1Y',
+            },
+          })),
+        ),
+      ],
     },
   ],
 };
@@ -217,7 +266,8 @@ const siteJsonLd = {
               <li class="flex gap-3 text-lg text-cream/80"><span aria-hidden="true" class="mt-1 text-gold">✦</span>{p}</li>
             ))}
           </ul>
-          <p class="mt-8 text-sm text-cream/60">Premium is optional. Apple shows any eligible offer, the price and renewal terms before you subscribe.</p>
+          <p class="mt-8 text-cream/75">{PRICE_TEXT}, each with a {TRIAL_TEXT}.</p>
+          <p class="mt-2 text-sm text-cream/60">Premium is optional. Apple shows your local price and renewal terms before you subscribe, and every Premium story has a free two-minute sample.</p>
         </div>
         <div class="flex justify-center gap-5">
           <img src="/assets/app/03-library.webp" alt="Bible Stories library showing free stories and Premium stories with two-minute samples" width="460" height="988" loading="lazy" decoding="async" class="w-[46%] max-w-[250px] h-auto drop-shadow-2xl" />
@@ -226,13 +276,31 @@ const siteJsonLd = {
       </div>
     </section>
 
+    <section aria-labelledby="brief-heading" class="py-20 md:py-28">
+      <div class="max-w-page mx-auto px-6 md:px-10">
+        <div class="max-w-2xl">
+          <p class="eyebrow">The facts</p>
+          <h2 id="brief-heading" class="mt-4 text-4xl md:text-5xl font-medium">Bible Bedtimes in brief.</h2>
+          <p class="mt-5 text-lg leading-relaxed text-cream/75">A Christian sleep app for iPhone and iPad, made in the UK and launched in June 2026.</p>
+        </div>
+        <dl class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {brief.map((b) => (
+            <div class="panel p-6">
+              <dt class="font-serif text-2xl text-gold-light">{b.href ? <a href={b.href} class="hover:text-gold">{b.term}</a> : b.term}</dt>
+              <dd class="mt-2 text-[15px] leading-relaxed text-cream/75">{b.detail}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
     <VerseOfTheDay />
 
     <section aria-labelledby="guides-heading" class="pb-20 md:pb-24">
       <div class="max-w-page mx-auto px-6 md:px-10">
         <p class="eyebrow">For the evening</p>
-        <h2 id="guides-heading" class="mt-4 text-4xl md:text-5xl font-medium">Scripture and prayer for bedtime.</h2>
-        <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <h2 id="guides-heading" class="mt-4 text-4xl md:text-5xl font-medium">Guides for bedtime.</h2>
+        <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {guides.map((g) => (
             <li>
               <a href={g.href} class="panel block h-full p-6 hover:border-gold/40 transition-colors">
