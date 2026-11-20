@@ -134,14 +134,28 @@ test.describe('site-wide head and body tags', () => {
     expect(read('privacy/index.html')).toContain('Cloudflare Web Analytics');
   });
 
-  test('psalms-for-sleep title and description fit the search snippet', () => {
+  test('psalms-for-sleep title and description match the before-bed searches and fit the snippet', () => {
     const html = read('psalms-for-sleep/index.html');
     const title = decode(html.match(/<title>([^<]+)<\/title>/)[1]);
     const description = decode(html.match(/<meta name="description" content="([^"]+)"/)[1]);
-    expect(title.toLowerCase()).toContain('psalms for sleep');
-    expect(title.toLowerCase()).toContain('bedtime psalms');
-    expect([...title].length).toBeLessThanOrEqual(60);
-    expect([...description].length).toBeLessThanOrEqual(160);
+    expect(title.toLowerCase()).toContain('psalms before bed');
+    expect(description.toLowerCase()).toContain('psalms to read before bed');
+    expect(description.toLowerCase()).toContain('night time psalms');
+    expect([...title].length).toBeLessThan(60);
+    expect([...description].length).toBeLessThan(155);
+  });
+
+  test('bible-verses-for-sleep targets verses about sleep and rest and answers what the Bible says', () => {
+    const html = read('bible-verses-for-sleep/index.html');
+    const title = decode(html.match(/<title>([^<]+)<\/title>/)[1]);
+    const description = decode(html.match(/<meta name="description" content="([^"]+)"/)[1]);
+    expect(title).toMatch(/^Bible Verses About Sleep and Rest/);
+    expect([...title].length).toBeLessThan(60);
+    expect(description).toContain('Bible verses about sleep and rest');
+    expect([...description].length).toBeLessThan(155);
+    expect(html).toContain('<h2 id="what-the-bible-says">What does the Bible say about sleep?</h2>');
+    const faq = jsonLd(html).find((d) => d['@type'] === 'FAQPage');
+    expect(faq.mainEntity[0].name).toBe('What does the Bible say about sleep?');
   });
 
   test('every verse on bible-verses-for-sleep is real KJV text from kjv.json and the count matches', () => {
@@ -150,12 +164,12 @@ test.describe('site-wide head and body tags', () => {
     const texts = new Set(Object.values(kjv).map((p) => `“${p.text}”`));
     for (const q of quotes) expect(texts.has(q), q).toBe(true);
     expect(quotes.length).toBeGreaterThanOrEqual(30);
-    expect(decode(html.match(/<h1\b[^>]*>([^<]+)<\/h1>/)[1])).toBe(`${quotes.length} Bible verses for sleep`);
+    expect(decode(html.match(/<h1\b[^>]*>([^<]+)<\/h1>/)[1])).toBe(`${quotes.length} Bible verses about sleep and rest`);
     expect(html.match(/<h2[^>]*>[^<]*\?<\/h2>/g)?.length ?? 0).toBeGreaterThanOrEqual(5);
   });
 });
 
-const faqPages = ['/', '/bible-stories/', '/bible-sleep-stories/', '/bible-verses-for-sleep/', '/psalms-for-sleep/', '/bedtime-prayers-for-adults/'];
+const faqPages = ['/', '/bible-stories/', '/bible-sleep-stories/', '/bible-verses-for-sleep/', '/psalms-for-sleep/', '/bedtime-prayers-for-adults/', '/bible-bedtime-stories-for-kids/', '/christian-sleep-app-comparison/'];
 
 test.describe('FAQ structured data', () => {
   for (const route of faqPages) {
@@ -189,4 +203,50 @@ test.describe('FAQ structured data', () => {
       }
     });
   }
+});
+
+test.describe('name, comparison and family pages', () => {
+  const ppid = (html, ct) =>
+    [...html.matchAll(/href="(https:\/\/apps\.apple\.com\/[^"]+)"/g)]
+      .map((m) => new URL(m[1].replaceAll('&amp;', '&')))
+      .filter((u) => u.searchParams.get('ct') === ct)
+      .map((u) => u.searchParams.get('ppid'));
+
+  test('the home page names a Christian sleep app, the prices and the different app with a similar name', () => {
+    const html = read('index.html');
+    const text = decode(html.replace(/<script.*?<\/script>/gs, '').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ');
+    expect(decode(html.match(/<title>([^<]+)<\/title>/)[1])).toMatch(/^Bible Bedtimes: Christian Sleep App/);
+    expect(text).toContain('Bible Bedtimes is a Christian sleep app');
+    expect(text).toContain('£4.99 / $4.99 a month or £34.99 / $34.99 a year, each with a 2-week free trial');
+    expect(text).toContain('All night (up to 10 hours)');
+    expect(text).toContain('Bible Bedtimes is a different app from ‘Bedtime Bible’');
+    expect(read('about/index.html')).toContain('Bible Bedtimes is a different app from ‘Bedtime Bible’.');
+  });
+
+  test('the comparison page is dated, links every app it compares and opens the adults product page', () => {
+    const html = read('christian-sleep-app-comparison/index.html');
+    expect(html).toContain('Checked November 2026');
+    for (const id of ['726031617', '1405323394', '1490587079', '571800810', '1672878800']) {
+      expect(html, id).toMatch(new RegExp(`href="https://apps\\.apple\\.com/us/app/[a-z0-9-]+/id${id}" rel="nofollow noopener"`));
+    }
+    const pages = ppid(html, 'site_compare');
+    expect(pages.length).toBeGreaterThan(0);
+    for (const p of pages) expect(p).toBe('1d9bac35-aca3-441c-9731-674d291d9b08');
+  });
+
+  test('the family page links every family story and opens the families product page', () => {
+    const html = read('bible-bedtime-stories-for-kids/index.html');
+    const family = ['noah-ark-and-rain', 'david-and-goliath', 'jonah-and-mercy', 'daniel-lions-den', 'jericho-the-quiet-march', 'through-the-sea-by-night', 'loaves-and-fishes', 'fiery-furnace'];
+    for (const id of family) expect(html, id).toContain(`href="/stories/${id}/"`);
+    const pages = ppid(html, 'site_kids');
+    expect(pages.length).toBeGreaterThan(0);
+    for (const p of pages) expect(p).toBe('722af402-73d0-48d1-be7f-f50c50aef4bf');
+  });
+
+  test('psalms-for-sleep links the Psalm 23 and Psalm 91 stories beside each psalm', () => {
+    const html = read('psalms-for-sleep/index.html');
+    const after = (heading, href) => html.indexOf(href, html.indexOf(heading)) < html.indexOf('<h2', html.indexOf(heading) + 1);
+    expect(after('2. Psalm 23', 'href="/stories/psalm-23-the-shepherd/"')).toBe(true);
+    expect(after('3. Psalm 91', 'href="/stories/psalm-91-under-the-shadow/"')).toBe(true);
+  });
 });

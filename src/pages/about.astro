@@ -2,10 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE, WEBSITE_ID, abs, organization } from '../lib/site';
+import { SITE, WEBSITE_ID, NAME_NOTE, abs, organization } from '../lib/site';
 
-const title = 'About | Bible Bedtime';
-const description = 'Bible Bedtime brings daily Scripture, thoughtful teaching and peaceful Bible stories into the rhythm of everyday life.';
+const title = 'About | Bible Bedtimes';
+const description = 'Bible Bedtimes is a Christian sleep app made in the UK, bringing daily Scripture, thoughtful teaching and peaceful Bible stories to the end of the day.';
 
 const values = [
   {
@@ -46,13 +46,17 @@ const aboutJsonLd = {
           Faith for Today.<br />Peace for Tonight.
         </h1>
         <p class="mt-6 text-cream/75 text-lg leading-relaxed">
-          Bible Bedtime began with a simple wish: to make space for God’s Word in the
+          Bible Bedtimes began with a simple wish: to make space for God’s Word in the
           everyday — a verse with your morning coffee, a devotional in a spare moment, a
           gentle story at the close of the day.
         </p>
         <p class="mt-4 text-cream/75 text-lg leading-relaxed">
           We bring daily Scripture, thoughtful teaching and timeless Bible stories
           together in one calm place, with room to listen, read and reflect.
+        </p>
+        <p class="mt-4 text-cream/75 text-lg leading-relaxed">
+          Bible Bedtimes is made in the UK and launched on iPhone and iPad in June 2026.
+          {NAME_NOTE} Look for “Bible Bedtimes”, with an s, on the App Store.
         </p>
       </div>
     </section>

@@ -11,7 +11,7 @@ interface Group { id: string; question: string; lead: string; verses: { ref: Ref
 const groups: Group[] = [
   {
     id: 'about-sleep',
-    question: 'What does the Bible say about sleep?',
+    question: 'Bible verses about sleep and rest',
     lead: 'Start here on an ordinary evening. Each of these links sleep to trust rather than to getting everything done.',
     verses: [
       { ref: 'Psalms 4:8', note: 'David wrote this after a day of pressure and criticism. The peace comes before the sleep, and the safety comes from God alone.' },
@@ -92,6 +92,10 @@ const count = groups.reduce((n, g) => n + g.verses.length, 0);
 
 const faqs = [
   {
+    q: 'What does the Bible say about sleep?',
+    a: 'The Bible treats sleep as a gift from God, not a reward for finishing everything: “he giveth his beloved sleep” (Psalm 127:2). It links peaceful sleep to trust (Psalm 4:8), reminds us that God never sleeps while he keeps us (Psalm 121:4), and also warns against laziness (Proverbs 6:9–11).',
+  },
+  {
     q: 'What is the best Bible verse for sleep?',
     a: 'Psalm 4:8 is the verse most people turn to: “I will both lay me down in peace, and sleep: for thou, LORD, only makest me dwell in safety.” David wrote it at the end of a hard day, and it ties sleep to trust in God rather than to circumstances.',
   },
@@ -110,16 +114,26 @@ const faqs = [
 ];
 ---
 <GuideLayout
-  title={`Bible Verses for Sleep: ${count} KJV Verses for Peace and Rest`}
-  description="Bible verses for sleep in the King James Version, grouped by need: peace at bedtime, anxiety at night, fear of the dark, sleepless nights and hard days."
+  title={`Bible Verses About Sleep and Rest: ${count} KJV Scriptures`}
+  description="What does the Bible say about sleep? Bible verses about sleep and rest in the KJV, with scriptures for peace, anxiety, fear and sleepless nights."
   eyebrow="Scripture for bedtime"
-  heading={`${count} Bible verses for sleep`}
-  intro="King James verses to read slowly at the end of the day: for lying down in peace, for a mind that will not settle, for fear in the dark, for the hours when sleep will not come, and for the morning after."
-  crumb="Bible verses for sleep"
+  heading={`${count} Bible verses about sleep and rest`}
+  intro={`What does the Bible say about sleep? That rest is a gift from God, and that we can lie down in peace because he keeps watch. Here are ${count} King James verses about sleep and rest, grouped by the kind of night you are having.`}
+  crumb="Bible verses about sleep and rest"
   campaign="site_guide_verses_sleep"
   faqs={faqs}
 >
   <p>Scripture does not promise that every night will be easy. It does keep returning to one idea: rest is something God gives, not something we earn by getting everything finished. These verses are grouped by the kind of night you are having, so you can go straight to the one you need.</p>
+
+  <h2 id="what-the-bible-says">What does the Bible say about sleep?</h2>
+  <p>Read across Scripture, a few plain ideas about sleep and rest keep coming back:</p>
+  <ul class="bullets">
+    <li><strong>Sleep is a gift.</strong> “He giveth his beloved sleep” (Psalm 127:2). See also Ecclesiastes 5:12.</li>
+    <li><strong>Peaceful sleep grows out of trust.</strong> “I will both lay me down in peace, and sleep” (Psalm 4:8). See also Psalm 3:5 and Proverbs 3:24.</li>
+    <li><strong>God keeps watch, so you can rest.</strong> “He that keepeth Israel shall neither slumber nor sleep” (Psalm 121:4).</li>
+    <li><strong>Rest is part of how God made us.</strong> God rested on the seventh day (Genesis 2:2–3), Jesus slept in the boat during the storm (Mark 4:38), and he told his tired disciples to “come ye yourselves apart … and rest a while” (Mark 6:31).</li>
+    <li><strong>Rest is not the same as idleness.</strong> Proverbs warns against loving sleep too much (Proverbs 6:9–11 and 20:13).</li>
+  </ul>
 
   <nav aria-label="Jump to a section" class="panel mt-8 px-6 py-5">
     <p class="font-semibold text-cream">Jump to</p>

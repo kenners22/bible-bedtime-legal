@@ -60,7 +60,7 @@ export function campaignFor(s: Story): string {
 
 // Which App Store custom product page a story page's button opens
 // (lib/appstore.ts PRODUCT_PAGES). Others use the default App Store page.
-const FAMILY_STORIES = new Set([
+export const FAMILY_STORIES = new Set([
   'noah-ark-and-rain',
   'david-and-goliath',
   'jonah-and-mercy',

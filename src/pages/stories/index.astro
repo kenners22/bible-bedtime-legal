@@ -12,14 +12,14 @@ const free = stories.filter(isFree);
 const groups = sections.map((s) => ({ ...s, stories: stories.filter((st) => sectionOf(st) === s.id) })).filter((g) => g.stories.length);
 const snapshot = new Date(catalog.snapshot).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
-const title = `All ${total} Bible Bedtime Stories — Old Testament, Gospels and Psalms`;
+const title = `All ${total} Bible Bedtimes Stories — Old Testament, Gospels and Psalms`;
 const description = `Every Bible story in the Bible Bedtimes app, with its passage, length and whether it is free. From Creation to the road to Emmaus, plus hour-long listens.`;
 
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Bible Bedtime stories',
+    name: 'Bible Bedtimes stories',
     description,
     url: abs('/stories/'),
     mainEntity: {
@@ -54,7 +54,7 @@ const jsonLd = [
           <span aria-current="page">Stories</span>
         </nav>
         <p class="eyebrow mt-8">The story library</p>
-        <h1 class="mt-4 font-medium leading-[1.05] text-[40px] sm:text-[54px]">Every Bible Bedtime story</h1>
+        <h1 class="mt-4 font-medium leading-[1.05] text-[40px] sm:text-[54px]">Every Bible Bedtimes story</h1>
         <p class="mt-6 text-lg md:text-xl leading-relaxed text-cream/80">
           There are {total} stories in Bible Bedtimes, each a calm retelling of a passage you can look up for yourself. {free.length} are complete and free: {free.map((s, i) => <>{i > 0 && (i === free.length - 1 ? ' and ' : ', ')}<a class="text-gold-light underline underline-offset-4" href={storyHref(s)}>{s.title}</a></>)}.
         </p>

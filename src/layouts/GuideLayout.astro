@@ -4,6 +4,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import AppCta from '../components/AppCta.astro';
 import { guides } from '../data/guides';
+import { lastModified } from '../lib/lastmod.mjs';
+import { SITE, ORGANIZATION_ID } from '../lib/site';
 
 export interface Faq { q: string; a: string }
 
@@ -16,11 +18,19 @@ interface Props {
   crumb: string;
   campaign: string;
   faqs: Faq[];
+  /** First published, YYYY-MM-DD. */
+  datePublished?: string;
+  ctaHeading?: string;
+  ctaText?: string;
 }
 
-const { title, description, eyebrow, heading, intro, crumb, campaign, faqs } = Astro.props;
+const { title, description, eyebrow, heading, intro, crumb, campaign, faqs, datePublished = '2026-09-18', ctaHeading, ctaText } = Astro.props;
 const url = new URL(Astro.url.pathname, Astro.site).href;
 const related = guides.filter((g) => g.href !== Astro.url.pathname);
+// The page's last change from git, as in the sitemap; the publish date without
+// full history, or when the page is newer than its last commit.
+const changed = lastModified(Astro.url.pathname);
+const dateModified = changed && new Date(changed) > new Date(datePublished) ? changed : datePublished;
 
 const jsonLd = [
   {
@@ -30,10 +40,10 @@ const jsonLd = [
     description,
     url,
     image: new URL('/assets/og-app-20260918.jpg', Astro.site).href,
-    datePublished: '2026-09-18',
-    dateModified: '2026-09-18',
-    author: { '@type': 'Organization', '@id': 'https://biblebedtime.uk/#organization', name: 'Bible Bedtime', url: 'https://biblebedtime.uk/' },
-    publisher: { '@type': 'Organization', '@id': 'https://biblebedtime.uk/#organization', name: 'Bible Bedtime', logo: { '@type': 'ImageObject', url: 'https://biblebedtime.uk/assets/bible-bedtime-logo-20260520.png' } },
+    datePublished,
+    dateModified,
+    author: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: SITE.name, url: SITE.url },
+    publisher: { '@type': 'Organization', '@id': ORGANIZATION_ID, name: SITE.name, logo: { '@type': 'ImageObject', url: SITE.logo } },
   },
   {
     '@context': 'https://schema.org',
@@ -74,7 +84,7 @@ const jsonLd = [
     <article class="guide max-w-3xl mx-auto px-6 md:px-10 py-14 md:py-20">
       <slot />
 
-      <AppCta campaign={campaign} />
+      <AppCta campaign={campaign} heading={ctaHeading} text={ctaText} />
 
       <section aria-labelledby="faq-heading" class="mt-16">
         <h2 id="faq-heading">Questions</h2>

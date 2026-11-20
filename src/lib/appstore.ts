@@ -30,6 +30,8 @@ const CAMPAIGN_PAGES: Record<string, ProductPage> = {
   site_guide_prayers: 'adults',
   site_guide_verses_sleep: 'daily',
   site_stories_index: 'families',
+  site_compare: 'adults',
+  site_kids: 'families',
 };
 
 export function appStoreLink(campaign: string, page?: ProductPage): string {
