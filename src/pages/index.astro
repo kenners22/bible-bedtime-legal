@@ -244,7 +244,7 @@ const siteJsonLd = {
               <img src={storyArt(s.id, 480)} srcset={`${storyArt(s.id, 480)} 480w, ${storyArt(s.id, 1040)} 1040w`} sizes="(min-width: 640px) 360px, 100vw" alt="" width="480" height="270" loading="lazy" decoding="async" class="aspect-video w-full object-cover" />
               <div class="p-6">
                 <p class="eyebrow">{s.ref}</p>
-                <h3 class="mt-2 h3-page"><a href={s.href} class="hover:text-gold-light">{s.title}</a></h3>
+                <h3 class="mt-2 h3-page"><a href={s.href} class="tap hover:text-gold-light">{s.title}</a></h3>
               </div>
             </li>
           ))}
@@ -286,7 +286,7 @@ const siteJsonLd = {
         <dl class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {brief.map((b) => (
             <div class="panel p-6">
-              <dt class="h3-page !text-gold-light">{b.href ? <a href={b.href} class="hover:text-gold">{b.term}</a> : b.term}</dt>
+              <dt class="h3-page !text-gold-light">{b.href ? <a href={b.href} class="tap hover:text-gold">{b.term}</a> : b.term}</dt>
               <dd class="mt-2 text-cream/[0.82]">{b.detail}</dd>
             </div>
           ))}

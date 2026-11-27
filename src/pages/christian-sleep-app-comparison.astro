@@ -145,7 +145,7 @@ const faqs = [
             <th scope="row" class="text-left font-normal px-[18px] py-[18px]">
               <span class="block font-serif font-semibold text-[21px] leading-[1.15] text-cream">{app.name}</span>
               <span class="mt-1.5 block text-cream/70">{app.developer}</span>
-              <a class="inline mt-2.5 inline-block" href={app.href} rel={app === ours ? undefined : 'nofollow noopener'}>{app.name} on the App Store</a>
+              <a class="inline tap mt-1" href={app.href} rel={app === ours ? undefined : 'nofollow noopener'}>{app.name} on the App Store</a>
             </th>
             <td class="px-[18px] py-[18px]">{app.what}</td>
             <td class="px-[18px] py-[18px]">{app.sleep}</td>
@@ -168,7 +168,7 @@ const faqs = [
         <div><dt class="font-semibold text-cream">Price</dt><dd class="mt-0.5 text-cream/[0.82]">{app.price}</dd></div>
         <div><dt class="font-semibold text-cream">Age rating</dt><dd class="mt-0.5 text-cream/[0.82]">{app.rating}</dd></div>
       </dl>
-      <a class="inline mt-4 inline-flex min-h-[44px] items-center small" href={app.href} rel={app === ours ? undefined : 'nofollow noopener'}>{app.name} on the App Store</a>
+      <a class="inline tap mt-2 small" href={app.href} rel={app === ours ? undefined : 'nofollow noopener'}>{app.name} on the App Store</a>
     </section>
   ))}
   </div>

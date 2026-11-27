@@ -88,7 +88,7 @@ const breadcrumbJsonLd = {
         <ul class="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {collections.map((item) => (
             <li class="panel p-7 flex flex-col gap-3">
-              <h3 class="h3-page"><a href={`/stories/#${item.id}`} class="hover:text-gold-light">{item.title}</a> <span class="font-sans small font-normal text-cream/70">· {item.count}</span></h3>
+              <h3 class="h3-page"><a href={`/stories/#${item.id}`} class="tap hover:text-gold-light">{item.title}</a> <span class="font-sans small font-normal text-cream/70">· {item.count}</span></h3>
               <p class="text-cream/[0.82]">{item.description}</p>
               <p class="text-cream/[0.82]">Including {item.examples.map((e, i) => <>{i > 0 && (i === item.examples.length - 1 ? ' and ' : ', ')}<a href={storyHref(e)} class="inline">{e.title}</a></>)}.</p>
             </li>

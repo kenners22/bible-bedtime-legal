@@ -77,7 +77,7 @@ const jsonLd = [
               <li class="flex flex-col gap-4 py-5 sm:flex-row sm:items-start sm:gap-5">
                 <a href={storyHref(s)} tabindex="-1" aria-hidden="true" class="shrink-0"><img src={storyArt(s.id, 480)} alt="" width="480" height="270" loading="lazy" decoding="async" class="aspect-video w-full sm:w-[176px] rounded-[14px] border border-cream/[0.12] object-cover" /></a>
                 <div class="min-w-0">
-                  <h3 class="h3-page"><a href={storyHref(s)} class="hover:text-gold-light">{s.title}</a></h3>
+                  <h3 class="h3-page"><a href={storyHref(s)} class="tap hover:text-gold-light">{s.title}</a></h3>
                   <p class="mt-1 small text-cream/70">{s.reference} · {lengthLabel(s)} · {isFree(s) ? 'Free' : 'Premium'}</p>
                   <p class="mt-2 text-cream/[0.82]">{s.description}</p>
                 </div>

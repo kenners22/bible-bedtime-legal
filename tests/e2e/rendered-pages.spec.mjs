@@ -36,6 +36,8 @@ const astroRoutes = [
 const englishChromeRoutes = astroRoutes.filter((route) => route !== '/privacy/bible-bedtime-espanol-ios/');
 const allRoutes = [...astroRoutes, '/app/', '/platform-info/', '/callback/'];
 const viewports = [
+  { width: 320, height: 800 },
+  { width: 360, height: 800 },
   { width: 375, height: 900 },
   { width: 768, height: 1024 },
   { width: 1280, height: 900 },
@@ -67,9 +69,17 @@ test.describe('rendered pages', () => {
 
         expect(overflow.scrollWidth).toBeLessThanOrEqual(overflow.clientWidth + 1);
 
+        // On a phone the header's menu button sits wholly inside the page.
+        const menuButton = page.locator('body > header .menu-btn');
+        if (viewport.width < 1024 && await menuButton.count()) {
+          const box = await menuButton.boundingBox();
+          expect(box.x + box.width, 'menu button right edge').toBeLessThanOrEqual(overflow.clientWidth);
+          expect(Math.round(box.height)).toBeGreaterThanOrEqual(44);
+        }
+
         // Baselines are only rewritten on demand (UPDATE_BASELINE=1 npm test),
         // never as a side effect of a normal run.
-        if (viewport.width !== 1440 && process.env.UPDATE_BASELINE) {
+        if ([375, 768, 1280].includes(viewport.width) && process.env.UPDATE_BASELINE) {
           await page.screenshot({
             path: path.join(baselineDir, `${safeName(route)}-${viewport.width}.png`),
             fullPage: true,

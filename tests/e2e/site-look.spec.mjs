@@ -281,3 +281,62 @@ test.describe('verses', () => {
     expect(textOf(read('daily-scriptures/index.html'))).toContain('“This is the day which the LORD hath made; we will rejoice and be glad in it.” — Psalm 118:24 (KJV)');
   });
 });
+
+test.describe('after review', () => {
+  const tapPages = ['/', '/bible-stories/', '/stories/', '/bible-sleep-stories/', '/bedtime-prayers-for-adults/', '/bible-verses-for-sleep/', '/christian-sleep-app-comparison/'];
+  for (const width of [390, 1280]) {
+    test(`links that stand on their own are 44px tall or more at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      const short = [];
+      for (const route of tapPages) {
+        await gotoLocal(page, route);
+        const found = await page.locator('a[href]').evaluateAll((links) => links
+          // Links inside a sentence are the one exception: a paragraph, or a bullet in the running text.
+          .filter((a) => !a.closest('p') && !(a.closest('ul.bullets') && !a.closest('nav')))
+          .filter((a) => a.getClientRects().length > 0)
+          .map((a) => ({ text: a.textContent.trim().slice(0, 40), h: a.getBoundingClientRect().height }))
+          .filter((l) => l.h < 43.5));
+        for (const l of found) short.push(`${route} "${l.text}" ${Math.round(l.h)}px`);
+      }
+      expect(short).toEqual([]);
+    });
+  }
+
+  test('with JavaScript off, the five header links show on a phone', async ({ browser }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    await gotoLocal(page, '/');
+    const links = page.locator('#site-menu a');
+    await expect(links).toHaveText(['Bible Stories', 'Daily Scriptures', 'Devotionals', 'App', 'About']);
+    for (const link of await links.all()) await expect(link).toBeVisible();
+    await expect(page.locator('body > header .menu-btn')).toBeHidden();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+    await context.close();
+  });
+
+  test('widening the window with the menu open keeps the focus in the header', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await gotoLocal(page, '/');
+    await page.locator('body > header .menu-btn').click();
+    await expect(page.locator('#site-menu a').first()).toBeFocused();
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await expect(page.locator('#site-menu')).toBeHidden();
+    await expect(page.locator('body > header nav[aria-label="Primary"] a').first()).toBeFocused();
+  });
+
+  test('the 404 page has no canonical address', () => {
+    const html = read('404.html');
+    expect(html).not.toContain('rel="canonical"');
+    expect(html).not.toContain('og:url');
+    expect(html).toContain('<meta name="robots" content="noindex, follow">');
+  });
+
+  test('the scan code script holds the same App Store link the download page builds', () => {
+    const script = fs.readFileSync(path.join(root, 'scripts/download-qr.sh'), 'utf8');
+    const fromScript = script.match(/^url='([^']+)'$/m)[1];
+    const fromPage = decode(read('download/index.html').match(/data-link="([^"]+)"/)[1]);
+    expect(fromScript).toBe(fromPage);
+    expect(new URL(fromScript).searchParams.get('ct')).toBe('site_download_qr');
+  });
+});
+

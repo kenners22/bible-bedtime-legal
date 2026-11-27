@@ -172,3 +172,11 @@
       linear-gradient(180deg, rgba(11, 31, 54, 0.35) 0%, #0B1F36 100%);
   }
 }
+
+/* A link that stands on its own (not inside a sentence): a target at least
+   44px tall, without changing its words or where it sits. */
+.tap {
+  display: inline-flex !important;
+  align-items: center;
+  min-height: 44px;
+}

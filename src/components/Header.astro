@@ -25,14 +25,14 @@ const navLinks = isSpanish
 const name = isSpanish ? 'Bible Bedtime' : 'Bible Bedtimes';
 ---
 <header class:list={["site-header sticky top-0 z-50 border-b border-cream/[0.12]", isSpanish && "is-es"]}>
-  <div class="wrap flex h-[60px] lg:h-16 items-center gap-2.5 sm:gap-6 lg:gap-9">
-    <a href="/" class="brand mr-auto flex min-h-[44px] items-center gap-[9px] sm:gap-3 shrink-0" aria-label={isSpanish ? 'Inicio de Bible Bedtime' : 'Bible Bedtimes home'}>
+  <div class="wrap head-row flex h-[60px] lg:h-16 items-center sm:gap-6 lg:gap-9">
+    <a href="/" class="brand mr-auto flex min-h-[44px] min-w-0 items-center sm:gap-3" aria-label={isSpanish ? 'Inicio de Bible Bedtime' : 'Bible Bedtimes home'}>
       <img
         src="/assets/bible-bedtimes-mark-20261127.webp"
         alt=""
         width="40"
         height="40"
-        class="h-8 w-8 lg:h-10 lg:w-10"
+        class="brand-mark h-8 w-8 shrink-0 lg:h-10 lg:w-10"
       />
       <span class="brand-name whitespace-nowrap font-serif font-semibold leading-none text-cream">{name}</span>
     </a>
@@ -50,7 +50,7 @@ const name = isSpanish ? 'Bible Bedtime' : 'Bible Bedtimes';
 
     <button
       type="button"
-      class="menu-btn lg:hidden -mr-2 grid h-11 w-11 shrink-0 place-items-center rounded-full text-cream hover:text-gold-light"
+      class="menu-btn lg:hidden grid h-11 w-11 shrink-0 place-items-center rounded-full text-cream hover:text-gold-light"
       aria-expanded="false"
       aria-controls="site-menu"
       aria-label={isSpanish ? 'Menú' : 'Menu'}
@@ -75,6 +75,16 @@ const name = isSpanish ? 'Bible Bedtime' : 'Bible Bedtimes';
     </nav>
   </div>
   <div class="menu-scrim lg:hidden" hidden></div>
+  <noscript>
+    <style>
+      /* Without JavaScript the menu button can't open the panel, so the five
+         links show under the bar instead, as they always did. */
+      @media (max-width: 1023px) {
+        .site-header .menu-btn { display: none !important; }
+        .site-header #site-menu { display: block !important; position: static; }
+      }
+    </style>
+  </noscript>
 </header>
 
 <script is:inline>
@@ -96,11 +106,18 @@ const name = isSpanish ? 'Bible Bedtime' : 'Bible Bedtimes';
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') setOpen(false, true);
     });
-    // Close it when focus leaves the header, and when the window grows to the wide layout.
+    // Close it when focus leaves the header.
     header.addEventListener('focusout', (event) => {
       if (button.getAttribute('aria-expanded') === 'true' && !header.contains(event.relatedTarget) && event.relatedTarget) setOpen(false, false);
     });
-    matchMedia('(min-width: 1024px)').addEventListener('change', (event) => { if (event.matches) setOpen(false, false); });
+    // Close it when the window grows to the wide layout. If the focus was in
+    // the menu, move it to the first link in the bar so it isn't lost.
+    matchMedia('(min-width: 1024px)').addEventListener('change', (event) => {
+      if (!event.matches || button.getAttribute('aria-expanded') !== 'true') return;
+      const hadFocus = menu.contains(document.activeElement);
+      setOpen(false, false);
+      if (hadFocus) header.querySelector('nav[aria-label] a').focus();
+    });
   })();
 </script>
 
@@ -137,14 +154,34 @@ const name = isSpanish ? 'Bible Bedtime' : 'Bible Bedtimes';
   .site-menu[hidden], .menu-scrim[hidden] { display: none; }
   .is-open .menu-open-icon { display: none; }
   .is-open .menu-close-icon { display: block; }
-  /* The narrowest phones: keep the name, the button and the menu on one row. */
-  /* The Spanish button's words are longer. */
+  /* Phones: the name, the button and the menu button stay on one row from
+     320px up. First the gaps and side padding shrink, then the name, then the
+     button's side padding. Nothing is hidden and nothing wraps. */
+  @media (max-width: 639px) {
+    .head-row { gap: 10px; }
+    .brand { gap: 9px; }
+    .menu-btn { margin-right: -8px; }
+  }
   @media (max-width: 399px) {
-    .is-es .brand-name { font-size: 18px; }
-    .is-es .head-btn { padding: 0 12px; font-size: 15px; }
+    .head-row { gap: 6px; padding-left: 14px; padding-right: 14px; }
+    .brand { gap: 7px; }
+    .brand-name { font-size: 18px; }
+    .head-btn { padding: 0 14px; }
+    .menu-btn { margin-right: -6px; }
   }
   @media (max-width: 359px) {
-    .brand-name { font-size: 18px; }
-    .head-btn { padding: 0 12px; font-size: 15px; }
+    .head-row { gap: 4px; padding-left: 12px; padding-right: 12px; }
+    .brand { gap: 6px; }
+    .brand-mark { width: 28px; height: 28px; }
+    .brand-name { font-size: 17px; }
+    .head-btn { padding: 0 10px; font-size: 15px; }
+  }
+  /* The Spanish button's words are longer. */
+  @media (max-width: 399px) {
+    .is-es .head-btn { padding: 0 10px; font-size: 15px; }
+  }
+  @media (max-width: 359px) {
+    .is-es .brand-name { font-size: 16px; }
+    .is-es .head-btn { padding: 0 8px; font-size: 14px; }
   }
 </style>
