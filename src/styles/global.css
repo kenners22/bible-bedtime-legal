@@ -180,3 +180,17 @@
   align-items: center;
   min-height: 44px;
 }
+
+/* The same 44px target for a link that must stay in its line (a count after
+   it, a bullet beside it, a title level with its neighbours): padding above
+   and below the words, which leaves the line itself as it was. The words'
+   own box is about 1.2em tall. */
+.tap-line {
+  padding-top: max(0px, calc(22.5px - 0.6em));
+  padding-bottom: max(0px, calc(22.5px - 0.6em));
+}
+/* A list of such links: items far enough apart that two links' targets
+   never overlap, and the same gap whether an item takes one line or two. */
+.tap-list > li + li {
+  margin-top: 18px !important;
+}

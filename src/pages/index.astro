@@ -286,7 +286,7 @@ const siteJsonLd = {
         <dl class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {brief.map((b) => (
             <div class="panel p-6">
-              <dt class="h3-page !text-gold-light">{b.href ? <a href={b.href} class="tap hover:text-gold">{b.term}</a> : b.term}</dt>
+              <dt class="h3-page !text-gold-light">{b.href ? <a href={b.href} class="tap-line hover:text-gold">{b.term}</a> : b.term}</dt>
               <dd class="mt-2 text-cream/[0.82]">{b.detail}</dd>
             </div>
           ))}

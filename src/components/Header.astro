@@ -80,6 +80,7 @@ const name = isSpanish ? 'Bible Bedtime' : 'Bible Bedtimes';
       /* Without JavaScript the menu button can't open the panel, so the five
          links show under the bar instead, as they always did. */
       @media (max-width: 1023px) {
+        .site-header { position: relative !important; }
         .site-header .menu-btn { display: none !important; }
         .site-header #site-menu { display: block !important; position: static; }
       }
