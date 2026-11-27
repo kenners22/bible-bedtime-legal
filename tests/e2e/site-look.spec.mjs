@@ -291,12 +291,13 @@ test.describe('after review', () => {
       for (const route of tapPages) {
         await gotoLocal(page, route);
         const found = await page.locator('a[href]').evaluateAll((links) => links
-          // Links inside a sentence are the one exception: a paragraph, or a list item or
-          // note whose words go on around the link. Lists that are only links (in a nav) count.
+          // Links inside a sentence are the one exception: a link in a paragraph, or one whose
+          // own parent has words of its own beside it. A title alone in a heading or a bullet
+          // that is only a link is pressed on its own, so it is checked.
           .filter((a) => {
             if (a.closest('p')) return false;
-            const block = a.closest('li, aside');
-            return !(block && !a.closest('nav') && block.textContent.trim() !== a.textContent.trim());
+            const words = [...a.parentElement.childNodes].some((n) => n.nodeType === Node.TEXT_NODE && /\p{L}/u.test(n.textContent));
+            return !words;
           })
           .filter((a) => a.getClientRects().length > 0)
           .map((a) => ({ text: a.textContent.trim().slice(0, 40), h: a.getBoundingClientRect().height }))
