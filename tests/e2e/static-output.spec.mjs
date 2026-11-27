@@ -184,6 +184,13 @@ test.describe('static output contract', () => {
     expect(footerPrivacy('privacy/bible-bedtime-espanol-ios/index.html')).toEqual(['/privacy/bible-bedtime-espanol-ios/']);
   });
 
+  test('/privacy/ points app users to the English app policy', () => {
+    const html = fs.readFileSync(path.join(dist, 'privacy/index.html'), 'utf8');
+    const main = html.match(/<main[\s\S]*<\/main>/)[0];
+    expect(main).toContain('Looking for the Bible Bedtimes iPhone and iPad app policy?');
+    expect(main).toContain('href="/privacy/bible-bedtimes-ios/">Bible Bedtimes iOS Privacy Policy</a>');
+  });
+
   test('the Spanish app policy stays linked from the English pages a visitor can reach', () => {
     for (const rel of ['privacy/index.html', 'privacy/bible-bedtimes-ios/index.html']) {
       const html = fs.readFileSync(path.join(dist, rel), 'utf8');
