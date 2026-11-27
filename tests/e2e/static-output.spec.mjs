@@ -41,6 +41,7 @@ const fontPages = [
   'download/index.html',
   'terms/index.html',
   'privacy/index.html',
+  'privacy/bible-bedtimes-ios/index.html',
   'privacy/bible-bedtime-espanol-ios/index.html',
   'app/index.html',
   'platform-info/index.html',
@@ -152,6 +153,48 @@ test.describe('static output contract', () => {
     expect(html).toContain('https://biblebedtime.uk/privacy/bible-bedtime-espanol-ios/');
     expect(html).not.toContain('OAuth tokens');
     expect(html).not.toContain('official TikTok profile');
+  });
+
+  test('English iOS privacy page exists and covers the app, not the publishing accounts', () => {
+    const html = fs.readFileSync(path.join(dist, 'privacy/bible-bedtimes-ios/index.html'), 'utf8');
+
+    expect(html).toContain('<html lang="en">');
+    expect(html.match(/<h1[^>]*>([^<]+)<\/h1>/)[1]).toBe('Privacy policy');
+    expect(html).toContain('<title>Bible Bedtimes iOS Privacy Policy</title>');
+    expect(html).toContain('https://biblebedtime.uk/privacy/bible-bedtimes-ios/');
+    expect(html).toContain('uk.biblebedtime</code>');
+    expect(html).toContain('Last updated: 27 November 2026');
+    expect(html).toContain('sends no usage counts');
+    expect(html).toContain('href="/support/"');
+    expect(html).toContain('href="/privacy/bible-bedtime-espanol-ios/"');
+    expect(html).toContain('href="/privacy/"');
+    expect(html).not.toContain('OAuth tokens');
+    expect(html).not.toContain('official TikTok profile');
+  });
+
+  test('footer Privacy opens the English app policy on English pages and the Spanish one on Spanish pages', () => {
+    const footerPrivacy = (rel) => {
+      const html = fs.readFileSync(path.join(dist, rel), 'utf8');
+      const footer = html.match(/<footer[\s\S]*<\/footer>/)[0];
+      return [...footer.matchAll(/href="(\/privacy\/[^"]*)"/g)].map((m) => m[1]);
+    };
+    for (const rel of ['index.html', 'terms/index.html', 'privacy/index.html', 'privacy/bible-bedtimes-ios/index.html']) {
+      expect(footerPrivacy(rel), rel).toEqual(['/privacy/bible-bedtimes-ios/']);
+    }
+    expect(footerPrivacy('privacy/bible-bedtime-espanol-ios/index.html')).toEqual(['/privacy/bible-bedtime-espanol-ios/']);
+  });
+
+  test('the Spanish app policy stays linked from the English pages a visitor can reach', () => {
+    for (const rel of ['privacy/index.html', 'privacy/bible-bedtimes-ios/index.html']) {
+      const html = fs.readFileSync(path.join(dist, rel), 'utf8');
+      expect(html, rel).toContain('href="/privacy/bible-bedtime-espanol-ios/"');
+    }
+    const llms = fs.readFileSync(path.join(dist, 'llms.txt'), 'utf8');
+    const sitemap = fs.readFileSync(path.join(dist, 'sitemap-0.xml'), 'utf8');
+    for (const slug of ['privacy/bible-bedtimes-ios', 'privacy/bible-bedtime-espanol-ios']) {
+      expect(llms, slug).toContain(`(https://biblebedtime.uk/${slug}/)`);
+      expect(sitemap, slug).toContain(`<loc>https://biblebedtime.uk/${slug}/</loc>`);
+    }
   });
 
   test('English app acquisition links point to the verified iOS listing while legacy /app remains intact', () => {

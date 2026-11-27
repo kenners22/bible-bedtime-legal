@@ -51,6 +51,7 @@ export const GET: APIRoute = () => {
     `- [Support](${abs('/support/')}): subscriptions, restoring purchases, playback and how to get in touch`,
     `- [Terms of Service](${abs('/terms/')})`,
     `- [Privacy Policy](${abs('/privacy/')}): for the official publishing accounts`,
+    `- [Bible Bedtimes privacy (iOS)](${abs('/privacy/bible-bedtimes-ios/')}): privacy policy for the English iPhone and iPad app`,
     `- [Bible Bedtime Español privacy (iOS)](${abs('/privacy/bible-bedtime-espanol-ios/')}): privacy policy for the Spanish app, in Spanish`,
     '',
     `Contact: ${abs('/support/')}`,
