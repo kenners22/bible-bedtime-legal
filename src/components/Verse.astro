@@ -4,19 +4,22 @@ import kjv from '../data/kjv.json';
 interface Props {
   ref: keyof typeof kjv;
   numbers?: boolean;
+  /** 'lamp' is the page's one cream card; every other verse sits on a night panel. */
+  kind?: 'lamp' | 'night';
 }
 
-const { ref, numbers = false } = Astro.props;
+const { ref, numbers = false, kind = 'lamp' } = Astro.props;
 const passage = kjv[ref];
 if (!passage) throw new Error(`Missing KJV passage: ${ref}`);
+const lamp = kind === 'lamp';
 ---
-<figure class="parchment-card px-6 py-6 sm:px-8 sm:py-7">
-  <blockquote class="font-serif text-[21px] sm:text-[23px] leading-relaxed text-parchment-ink/90">
+<figure class:list={[lamp ? 'parchment-card verse-lamp' : 'night-panel verse-night', 'px-5 py-[22px] sm:px-8 sm:py-7']}>
+  <blockquote class:list={['font-serif font-medium text-[22px] sm:text-[24px] leading-[1.5]', lamp ? 'text-parchment-ink' : 'text-parchment']}>
     {numbers
       ? passage.verses.map((v) => (
-          <span><sup class="mr-1 font-sans text-[11px] font-semibold text-[#7a4f16]">{v.v}</sup>{v.t} </span>
+          <span><sup class:list={['mr-1 font-sans text-[12px] font-semibold', lamp ? 'text-bronze' : 'text-gold-light']}>{v.v}</sup>{v.t} </span>
         ))
       : <>&ldquo;{passage.text}&rdquo;</>}
   </blockquote>
-  <figcaption class="mt-4 text-sm font-semibold tracking-wide text-[#7a4f16]">{passage.reference} · KJV</figcaption>
+  <figcaption class:list={['mt-4 small font-semibold tracking-wide', lamp ? 'text-bronze' : 'text-gold-light']}>{passage.reference} · KJV</figcaption>
 </figure>

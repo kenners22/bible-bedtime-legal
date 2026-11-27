@@ -17,42 +17,42 @@ const appStore = appStoreLink('site_home_hero');
   <!-- Night-navy wash, as on the App Store screenshots: art glows through at the top, settles into the app navy. -->
   <div aria-hidden="true" class="hero-wash absolute inset-0 -z-10"></div>
 
-  <div class="max-w-page mx-auto px-6 md:px-10 pt-14 pb-16 md:pt-20 lg:pt-24 lg:pb-24 grid gap-14 lg:grid-cols-[1.05fr_0.95fr] items-center">
+  <div class="wrap pt-10 pb-12 md:pt-20 lg:pt-[84px] lg:pb-24 grid gap-9 lg:gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center">
     <div>
       <p class="eyebrow">Bible Bedtimes · Christian sleep app for iPhone and iPad</p>
-      <h1 class="mt-5 font-serif font-medium leading-[1.02] text-[46px] sm:text-[64px] lg:text-[76px] max-w-[640px]">
+      <h1 class="mt-4 sm:mt-5 font-serif font-medium leading-[1.02] text-[46px] sm:text-[64px] lg:text-[76px] max-w-[640px]">
         A calmer way<br />
         <span class="text-gold-light">to end the day.</span>
       </h1>
-      <p class="mt-6 max-w-[540px] text-lg md:text-xl leading-relaxed text-cream/80">
+      <p class="lead mt-4 sm:mt-6 max-w-[34em]">
         Bible Bedtimes is a Christian sleep app of calm Bible stories read aloud, with tonight’s Scripture passage and a gentle Daily Teaching, together in one quiet app.
       </p>
-      <div class="mt-9 flex flex-wrap gap-4">
-        <a href={appStore} class="btn-gold rounded-full px-7 py-4 text-[17px]">Download on the App Store</a>
-        <a href="#inside" class="btn-outline rounded-full px-7 py-4 text-[17px]">See inside the app</a>
+      <div class="mt-7 sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-[14px]">
+        <a href={appStore} class="btn-gold">Download on the App Store</a>
+        <a href="#inside" class="btn-outline">See inside the app</a>
       </div>
-      <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-cream/70">
-        <li class="flex items-center gap-2"><span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-gold"></span>Free to download</li>
-        <li class="flex items-center gap-2"><span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-gold"></span>Three complete stories free</li>
-        <li class="flex items-center gap-2"><span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-gold"></span>Optional Premium</li>
+      <ul class="mt-6 flex flex-col sm:flex-row sm:flex-wrap gap-x-[22px] gap-y-2 small text-cream/[0.82]">
+        <li class="flex items-center gap-2"><span aria-hidden="true" class="h-[7px] w-[7px] rounded-full bg-gold"></span>Free to download</li>
+        <li class="flex items-center gap-2"><span aria-hidden="true" class="h-[7px] w-[7px] rounded-full bg-gold"></span>Three complete stories free</li>
+        <li class="flex items-center gap-2"><span aria-hidden="true" class="h-[7px] w-[7px] rounded-full bg-gold"></span>Optional Premium</li>
       </ul>
     </div>
 
-    <div class="hero-phones relative mx-auto w-full max-w-[460px] h-[520px] sm:h-[600px]">
+    <div class="hero-phones relative mx-auto w-full max-w-[360px] sm:max-w-[460px] h-[470px] sm:h-[560px]">
       <img
-        src="/assets/app/02-daily-teaching.webp"
+        src="/assets/app/app-daily-teaching-20261127.webp"
         alt="Bible Bedtimes Daily Teaching screen with a King James passage and the day’s teaching"
         width="460"
-        height="988"
+        height="976"
         fetchpriority="low"
-        class="absolute right-0 top-10 w-[62%] rotate-[4deg] opacity-90 drop-shadow-2xl"
+        class="absolute right-0 top-[46px] w-[60%] rotate-[4deg]"
       />
       <img
-        src="/assets/app/01-tonight.webp"
+        src="/assets/app/app-tonight-20261127.webp"
         alt="Bible Bedtimes Tonight screen with tonight’s Scripture card and a free Genesis video"
         width="460"
-        height="988"
-        class="absolute left-0 top-0 w-[66%] -rotate-[3deg] drop-shadow-2xl"
+        height="976"
+        class="absolute left-0 top-0 w-[64%] -rotate-[3deg]"
       />
     </div>
   </div>
@@ -61,8 +61,8 @@ const appStore = appStoreLink('site_home_hero');
 <style>
   .hero-wash {
     background:
-      linear-gradient(90deg, rgba(16, 26, 42, 0.94) 0%, rgba(16, 26, 42, 0.78) 45%, rgba(16, 26, 42, 0.55) 100%),
-      linear-gradient(180deg, rgba(16, 26, 42, 0) 55%, #101a2a 100%);
+      linear-gradient(90deg, rgba(7, 20, 38, 0.94) 0%, rgba(7, 20, 38, 0.78) 45%, rgba(7, 20, 38, 0.55) 100%),
+      linear-gradient(180deg, rgba(7, 20, 38, 0) 55%, #0B1F36 100%);
   }
   .hero-phones img {
     filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.5));

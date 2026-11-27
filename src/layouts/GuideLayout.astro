@@ -22,9 +22,15 @@ interface Props {
   datePublished?: string;
   ctaHeading?: string;
   ctaText?: string;
+  /** Links to jump to a part of the page, shown as pills under the intro. */
+  jump?: { label: string; href: string }[];
+  /** The page places its own app panel, so the layout leaves its one out. */
+  ctaInline?: boolean;
+  /** Let a wide part of the page (a table) use the whole width. */
+  wide?: boolean;
 }
 
-const { title, description, eyebrow, heading, intro, crumb, campaign, faqs, datePublished = '2026-09-18', ctaHeading, ctaText } = Astro.props;
+const { title, description, eyebrow, heading, intro, crumb, campaign, faqs, datePublished = '2026-09-18', ctaHeading, ctaText, jump = [], ctaInline = false, wide = false } = Astro.props;
 const url = new URL(Astro.url.pathname, Astro.site).href;
 const related = guides.filter((g) => g.href !== Astro.url.pathname);
 // The page's last change from git, as in the sitemap; the publish date without
@@ -66,67 +72,85 @@ const jsonLd = [
   </Fragment>
   <Header />
   <main>
-    <section class="relative isolate overflow-hidden border-b border-white/[0.08]">
-      <img src="/assets/app/hero-shepherd-dusk-900.webp" alt="" width="720" height="405" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-30" />
-      <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-b from-night/70 via-night/85 to-night"></div>
-      <div class="max-w-3xl mx-auto px-6 md:px-10 pt-10 pb-14 md:pt-14 md:pb-20">
-        <nav aria-label="Breadcrumb" class="text-sm text-cream/60">
-          <a href="/" class="hover:text-gold-light">Home</a>
-          <span aria-hidden="true" class="mx-2">/</span>
-          <span aria-current="page">{crumb}</span>
-        </nav>
-        <p class="eyebrow mt-8">{eyebrow}</p>
-        <h1 class="mt-4 font-medium leading-[1.05] text-[42px] sm:text-[56px]">{heading}</h1>
-        <p class="mt-6 text-lg md:text-xl leading-relaxed text-cream/80">{intro}</p>
+    <section class="band">
+      <img src="/assets/app/hero-shepherd-dusk-900.webp" alt="" width="720" height="405" class="band-art band-art-blur" />
+      <div aria-hidden="true" class="band-wash"></div>
+      <div class="wrap pt-[30px] pb-10 sm:pt-14 sm:pb-16">
+        <div class="measure">
+          <nav aria-label="Breadcrumb" class="crumbs">
+            <a href="/">Home</a>
+            <span aria-hidden="true" class="mx-2.5">/</span>
+            <span aria-current="page">{crumb}</span>
+          </nav>
+          <p class="eyebrow mt-4 sm:mt-6">{eyebrow}</p>
+          <h1 class="h1-page mt-4">{heading}</h1>
+          <p class="lead mt-4 sm:mt-[22px] max-w-[34em]">{intro}</p>
+          {jump.length > 0 && (
+            <nav aria-label="On this page" class="mt-6 sm:mt-[30px] flex flex-wrap gap-2 sm:gap-2.5">
+              {jump.map((j) => <a href={j.href} class="pill-link">{j.label}</a>)}
+            </nav>
+          )}
+        </div>
       </div>
     </section>
 
-    <article class="guide max-w-3xl mx-auto px-6 md:px-10 py-14 md:py-20">
-      <slot />
+    <div class="wrap py-10 sm:py-16">
+      <article class:list={['guide', !wide && 'measure']}>
+        <slot />
 
-      <AppCta campaign={campaign} heading={ctaHeading} text={ctaText} />
+        {!ctaInline && <div class="measure"><AppCta campaign={campaign} heading={ctaHeading} text={ctaText} /></div>}
 
-      <section aria-labelledby="faq-heading" class="mt-16">
-        <h2 id="faq-heading">Questions</h2>
-        <div class="mt-6 divide-y divide-white/[0.08] border-y border-white/[0.08]">
-          {faqs.map((f) => (
-            <details class="group py-5">
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-serif text-xl text-cream">
-                {f.q}
-                <span aria-hidden="true" class="text-gold transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
-              </summary>
-              <p class="mt-3 text-cream/75 leading-relaxed">{f.a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
+        <section aria-labelledby="faq-heading" class="measure">
+          <h2 id="faq-heading">Questions</h2>
+          <div class="mt-5 divide-y divide-cream/[0.12] border-y border-cream/[0.12]">
+            {faqs.map((f) => (
+              <details class="group py-2">
+                <summary class="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-5 font-serif font-semibold text-[21px] sm:text-2xl leading-tight text-cream">
+                  {f.q}
+                  <span aria-hidden="true" class="text-gold-light transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+                </summary>
+                <p class="mt-2 mb-3 text-cream/[0.82]">{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
 
-      <section aria-labelledby="related-heading" class="mt-16">
-        <h2 id="related-heading">More for the evening</h2>
-        <ul class="mt-6 grid gap-4 sm:grid-cols-2">
-          {related.map((g) => (
-            <li>
-              <a href={g.href} class="panel block p-5 hover:border-gold/40 transition-colors">
-                <span class="font-serif text-xl text-cream">{g.title}</span>
-                <span class="mt-1 block text-sm text-cream/65">{g.blurb}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </article>
+        <section aria-labelledby="related-heading" class="measure">
+          <h2 id="related-heading">More for the evening</h2>
+          <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+            {related.map((g) => (
+              <li>
+                <a href={g.href} class="panel block h-full px-[22px] py-5 hover:border-gold/50 transition-colors">
+                  <span class="h3-page block">{g.title}</span>
+                  <span class="mt-1.5 block small text-cream/[0.82]">{g.blurb}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </article>
+    </div>
   </main>
   <Footer />
 </BaseLayout>
 
 <style is:global>
-  .guide h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: clamp(30px, 4.2vw, 40px); line-height: 1.1; margin-top: 3.5rem; color: #f7eddc; }
-  .guide h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 26px; line-height: 1.2; margin-top: 2.5rem; color: #f7eddc; }
-  .guide > p, .guide section > p, .guide .prose-p { margin-top: 1.1rem; font-size: 1.075rem; line-height: 1.8; color: rgba(247, 237, 220, 0.8); }
-  .guide h2 + p, .guide h3 + p { margin-top: 0.9rem; }
-  .guide figure { margin-top: 1.4rem; }
-  .guide ul.bullets { margin-top: 1.1rem; padding-left: 1.2rem; list-style: disc; color: rgba(247, 237, 220, 0.8); line-height: 1.8; }
-  .guide ul.bullets li::marker { color: #d4a14a; }
-  .guide a.inline { color: #e2b66a; text-decoration: underline; text-underline-offset: 3px; }
-  .guide a.inline:hover { color: #d4a14a; }
+  .guide h2 { font-family: 'Cormorant Garamond', 'Cormorant Fallback', Georgia, serif; font-weight: 500; font-size: 32px; line-height: 1.12; margin-top: 2.75rem; color: #F8F3E8; text-wrap: balance; }
+  .guide h3 { font-family: 'Cormorant Garamond', 'Cormorant Fallback', Georgia, serif; font-weight: 600; font-size: 24px; line-height: 1.15; margin-top: 2.25rem; color: #F8F3E8; }
+  .guide > h2:first-child, .guide > section:first-child > h2:first-child { margin-top: 0; }
+  .guide > p, .guide section > p, .guide .prose-p { margin-top: 1.1rem; color: rgba(248, 243, 232, 0.82); }
+  .guide h2 + p, .guide h3 + p { margin-top: 1rem; }
+  .guide figure { margin-top: 1.5rem; }
+  .guide figure + p { margin-top: 1.1rem; }
+  .guide ul.bullets { margin-top: 1rem; padding-left: 0; list-style: none; color: rgba(248, 243, 232, 0.82); }
+  .guide ul.bullets li { position: relative; padding-left: 24px; }
+  .guide ul.bullets li + li { margin-top: 12px; }
+  .guide ul.bullets li::before { content: ''; position: absolute; left: 2px; top: 0.72em; width: 7px; height: 7px; border-radius: 999px; background: #D7A84A; }
+  .guide ul.bullets strong { color: #F8F3E8; font-weight: 600; }
+  .guide a.inline { color: #E4C36F; text-decoration: underline; text-underline-offset: 3px; }
+  .guide a.inline:hover { color: #D7A84A; }
+  .guide h2[id], .guide section[id] { scroll-margin-top: 84px; }
+  @media (min-width: 640px) {
+    .guide h2 { font-size: 44px; line-height: 1.1; margin-top: 4rem; }
+  }
 </style>

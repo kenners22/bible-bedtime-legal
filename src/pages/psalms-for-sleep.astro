@@ -1,6 +1,10 @@
 ---
 import GuideLayout from '../layouts/GuideLayout.astro';
 import Verse from '../components/Verse.astro';
+import AppCta from '../components/AppCta.astro';
+
+const psalms = ['4', '23', '91', '121', '131', '139', '62'];
+const jump = psalms.map((n) => ({ label: `Psalm ${n}`, href: `#psalm-${n}` }));
 
 const faqs = [
   {
@@ -30,38 +34,42 @@ const faqs = [
   crumb="Psalms for sleep"
   campaign="site_guide_psalms_sleep"
   faqs={faqs}
+  jump={jump}
+  ctaInline
 >
   <p>You do not need to read all seven. Pick the one that fits your evening, read it once to understand it and a second time to pray it. If a single line stays with you, that is enough to carry into sleep.</p>
 
-  <h2>1. Psalm 4 — the evening psalm</h2>
+  <h2 id="psalm-4">1. Psalm 4 — the evening psalm</h2>
   <p>Psalm 4 moves from distress to quiet. David asks to be heard, tells himself to “commune with your own heart upon your bed, and be still”, and ends in rest.</p>
   <Verse ref="Psalms 4" numbers />
 
-  <h2>2. Psalm 23 — the Shepherd</h2>
+  <h2 id="psalm-23">2. Psalm 23 — the Shepherd</h2>
   <p>The best-loved psalm of all, and a gentle one to fall asleep with. Notice the pace: green pastures, still waters, a restored soul, and a table prepared even in hard places.</p>
-  <Verse ref="Psalms 23" numbers />
+  <Verse ref="Psalms 23" numbers kind="night" />
   <p>To hear it unfolded slowly as a story instead, listen to <a class="inline" href="/stories/psalm-23-the-shepherd/">Psalm 23 — The Shepherd</a> in the app.</p>
 
-  <h2>3. Psalm 91 — under the shadow</h2>
+  <AppCta campaign="site_guide_psalms_sleep" />
+
+  <h2 id="psalm-91">3. Psalm 91 — under the shadow</h2>
   <p>For nights when fear is the problem. Psalm 91 names “the terror by night” and answers it with the image of shelter under God’s wings.</p>
-  <Verse ref="Psalms 91:1-6" numbers />
+  <Verse ref="Psalms 91:1-6" numbers kind="night" />
   <p>The app tells this psalm as a calm story too: <a class="inline" href="/stories/psalm-91-under-the-shadow/">Psalm 91 — Under the Shadow</a>.</p>
 
-  <h2>4. Psalm 121 — he that keepeth thee</h2>
+  <h2 id="psalm-121">4. Psalm 121 — he that keepeth thee</h2>
   <p>A short psalm with one repeated idea: you are kept. The God who watches over you “shall neither slumber nor sleep”, so you can.</p>
-  <Verse ref="Psalms 121" numbers />
+  <Verse ref="Psalms 121" numbers kind="night" />
 
-  <h2>5. Psalm 131 — like a weaned child</h2>
+  <h2 id="psalm-131">5. Psalm 131 — like a weaned child</h2>
   <p>Only three verses, and perfect for an exhausted night. It is a psalm about letting go of things too great for us and settling like a child with its mother.</p>
-  <Verse ref="Psalms 131" numbers />
+  <Verse ref="Psalms 131" numbers kind="night" />
 
-  <h2>6. Psalm 139 — the darkness is not dark to thee</h2>
+  <h2 id="psalm-139">6. Psalm 139 — the darkness is not dark to thee</h2>
   <p>For anyone who finds the dark unsettling. These verses say there is nowhere, not even the night, where God is absent.</p>
-  <Verse ref="Psalms 139:7-12" numbers />
+  <Verse ref="Psalms 139:7-12" numbers kind="night" />
 
-  <h2>7. Psalm 62 — my soul waiteth</h2>
+  <h2 id="psalm-62">7. Psalm 62 — my soul waiteth</h2>
   <p>Two verses for the end of a draining day, when you need to stop striving and wait.</p>
-  <Verse ref="Psalms 62:1-2" numbers />
+  <Verse ref="Psalms 62:1-2" numbers kind="night" />
 
   <h2>How to read a psalm before bed</h2>
   <ul class="bullets">

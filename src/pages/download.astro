@@ -4,11 +4,11 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
 import { appStoreLink } from '../lib/appstore';
+import { PRICE_TEXT, TRIAL_TEXT } from '../lib/site';
 const appStore = appStoreLink('site_download_top');
 const appStoreBottom = appStoreLink('site_download_bottom');
-// Apple's current 0.1.14 App Store screenshot. The fresh simulator capture is
-// retained separately as QA evidence; no app UI is redrawn for this page.
-const tonightScreenshot = 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/cf/83/7f/cf837f1f-2b93-6360-8747-c36ab9e5676e/01-tonight.png/600x1200bb.jpg';
+// The scan code holds this link (scripts/download-qr.sh makes the SVG).
+const qrLink = appStoreLink('site_download_qr');
 ---
 <BaseLayout
   title="Bible Bedtimes app — peaceful Bible stories for iPhone and iPad"
@@ -17,47 +17,55 @@ const tonightScreenshot = 'https://is1-ssl.mzstatic.com/image/thumb/PurpleSource
   <Header />
   <main>
     <section class="bg-night">
-      <div class="max-w-page mx-auto px-6 md:px-10 py-12 md:py-20 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center">
+      <div class="wrap pt-10 pb-12 md:pt-[72px] md:pb-20 grid gap-9 lg:gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center">
         <div>
           <p class="eyebrow">Bible Bedtimes for iPhone and iPad</p>
-          <h1 class="mt-4 max-w-[700px] text-[44px] sm:text-[60px] lg:text-[72px] leading-[1.02] font-medium">A quieter way to end the day.</h1>
-          <p class="mt-6 max-w-[610px] text-lg md:text-xl leading-relaxed text-cream/80">Peaceful Bible stories, tonight’s Scripture passage and a thoughtful daily teaching—all together in the app.</p>
-          <div class="mt-8 flex flex-wrap gap-4 items-center">
-            <a class="btn-gold rounded-lg px-7 py-4 text-lg" href={appStore}>Download on the App Store</a>
-            <a class="btn-outline rounded-full px-7 py-4 text-lg" href="/bible-stories/">Explore the stories</a>
+          <h1 class="h1-page mt-4 sm:mt-5 max-w-[700px]">A quieter way to end the day.</h1>
+          <p class="lead mt-4 sm:mt-[22px] max-w-[34em]">Peaceful Bible stories, tonight’s Scripture passage and a thoughtful daily teaching—all together in the app.</p>
+          <div class="mt-[26px] sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-[14px]">
+            <a class="btn-gold" href={appStore}>Download on the App Store</a>
+            <a class="btn-outline" href="/bible-stories/">Explore the stories</a>
           </div>
-          <p class="mt-4 text-sm text-cream/70">Free to download. Three complete stories and tonight’s passage and teaching are free. Optional Premium subscription for more.</p>
+          <p class="mt-4 small text-cream/[0.82]">Free to download. Three complete stories and tonight’s passage and teaching are free. Optional Premium subscription for more.</p>
+          <div class="scan-card panel mt-8 hidden lg:flex max-w-[440px] items-center gap-[18px] py-3.5 pl-3.5 pr-5">
+            <img src="/assets/download-qr-20261127.svg" alt="Scan code for Bible Bedtimes on the App Store" width="92" height="92" class="h-[92px] w-[92px] shrink-0 rounded-[14px] bg-parchment" data-link={qrLink} />
+            <p class="small text-cream/[0.82]">On a laptop? Scan this with your iPhone’s camera.</p>
+          </div>
         </div>
-        <div class="mx-auto w-full max-w-[400px] rounded-[38px] bg-night-deep p-3 shadow-2xl">
+        <div class="flex justify-center">
           <img
-            src={tonightScreenshot}
-            alt="App Store preview of the Bible Bedtimes Tonight screen, with a daily Scripture card and a free Genesis video"
-            width="600"
-            height="1200"
-            class="block w-full h-auto rounded-[28px]"
+            src="/assets/app/app-tonight-20261127.webp"
+            alt="Bible Bedtimes Tonight screen with tonight’s Scripture card and a free Genesis video"
+            width="460"
+            height="976"
+            class="block w-[250px] sm:w-[300px] h-auto drop-shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
             loading="eager"
             decoding="async"
-            referrerpolicy="no-referrer"
-            onerror="this.onerror=null; this.src='/assets/bible-bedtime-logo-20260520.webp'; this.alt='Bible Bedtimes moon and book logo';"
           />
         </div>
       </div>
     </section>
     <section class="bg-night-deep text-cream">
-      <div class="max-w-page mx-auto px-6 md:px-10 py-14 md:py-20">
-        <h2 class="text-cream text-4xl md:text-5xl font-medium">Begin with what’s free.</h2>
-        <div class="mt-8 grid gap-6 md:grid-cols-3">
-          <div class="border-t border-gold/60 pt-5"><h3 class="text-cream text-2xl">Three complete stories</h3><p class="mt-3 text-cream/80">Listen to Genesis — Creation and Eden, Joseph — The Coat and the Promise, and Jesus Calms the Storm.</p></div>
-          <div class="border-t border-gold/60 pt-5"><h3 class="text-cream text-2xl">Tonight’s Scripture</h3><p class="mt-3 text-cream/80">Read the complete passage and its Daily Teaching without a subscription.</p></div>
-          <div class="border-t border-gold/60 pt-5"><h3 class="text-cream text-2xl">A pace that suits you</h3><p class="mt-3 text-cream/80">Save favourites and return to an unfinished story.</p></div>
+      <div class="wrap py-12 md:py-[72px]">
+        <h2 class="h2-page">Begin with what’s free.</h2>
+        <div class="mt-6 sm:mt-8 grid gap-6 md:gap-8 md:grid-cols-3">
+          <div class="border-t-2 border-gold pt-5"><h3 class="h3-page">Three complete stories</h3><p class="mt-2.5 text-cream/[0.82]">Listen to Genesis — Creation and Eden, Joseph — The Coat and the Promise, and Jesus Calms the Storm.</p></div>
+          <div class="border-t-2 border-gold pt-5"><h3 class="h3-page">Tonight’s Scripture</h3><p class="mt-2.5 text-cream/[0.82]">Read the complete passage and its Daily Teaching without a subscription.</p></div>
+          <div class="border-t-2 border-gold pt-5"><h3 class="h3-page">A pace that suits you</h3><p class="mt-2.5 text-cream/[0.82]">Save favourites and return to an unfinished story.</p></div>
         </div>
       </div>
     </section>
+    <section aria-labelledby="premium-heading" class="bg-night">
+      <div class="wrap pt-12 md:pt-[72px]">
+        <h2 id="premium-heading" class="h2-page">Premium, when you want more</h2>
+        <p class="price-line lead mt-4 max-w-[38em]">{PRICE_TEXT}, each with a {TRIAL_TEXT}. Apple shows your local price before you subscribe.</p>
+      </div>
+    </section>
     <section class="bg-night">
-      <div class="max-w-page mx-auto px-6 md:px-10 py-14 md:py-20 text-center">
-        <h2 class="text-4xl md:text-5xl font-medium">Ready for tonight?</h2>
-        <p class="mt-4 mx-auto max-w-[620px] text-lg text-cream/80">Download Bible Bedtimes on iPhone or iPad. Apple shows any eligible Premium offer and renewal terms before you subscribe.</p>
-        <a class="btn-gold mt-8 rounded-lg px-7 py-4 text-lg" href={appStoreBottom}>Get Bible Bedtimes on the App Store</a>
+      <div class="wrap pt-11 pb-14 md:pt-16 md:pb-[88px] text-center">
+        <h2 class="h2-page">Ready for tonight?</h2>
+        <p class="mt-3.5 mb-[30px] mx-auto max-w-[38em] lead">Download Bible Bedtimes on iPhone or iPad. Apple shows any eligible Premium offer and renewal terms before you subscribe.</p>
+        <a class="btn-gold w-full sm:w-auto" href={appStoreBottom}>Download on the App Store</a>
       </div>
     </section>
   </main>

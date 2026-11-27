@@ -8,7 +8,7 @@ import Footer from '../components/Footer.astro';
 import { APP_STORE_LISTING, appStoreLink } from '../lib/appstore';
 import { guides } from '../data/guides';
 import { SITE, WEBSITE_ID, ORGANIZATION_ID, PREMIUM, PRICE_TEXT, TRIAL_TEXT, abs, organization } from '../lib/site';
-import { stories, isLong } from '../lib/stories';
+import { stories, isLong, storyArt } from '../lib/stories';
 const title = 'Bible Bedtimes: Christian Sleep App of Calm Bible Stories Read Aloud';
 const description = 'Bible Bedtimes is a Christian sleep app for iPhone and iPad: calm Bible stories read aloud, tonight’s Scripture and a Daily Teaching. Three stories free.';
 const hourLong = stories.filter(isLong).length;
@@ -25,38 +25,38 @@ const rhythm = [
     step: '01 · READ',
     title: 'Tonight’s Scripture',
     text: 'Open the app to the evening’s passage and a gentle teaching that stays close to the text.',
-    img: '/assets/app/02-daily-teaching.webp',
+    img: '/assets/app/app-daily-teaching-20261127.webp',
     alt: 'Daily Teaching screen with a King James passage and teaching',
   },
   {
     step: '02 · LISTEN',
     title: 'A story, softly told',
     text: 'Choose a Bible story to listen to or watch, from Genesis to the Gospels.',
-    img: '/assets/app/04-genesis-detail.webp',
+    img: '/assets/app/app-genesis-20261127.webp',
     alt: 'Story screen for Genesis — Creation and Eden with a Play Story button',
   },
   {
     step: '03 · REST',
     title: 'Let the night settle',
     text: 'Set the sleep timer, dim the screen and let the story carry you to sleep.',
-    img: '/assets/app/05-now-playing.webp',
-    alt: 'Now Playing screen with audio controls, sleep timer and save buttons',
+    img: '/assets/app/app-now-playing-20261127.webp',
+    alt: 'Now Playing screen with audio controls and the sleep timer, saved and info buttons',
   },
 ];
 
 const screens = [
-  { img: '/assets/app/01-tonight.webp', label: 'Tonight', caption: 'A calmer way to end the day', alt: 'Tonight screen' },
-  { img: '/assets/app/02-daily-teaching.webp', label: 'Daily Scripture', caption: 'Scripture for tonight', alt: 'Daily Teaching screen' },
-  { img: '/assets/app/03-library.webp', label: 'Bible Stories', caption: 'Stories for quiet evenings', alt: 'Bible Stories library screen' },
-  { img: '/assets/app/04-genesis-detail.webp', label: 'Genesis', caption: 'Begin with Genesis', alt: 'Genesis story screen' },
-  { img: '/assets/app/05-now-playing.webp', label: 'Now Playing', caption: 'Listen your way', alt: 'Now Playing screen' },
-  { img: '/assets/app/06-offline-audio.webp', label: 'Premium offline audio', caption: 'Take the story offline', alt: 'Daniel in the Lions’ Den story screen with a downloaded audio option' },
+  { img: '/assets/app/app-tonight-20261127.webp', label: 'Tonight', caption: 'A calmer way to end the day', alt: 'Tonight screen' },
+  { img: '/assets/app/app-daily-teaching-20261127.webp', label: 'Daily Scripture', caption: 'Scripture for tonight', alt: 'Daily Teaching screen' },
+  { img: '/assets/app/app-stories-20261127.webp', label: 'Bible Stories', caption: 'Stories for quiet evenings', alt: 'Bible Stories screen' },
+  { img: '/assets/app/app-genesis-20261127.webp', label: 'Genesis', caption: 'Begin with Genesis', alt: 'Genesis story screen' },
+  { img: '/assets/app/app-now-playing-20261127.webp', label: 'Now Playing', caption: 'Listen your way', alt: 'Now Playing screen' },
+  { img: '/assets/app/app-offline-audio-20261127.webp', label: 'Premium offline audio', caption: 'Take the story offline', alt: 'Daniel in the Lions’ Den story screen with a downloaded audio option' },
 ];
 
 const freeStories = [
-  { img: '/assets/app/story-genesis.webp', title: 'Genesis — Creation and Eden', ref: 'Genesis 1–3', href: '/stories/genesis-creation-and-eden/' },
-  { img: '/assets/app/story-joseph.webp', title: 'Joseph — The Coat and the Promise', ref: 'Genesis 37–50', href: '/stories/joseph-coat-and-promise/' },
-  { img: '/assets/app/story-storm.webp', title: 'Jesus Calms the Storm', ref: 'Mark 4:35–41', href: '/stories/jesus-calms-the-storm/' },
+  { id: 'genesis-creation-and-eden', title: 'Genesis — Creation and Eden', ref: 'Genesis 1–3', href: '/stories/genesis-creation-and-eden/' },
+  { id: 'joseph-coat-and-promise', title: 'Joseph — The Coat and the Promise', ref: 'Genesis 37–50', href: '/stories/joseph-coat-and-promise/' },
+  { id: 'jesus-calms-the-storm', title: 'Jesus Calms the Storm', ref: 'Mark 4:35–41', href: '/stories/jesus-calms-the-storm/' },
 ];
 
 const premium = [
@@ -175,34 +175,34 @@ const siteJsonLd = {
   <main>
     <Hero />
 
-    <section aria-label="At a glance" class="border-y border-white/[0.08] bg-night-deep/60">
-      <ul class="max-w-page mx-auto px-6 md:px-10 py-8 grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-7">
+    <section aria-label="At a glance" class="border-y border-cream/[0.12] bg-night-deep">
+      <ul class="wrap py-[26px] sm:py-8 grid grid-cols-2 lg:grid-cols-4 gap-x-[18px] sm:gap-x-8 gap-y-[22px] sm:gap-y-7">
         {facts.map((f) => (
           <li>
-            <p class="font-serif text-xl text-gold-light">{f.title}</p>
-            <p class="mt-1 text-sm leading-relaxed text-cream/65">{f.text}</p>
+            <p class="h3-page !text-gold-light">{f.title}</p>
+            <p class="mt-1.5 small text-cream/[0.82]">{f.text}</p>
           </li>
         ))}
       </ul>
     </section>
 
-    <section aria-labelledby="rhythm-heading" class="py-20 md:py-28">
-      <div class="max-w-page mx-auto px-6 md:px-10">
+    <section aria-labelledby="rhythm-heading" class="py-[52px] md:py-[88px]">
+      <div class="wrap">
         <div class="max-w-2xl">
           <p class="eyebrow">One evening rhythm</p>
-          <h2 id="rhythm-heading" class="mt-4 text-4xl md:text-[56px] leading-[1.05] font-medium">Read. Listen. Rest.</h2>
-          <p class="mt-5 text-lg leading-relaxed text-cream/75">Bible Bedtimes keeps the evening simple: one passage, one story and a quiet way to fall asleep.</p>
+          <h2 id="rhythm-heading" class="mt-4 h2-page">Read. Listen. Rest.</h2>
+          <p class="mt-4 lead">Bible Bedtimes keeps the evening simple: one passage, one story and a quiet way to fall asleep.</p>
         </div>
         <ol class="mt-14 grid gap-6 md:grid-cols-3">
           {rhythm.map((r) => (
             <li class="panel overflow-hidden flex flex-col">
               <div class="px-7 pt-7">
                 <p class="eyebrow">{r.step}</p>
-                <h3 class="mt-3 text-2xl md:text-[28px] font-medium">{r.title}</h3>
-                <p class="mt-3 text-[15px] leading-relaxed text-cream/70">{r.text}</p>
+                <h3 class="mt-3 h3-page">{r.title}</h3>
+                <p class="mt-2.5 text-cream/[0.82]">{r.text}</p>
               </div>
-              <div class="mt-8 h-[300px] overflow-hidden flex justify-center">
-                <img src={r.img} alt={r.alt} width="460" height="988" loading="lazy" decoding="async" class="w-[62%] h-auto self-start drop-shadow-2xl" />
+              <div class="mt-7 h-[280px] overflow-hidden flex justify-center">
+                <img src={r.img} alt={r.alt} width="460" height="976" loading="lazy" decoding="async" class="w-[62%] h-auto self-start" />
               </div>
             </li>
           ))}
@@ -210,84 +210,84 @@ const siteJsonLd = {
       </div>
     </section>
 
-    <section id="inside" aria-labelledby="inside-heading" class="bg-night-deep py-20 md:py-28 scroll-mt-20">
-      <div class="max-w-page mx-auto px-6 md:px-10">
+    <section id="inside" aria-labelledby="inside-heading" class="bg-night-deep py-[52px] md:py-[88px] scroll-mt-20">
+      <div class="wrap">
         <div class="flex flex-wrap items-end justify-between gap-6">
           <div class="max-w-2xl">
             <p class="eyebrow">Inside the app</p>
-            <h2 id="inside-heading" class="mt-4 text-4xl md:text-[56px] leading-[1.05] font-medium">Made for the last<br class="hidden sm:block" /> hour of the day.</h2>
+            <h2 id="inside-heading" class="mt-4 h2-page">Made for the last<br class="hidden sm:block" /> hour of the day.</h2>
           </div>
-          <a href={appStoreLink('site_home_gallery')} class="btn-gold rounded-full px-6 py-3.5">Download free</a>
+          <a href={appStoreLink('site_home_gallery')} class="btn-gold">Download on the App Store</a>
         </div>
       </div>
-      <ul class="screens mt-12 flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-px-6 md:scroll-px-10 px-6 md:px-10 pb-6 max-w-page mx-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/70 rounded-lg" aria-label="App screens" tabindex="0">
+      <ul class="screens mt-12 flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-px-5 sm:scroll-px-10 lg:scroll-px-14 px-5 sm:px-10 lg:px-14 pb-6 max-w-page mx-auto focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/70 rounded-lg" aria-label="App screens" tabindex="0">
         {screens.map((s) => (
           <li class="snap-start shrink-0 w-[220px] sm:w-[250px]">
-            <img src={s.img} alt={s.alt} width="460" height="988" loading="lazy" decoding="async" class="w-full h-auto drop-shadow-2xl" />
+            <img src={s.img} alt={s.alt} width="460" height="976" loading="lazy" decoding="async" class="w-full h-auto" />
             <p class="mt-5 eyebrow">{s.label}</p>
-            <p class="mt-1 font-serif text-xl text-cream">{s.caption}</p>
+            <p class="mt-1 h3-page">{s.caption}</p>
           </li>
         ))}
       </ul>
     </section>
 
-    <section aria-labelledby="free-heading" class="py-20 md:py-28">
-      <div class="max-w-page mx-auto px-6 md:px-10">
+    <section aria-labelledby="free-heading" class="py-[52px] md:py-[88px]">
+      <div class="wrap">
         <div class="max-w-2xl">
           <p class="eyebrow">Free to listen</p>
-          <h2 id="free-heading" class="mt-4 text-4xl md:text-[56px] leading-[1.05] font-medium">Three complete stories. Free.</h2>
-          <p class="mt-5 text-lg leading-relaxed text-cream/75">Listen to real bedtime stories before you ever think about Premium.</p>
+          <h2 id="free-heading" class="mt-4 h2-page">Three complete stories. Free.</h2>
+          <p class="mt-4 lead">Listen to real bedtime stories before you ever think about Premium.</p>
         </div>
         <ul class="mt-12 grid gap-6 sm:grid-cols-3">
           {freeStories.map((s) => (
             <li class="panel overflow-hidden">
-              <img src={s.img} alt="" width="800" height="450" loading="lazy" decoding="async" class="aspect-video w-full object-cover" />
+              <img src={storyArt(s.id, 480)} srcset={`${storyArt(s.id, 480)} 480w, ${storyArt(s.id, 1040)} 1040w`} sizes="(min-width: 640px) 360px, 100vw" alt="" width="480" height="270" loading="lazy" decoding="async" class="aspect-video w-full object-cover" />
               <div class="p-6">
                 <p class="eyebrow">{s.ref}</p>
-                <h3 class="mt-2 text-2xl font-medium"><a href={s.href} class="hover:text-gold-light">{s.title}</a></h3>
+                <h3 class="mt-2 h3-page"><a href={s.href} class="hover:text-gold-light">{s.title}</a></h3>
               </div>
             </li>
           ))}
         </ul>
         <div class="mt-10 flex flex-wrap gap-x-8 gap-y-3">
-          <a href="/bible-sleep-stories/" class="inline-flex items-center gap-2 text-gold-light font-semibold hover:text-gold">See all the Bible sleep stories <span aria-hidden="true">→</span></a>
-          <a href="/stories/" class="inline-flex items-center gap-2 text-gold-light font-semibold hover:text-gold">Browse every story <span aria-hidden="true">→</span></a>
+          <a href="/bible-sleep-stories/" class="inline-flex min-h-[44px] items-center gap-2 text-gold-light font-semibold underline underline-offset-[3px] hover:text-gold">See all the Bible sleep stories <span aria-hidden="true">→</span></a>
+          <a href="/stories/" class="inline-flex min-h-[44px] items-center gap-2 text-gold-light font-semibold underline underline-offset-[3px] hover:text-gold">Browse every story <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
 
-    <section aria-labelledby="premium-heading" class="bg-night-deep py-20 md:py-28">
-      <div class="max-w-page mx-auto px-6 md:px-10 grid gap-14 lg:grid-cols-2 items-center">
+    <section aria-labelledby="premium-heading" class="bg-night-deep py-[52px] md:py-[88px]">
+      <div class="wrap grid gap-14 lg:grid-cols-2 items-center">
         <div>
           <p class="eyebrow">Premium</p>
-          <h2 id="premium-heading" class="mt-4 text-4xl md:text-[56px] leading-[1.05] font-medium">Stories that keep the night flowing.</h2>
+          <h2 id="premium-heading" class="mt-4 h2-page">Stories that keep the night flowing.</h2>
           <ul class="mt-8 space-y-4">
             {premium.map((p) => (
-              <li class="flex gap-3 text-lg text-cream/80"><span aria-hidden="true" class="mt-1 text-gold">✦</span>{p}</li>
+              <li class="flex gap-3 text-cream/[0.82]"><span aria-hidden="true" class="mt-1 text-gold">✦</span>{p}</li>
             ))}
           </ul>
-          <p class="mt-8 text-cream/75">{PRICE_TEXT}, each with a {TRIAL_TEXT}.</p>
-          <p class="mt-2 text-sm text-cream/60">Premium is optional. Apple shows your local price and renewal terms before you subscribe, and every Premium story has a free two-minute sample.</p>
+          <p class="mt-8 text-cream/[0.82]">{PRICE_TEXT}, each with a {TRIAL_TEXT}.</p>
+          <p class="mt-2 small text-cream/70">Premium is optional. Apple shows your local price and renewal terms before you subscribe, and every Premium story has a free two-minute sample.</p>
         </div>
         <div class="flex justify-center gap-5">
-          <img src="/assets/app/03-library.webp" alt="Bible Stories library showing free stories and Premium stories with two-minute samples" width="460" height="988" loading="lazy" decoding="async" class="w-[46%] max-w-[250px] h-auto drop-shadow-2xl" />
-          <img src="/assets/app/06-offline-audio.webp" alt="Premium story screen with a downloaded audio option" width="460" height="988" loading="lazy" decoding="async" class="w-[46%] max-w-[250px] h-auto mt-12 drop-shadow-2xl" />
+          <img src="/assets/app/app-stories-20261127.webp" alt="Bible Stories screen showing the free stories and Premium stories with two-minute samples" width="460" height="976" loading="lazy" decoding="async" class="w-[46%] max-w-[250px] h-auto" />
+          <img src="/assets/app/app-offline-audio-20261127.webp" alt="Premium story screen with a downloaded audio option" width="460" height="976" loading="lazy" decoding="async" class="w-[46%] max-w-[250px] h-auto mt-12" />
         </div>
       </div>
     </section>
 
-    <section aria-labelledby="brief-heading" class="py-20 md:py-28">
-      <div class="max-w-page mx-auto px-6 md:px-10">
+    <section aria-labelledby="brief-heading" class="py-[52px] md:py-[88px]">
+      <div class="wrap">
         <div class="max-w-2xl">
           <p class="eyebrow">The facts</p>
-          <h2 id="brief-heading" class="mt-4 text-4xl md:text-5xl font-medium">Bible Bedtimes in brief.</h2>
-          <p class="mt-5 text-lg leading-relaxed text-cream/75">A Christian sleep app for iPhone and iPad, made in the UK and launched in June 2026.</p>
+          <h2 id="brief-heading" class="mt-4 h2-page">Bible Bedtimes in brief.</h2>
+          <p class="mt-4 lead">A Christian sleep app for iPhone and iPad, made in the UK and launched in June 2026.</p>
         </div>
         <dl class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {brief.map((b) => (
             <div class="panel p-6">
-              <dt class="font-serif text-2xl text-gold-light">{b.href ? <a href={b.href} class="hover:text-gold">{b.term}</a> : b.term}</dt>
-              <dd class="mt-2 text-[15px] leading-relaxed text-cream/75">{b.detail}</dd>
+              <dt class="h3-page !text-gold-light">{b.href ? <a href={b.href} class="hover:text-gold">{b.term}</a> : b.term}</dt>
+              <dd class="mt-2 text-cream/[0.82]">{b.detail}</dd>
             </div>
           ))}
         </dl>
@@ -296,16 +296,16 @@ const siteJsonLd = {
 
     <VerseOfTheDay />
 
-    <section aria-labelledby="guides-heading" class="pb-20 md:pb-24">
-      <div class="max-w-page mx-auto px-6 md:px-10">
+    <section aria-labelledby="guides-heading" class="pb-[52px] md:pb-[88px]">
+      <div class="wrap">
         <p class="eyebrow">For the evening</p>
-        <h2 id="guides-heading" class="mt-4 text-4xl md:text-5xl font-medium">Guides for bedtime.</h2>
+        <h2 id="guides-heading" class="mt-4 h2-page">Guides for bedtime.</h2>
         <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {guides.map((g) => (
             <li>
-              <a href={g.href} class="panel block h-full p-6 hover:border-gold/40 transition-colors">
-                <span class="font-serif text-2xl text-cream">{g.title}</span>
-                <span class="mt-2 block text-[15px] leading-relaxed text-cream/65">{g.blurb}</span>
+              <a href={g.href} class="panel block h-full p-6 hover:border-gold/50 transition-colors">
+                <span class="h3-page block">{g.title}</span>
+                <span class="mt-2 block small text-cream/[0.82]">{g.blurb}</span>
                 <span aria-hidden="true" class="mt-4 block text-gold">→</span>
               </a>
             </li>
@@ -314,34 +314,34 @@ const siteJsonLd = {
       </div>
     </section>
 
-    <section aria-labelledby="faq-heading" class="pb-20 md:pb-28">
-      <div class="max-w-3xl mx-auto px-6 md:px-10">
+    <section aria-labelledby="faq-heading" class="pb-[52px] md:pb-[88px]">
+      <div class="wrap"><div class="measure">
         <p class="eyebrow">Questions</p>
-        <h2 id="faq-heading" class="mt-4 text-4xl md:text-5xl font-medium">The useful details.</h2>
-        <div class="mt-10 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+        <h2 id="faq-heading" class="mt-4 h2-page">The useful details.</h2>
+        <div class="mt-10 divide-y divide-cream/[0.12] border-y border-cream/[0.12]">
           {faqs.map((f, i) => (
-            <details class="group py-5" open={i === 0}>
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-serif text-xl md:text-2xl text-cream">
+            <details class="group py-2" open={i === 0}>
+              <summary class="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-6 font-serif font-semibold text-[21px] sm:text-2xl leading-tight text-cream">
                 {f.q}
-                <span aria-hidden="true" class="text-gold transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+                <span aria-hidden="true" class="text-gold-light transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
               </summary>
-              <p class="mt-3 text-cream/75 leading-relaxed">{f.a}</p>
+              <p class="mt-3 text-cream/[0.82]">{f.a}</p>
             </details>
           ))}
         </div>
-      </div>
+      </div></div>
     </section>
 
-    <section aria-labelledby="cta-heading" class="relative isolate overflow-hidden border-t border-gold/20">
+    <section aria-labelledby="cta-heading" class="relative isolate overflow-hidden border-t border-cream/[0.12]">
       <img src="/assets/app/hero-shepherd-dusk-900.webp" alt="" width="720" height="405" loading="lazy" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-40" />
       <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-t from-night via-night/80 to-night/50"></div>
-      <div class="max-w-page mx-auto px-6 md:px-10 py-20 md:py-28 text-center">
+      <div class="wrap py-[52px] md:py-[88px] text-center">
         <p class="eyebrow">Ready for tonight</p>
-        <h2 id="cta-heading" class="mt-4 text-4xl md:text-[60px] leading-[1.05] font-medium">End the day with Scripture.</h2>
-        <p class="mt-5 mx-auto max-w-xl text-lg text-cream/75">Download Bible Bedtimes free on iPhone and iPad and start with tonight’s passage.</p>
+        <h2 id="cta-heading" class="mt-4 h2-page">End the day with Scripture.</h2>
+        <p class="mt-5 mx-auto max-w-xl lead">Download Bible Bedtimes free on iPhone and iPad and start with tonight’s passage.</p>
         <div class="mt-9 flex flex-wrap justify-center gap-4">
-          <a href={appStoreLink('site_home_final')} class="btn-gold rounded-full px-8 py-4 text-lg">Download on the App Store</a>
-          <a href="/download/" class="btn-outline rounded-full px-8 py-4 text-lg">About the app</a>
+          <a href={appStoreLink('site_home_final')} class="btn-gold">Download on the App Store</a>
+          <a href="/download/" class="btn-outline">About the app</a>
         </div>
       </div>
     </section>
@@ -350,5 +350,5 @@ const siteJsonLd = {
 </BaseLayout>
 
 <style>
-  .screens { scrollbar-width: thin; scrollbar-color: rgba(212, 161, 74, 0.4) transparent; }
+  .screens { scrollbar-width: thin; scrollbar-color: rgba(215, 168, 74, 0.4) transparent; }
 </style>

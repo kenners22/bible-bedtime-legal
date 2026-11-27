@@ -45,9 +45,9 @@ const faqs = [
   <ul class="mt-6 grid gap-3">
     {family.map((s) => (
       <li>
-        <a href={storyHref(s)} class="panel block px-5 py-4 hover:border-gold/40 transition-colors">
+        <a href={storyHref(s)} class="panel block px-5 py-4 hover:border-gold/50 transition-colors">
           <span class="font-serif text-xl text-cream">{s.title}</span>
-          <span class="block text-sm text-cream/60">{s.reference} · {minutes(s)} min</span>
+          <span class="block small text-cream/70">{s.reference} · {minutes(s)} min</span>
           <span class="mt-1 block text-[15px] leading-relaxed text-cream/75">{s.description}</span>
         </a>
       </li>

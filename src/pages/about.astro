@@ -2,6 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import kjv from '../data/kjv.json';
+import { appStoreLink } from '../lib/appstore';
+const rest = kjv['Matthew 11:28'];
 import { SITE, WEBSITE_ID, NAME_NOTE, abs, organization } from '../lib/site';
 
 const title = 'About | Bible Bedtimes';
@@ -39,55 +42,59 @@ const aboutJsonLd = {
   </Fragment>
   <Header />
   <main>
-    <section class="relative bg-night overflow-hidden">
-      <div class="max-w-page mx-auto px-6 md:px-10 pt-10 pb-14 lg:pt-16 lg:pb-20 max-w-3xl">
+    <section class="band">
+      <img src="/assets/app/hero-shepherd-dusk-900.webp" alt="" width="720" height="405" class="band-art band-art-blur" />
+      <div aria-hidden="true" class="band-wash"></div>
+      <div class="wrap pt-[30px] pb-10 sm:pt-14 sm:pb-16"><div class="measure">
         <p class="eyebrow">About</p>
-        <h1 class="mt-4 font-serif font-medium text-cream leading-[1.05] tracking-tight text-[40px] sm:text-[52px] lg:text-[60px]">
-          Faith for Today.<br />Peace for Tonight.
+        <h1 class="h1-page mt-4">
+          Faith for today.<br />Peace for tonight.
         </h1>
-        <p class="mt-6 text-cream/75 text-lg leading-relaxed">
+        <p class="lead mt-4 sm:mt-[22px]">
           Bible Bedtimes began with a simple wish: to make space for God’s Word in the
           everyday — a verse with your morning coffee, a devotional in a spare moment, a
           gentle story at the close of the day.
         </p>
-        <p class="mt-4 text-cream/75 text-lg leading-relaxed">
+        <p class="lead mt-4">
           We bring daily Scripture, thoughtful teaching and timeless Bible stories
           together in one calm place, with room to listen, read and reflect.
         </p>
-        <p class="mt-4 text-cream/75 text-lg leading-relaxed">
+        <p class="lead mt-4">
           Bible Bedtimes is made in the UK and launched on iPhone and iPad in June 2026.
           {NAME_NOTE} Look for “Bible Bedtimes”, with an s, on the App Store.
         </p>
-      </div>
+      </div></div>
     </section>
 
-    <section aria-labelledby="values-heading" class="bg-night pb-20">
-      <div class="max-w-page mx-auto px-6 md:px-10">
-        <h2 id="values-heading" class="font-serif font-medium text-cream text-center text-3xl sm:text-4xl mb-12">
-          What We Believe
+    <section aria-labelledby="values-heading" class="bg-night pt-10 sm:pt-16 pb-[52px] sm:pb-[88px]">
+      <div class="wrap">
+        <h2 id="values-heading" class="h2-page mb-8 sm:mb-10">
+          What we believe
         </h2>
         <ul class="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {values.map((value) => (
-            <li class="bg-night-raised/60 border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-3">
-              <h3 class="font-serif font-semibold text-cream text-xl">{value.title}</h3>
-              <p class="text-cream/70 text-[15px] leading-relaxed">{value.description}</p>
+            <li class="panel p-7 flex flex-col gap-3">
+              <h3 class="h3-page">{value.title}</h3>
+              <p class="text-cream/[0.82]">{value.description}</p>
             </li>
           ))}
         </ul>
-        <div class="mt-12 text-center">
-          <a href="/download/" class="btn-gold rounded-full px-7 py-4 text-[15px]">
-            Get the App
+        <div class="mt-10">
+          <a href={appStoreLink('site_about')} class="btn-gold w-full sm:w-auto">
+            Download on the App Store
           </a>
         </div>
       </div>
     </section>
 
-    <section aria-label="Verse" class="bg-night-deep text-cream py-6 text-center">
-      <p class="font-serif italic text-base sm:text-lg">
+    <section aria-label="Verse" class="bg-night-deep text-cream border-t border-cream/[0.12]">
+      <div class="wrap py-6 text-center">
+      <p class="font-serif italic text-[20px] sm:text-[22px] leading-snug">
         <span aria-hidden="true" class="text-gold-light mr-2">☾</span>
-        &ldquo;Come to me, all you who are weary and burdened, and I will give you rest.&rdquo;
-        <span class="text-gold-light font-semibold not-italic ml-2">— Matthew 11:28</span>
+        &ldquo;{rest.text}&rdquo;
+        <span class="text-gold-light font-semibold not-italic ml-2">— {rest.reference} (KJV)</span>
       </p>
+      </div>
     </section>
   </main>
   <Footer />

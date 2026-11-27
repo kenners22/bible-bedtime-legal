@@ -8,40 +8,40 @@ const isSpanish = locale === 'es';
 const year = new Date().getFullYear();
 import { guides } from '../data/guides';
 ---
-<footer class="bg-night-deep text-cream/80 border-t border-gold/20">
-  <div class="max-w-page mx-auto px-6 md:px-10 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-sm">
-    <div>
-      <p class="font-serif font-semibold text-lg text-cream">{isSpanish ? 'Bible Bedtime' : 'Bible Bedtimes'}</p>
-      <p class="mt-2 text-cream/65">{isSpanish ? 'Historias bíblicas serenas, Escritura diaria y devocionales para cada etapa de la vida.' : 'Gentle Bible stories, daily scriptures, and devotionals for every season of life.'}</p>
+<footer class="bg-night-deep text-cream/[0.82] border-t border-cream/[0.12]">
+  <div class="wrap pt-9 pb-4 sm:pt-[52px] grid grid-cols-2 md:grid-cols-[1.3fr_1fr_1.4fr_1fr] gap-x-5 gap-y-6 md:gap-10 small">
+    <div class="col-span-2 md:col-span-1">
+      <p class="flex items-center gap-2.5"><img src="/assets/bible-bedtimes-mark-20261127.webp" alt="" width="32" height="32" class="h-8 w-8" loading="lazy" /><span class="font-serif font-semibold text-[20px] leading-none text-cream">{isSpanish ? 'Bible Bedtime' : 'Bible Bedtimes'}</span></p>
+      <p class="mt-3 max-w-[18em]">{isSpanish ? 'Historias bíblicas serenas, Escritura diaria y devocionales para cada etapa de la vida.' : 'Gentle Bible stories, daily scriptures, and devotionals for every season of life.'}</p>
     </div>
     <nav aria-label={isSpanish ? 'Enlaces del sitio' : 'Footer site links'}>
-      <p class="font-semibold text-cream mb-3">{isSpanish ? 'Explorar' : 'Explore'}</p>
-      <ul class="space-y-2">
-        <li><a href="/bible-stories/" class="hover:text-gold-light">{isSpanish ? 'Historias bíblicas' : 'Bible Stories'}</a></li>
-        {!isSpanish && <li><a href="/stories/" class="hover:text-gold-light">All stories</a></li>}
-        <li><a href="/daily-scriptures/" class="hover:text-gold-light">{isSpanish ? 'Escrituras diarias' : 'Daily Scriptures'}</a></li>
-        <li><a href="/devotionals/" class="hover:text-gold-light">{isSpanish ? 'Devocionales' : 'Devotionals'}</a></li>
-        <li><a href={isSpanish ? '/app/' : '/download/'} class="hover:text-gold-light">App</a></li>
+      <p class="eyebrow mb-1">{isSpanish ? 'Explorar' : 'Explore'}</p>
+      <ul>
+        <li><a href="/bible-stories/" class="flex min-h-[44px] items-center hover:text-gold-light">{isSpanish ? 'Historias bíblicas' : 'Bible Stories'}</a></li>
+        {!isSpanish && <li><a href="/stories/" class="flex min-h-[44px] items-center hover:text-gold-light">All stories</a></li>}
+        <li><a href="/daily-scriptures/" class="flex min-h-[44px] items-center hover:text-gold-light">{isSpanish ? 'Escrituras diarias' : 'Daily Scriptures'}</a></li>
+        <li><a href="/devotionals/" class="flex min-h-[44px] items-center hover:text-gold-light">{isSpanish ? 'Devocionales' : 'Devotionals'}</a></li>
+        <li><a href={isSpanish ? '/app/' : '/download/'} class="flex min-h-[44px] items-center hover:text-gold-light">App</a></li>
       </ul>
     </nav>
-    <nav aria-label={isSpanish ? 'Guías' : 'Footer guides'}>
-      <p class="font-semibold text-cream mb-3">{isSpanish ? 'Guías' : 'Guides'}</p>
-      <ul class="space-y-2">
-        {guides.map((g) => <li><a href={g.href} class="hover:text-gold-light">{g.title}</a></li>)}
+    <nav aria-label={isSpanish ? 'Guías' : 'Footer guides'} class="col-span-2 md:col-span-1 order-last md:order-none">
+      <p class="eyebrow mb-1">{isSpanish ? 'Guías' : 'Guides'}</p>
+      <ul>
+        {guides.map((g) => <li><a href={g.href} class="flex min-h-[44px] items-center hover:text-gold-light">{g.title}</a></li>)}
       </ul>
     </nav>
     <nav aria-label={isSpanish ? 'Enlaces legales' : 'Footer legal links'}>
-      <p class="font-semibold text-cream mb-3">{isSpanish ? 'Más' : 'More'}</p>
-      <ul class="space-y-2">
-        <li><a href="/about/" class="hover:text-gold-light">{isSpanish ? 'Acerca de' : 'About'}</a></li>
-        <li><a href="/terms/" class="hover:text-gold-light">{isSpanish ? 'Términos' : 'Terms'}</a></li>
-        <li><a href="/privacy/bible-bedtime-espanol-ios/" class="hover:text-gold-light">{isSpanish ? 'Privacidad de la app' : 'Privacy'}</a></li>
-        <li><a href="/support/" class="hover:text-gold-light">{isSpanish ? 'Ayuda' : 'Support'}</a></li>
+      <p class="eyebrow mb-1">{isSpanish ? 'Más' : 'More'}</p>
+      <ul>
+        <li><a href="/about/" class="flex min-h-[44px] items-center hover:text-gold-light">{isSpanish ? 'Acerca de' : 'About'}</a></li>
+        <li><a href="/terms/" class="flex min-h-[44px] items-center hover:text-gold-light">{isSpanish ? 'Términos' : 'Terms'}</a></li>
+        <li><a href="/privacy/bible-bedtime-espanol-ios/" class="flex min-h-[44px] items-center hover:text-gold-light">{isSpanish ? 'Privacidad de la app' : 'Privacy'}</a></li>
+        <li><a href="/support/" class="flex min-h-[44px] items-center hover:text-gold-light">{isSpanish ? 'Ayuda' : 'Support'}</a></li>
       </ul>
     </nav>
   </div>
-  <div class="border-t border-cream/10">
-    <div class="max-w-page mx-auto px-6 md:px-10 py-4 text-xs text-cream/55">
+  <div class="wrap pb-8">
+    <div class="border-t border-cream/[0.12] pt-[18px] small text-cream/70">
       © {year} {isSpanish ? 'Bible Bedtime' : 'Bible Bedtimes'}
     </div>
   </div>

@@ -21,13 +21,14 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#101a2a" />
+    <meta name="theme-color" content="#071426" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     {noindex && <meta name="robots" content="noindex, follow" />}
     {appBanner && <meta name="apple-itunes-app" content="app-id=6773492861" />}
-    <link rel="icon" type="image/png" href="/assets/bible-bedtime-logo-20260520.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-20261127.png" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon-20261127.png" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { appStoreLink } from '../lib/appstore';
 
 const title = 'Devotionals | Bible Bedtimes';
 const description = 'Read a complete Scripture passage and Daily Teaching free in Bible Bedtimes. Premium adds access to the teaching archive, prayers and closing blessings.';
@@ -24,50 +25,54 @@ const parts = [
 <BaseLayout title={title} description={description}>
   <Header />
   <main>
-    <section class="relative bg-night overflow-hidden">
-      <div class="max-w-page mx-auto px-6 md:px-10 pt-10 pb-14 lg:pt-16 lg:pb-20 max-w-3xl">
+    <section class="band">
+      <img src="/assets/app/hero-shepherd-dusk-900.webp" alt="" width="720" height="405" class="band-art band-art-blur" />
+      <div aria-hidden="true" class="band-wash"></div>
+      <div class="wrap pt-[30px] pb-10 sm:pt-14 sm:pb-16"><div class="measure">
         <p class="eyebrow">Devotionals</p>
-        <h1 class="mt-4 font-serif font-medium text-cream leading-[1.05] tracking-tight text-[40px] sm:text-[52px] lg:text-[60px]">
-          A Few Quiet Minutes<br />to Grow in Faith
+        <h1 class="h1-page mt-4">
+          A few quiet minutes<br />to grow in faith
         </h1>
-        <p class="mt-6 text-cream/75 text-lg leading-relaxed">
+        <p class="lead mt-4 sm:mt-[22px]">
           Practical, unhurried readings that meet you where you are. Tonight’s Scripture
           passage and Daily Teaching are free; Premium adds prayers, closing blessings
           and a teaching archive when you want to go further.
         </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/daily-scriptures/" class="btn-gold rounded-full px-6 py-4 text-[15px]">
-            Read Sample Scripture
+        <div class="mt-[26px] sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-[14px]">
+          <a href="/daily-scriptures/" class="btn-gold">
+            Read sample Scripture
           </a>
-          <a href="/download/" class="btn-outline rounded-full px-6 py-4 text-[15px]">
-            Get the App
+          <a href={appStoreLink('site_devotionals')} class="btn-outline">
+            Download on the App Store
           </a>
         </div>
-      </div>
+      </div></div>
     </section>
 
-    <section aria-labelledby="inside-heading" class="bg-night pb-20">
-      <div class="max-w-page mx-auto px-6 md:px-10">
-        <h2 id="inside-heading" class="font-serif font-medium text-cream text-center text-3xl sm:text-4xl mb-12">
-          What’s Inside Each One
+    <section aria-labelledby="inside-heading" class="bg-night pt-10 sm:pt-16 pb-[52px] sm:pb-[88px]">
+      <div class="wrap">
+        <h2 id="inside-heading" class="h2-page mb-8 sm:mb-10">
+          What’s inside each one
         </h2>
         <ul class="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {parts.map((part) => (
-            <li class="bg-night-raised/60 border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-3">
-              <h3 class="font-serif font-semibold text-cream text-xl">{part.title}</h3>
-              <p class="text-cream/70 text-[15px] leading-relaxed">{part.description}</p>
+            <li class="panel p-7 flex flex-col gap-3">
+              <h3 class="h3-page">{part.title}</h3>
+              <p class="text-cream/[0.82]">{part.description}</p>
             </li>
           ))}
         </ul>
       </div>
     </section>
 
-    <section aria-label="Verse" class="bg-night-deep text-cream py-6 text-center">
-      <p class="font-serif italic text-base sm:text-lg">
+    <section aria-label="Verse" class="bg-night-deep text-cream border-t border-cream/[0.12]">
+      <div class="wrap py-6 text-center">
+      <p class="font-serif italic text-[20px] sm:text-[22px] leading-snug">
         <span aria-hidden="true" class="text-gold-light mr-2">☾</span>
         &ldquo;Be still, and know that I am God.&rdquo;
         <span class="text-gold-light font-semibold not-italic ml-2">— Psalm 46:10</span>
       </p>
+      </div>
     </section>
   </main>
   <Footer />
