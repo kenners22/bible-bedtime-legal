@@ -31,6 +31,7 @@ const astroRoutes = [
   '/404.html',
   '/terms/',
   '/privacy/',
+  '/privacy/bible-bedtimes-ios/',
   '/privacy/bible-bedtime-espanol-ios/',
 ];
 const englishChromeRoutes = astroRoutes.filter((route) => route !== '/privacy/bible-bedtime-espanol-ios/');

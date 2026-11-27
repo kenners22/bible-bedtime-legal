@@ -283,7 +283,7 @@ test.describe('verses', () => {
 });
 
 test.describe('after review', () => {
-  const tapPages = ['/', '/bible-stories/', '/stories/', '/bible-sleep-stories/', '/bedtime-prayers-for-adults/', '/bible-verses-for-sleep/', '/christian-sleep-app-comparison/'];
+  const tapPages = ['/', '/bible-stories/', '/stories/', '/bible-sleep-stories/', '/bedtime-prayers-for-adults/', '/bible-verses-for-sleep/', '/christian-sleep-app-comparison/', '/privacy/', '/privacy/bible-bedtimes-ios/'];
   for (const width of [390, 1280]) {
     test(`links that stand on their own are 44px tall or more at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
@@ -291,8 +291,13 @@ test.describe('after review', () => {
       for (const route of tapPages) {
         await gotoLocal(page, route);
         const found = await page.locator('a[href]').evaluateAll((links) => links
-          // Links inside a sentence are the one exception: a paragraph, or a bullet in the running text.
-          .filter((a) => !a.closest('p') && !(a.closest('ul.bullets') && !a.closest('nav')))
+          // Links inside a sentence are the one exception: a paragraph, or a list item or
+          // note whose words go on around the link. Lists that are only links (in a nav) count.
+          .filter((a) => {
+            if (a.closest('p')) return false;
+            const block = a.closest('li, aside');
+            return !(block && !a.closest('nav') && block.textContent.trim() !== a.textContent.trim());
+          })
           .filter((a) => a.getClientRects().length > 0)
           .map((a) => ({ text: a.textContent.trim().slice(0, 40), h: a.getBoundingClientRect().height }))
           .filter((l) => l.h < 43.5));
