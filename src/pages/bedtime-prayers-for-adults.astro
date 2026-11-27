@@ -98,8 +98,8 @@ const faqs = [
 
   <nav aria-label="Prayers on this page" class="panel mt-10 p-6">
     <p class="eyebrow">On this page</p>
-    <ol class="mt-2 text-cream/[0.82]">
-      {prayers.map((p, i) => <li><a class="inline tap" href={`#${p.id}`}>{i + 1}. {p.title}</a></li>)}
+    <ol class="tap-list mt-3 text-cream/[0.82]">
+      {prayers.map((p, i) => <li><a class="inline tap-line" href={`#${p.id}`}>{i + 1}. {p.title}</a></li>)}
     </ol>
   </nav>
 

@@ -283,14 +283,17 @@ test.describe('verses', () => {
 });
 
 test.describe('after review', () => {
-  const tapPages = ['/', '/bible-stories/', '/stories/', '/bible-sleep-stories/', '/bedtime-prayers-for-adults/', '/bible-verses-for-sleep/', '/christian-sleep-app-comparison/'];
+  // Every English page, as the other tests walk them.
+  const tapPages = englishPages.map((file) => '/' + path.relative(dist, file).replace(/index\.html$/, '').split(path.sep).join('/'));
   for (const width of [390, 1280]) {
-    test(`links that stand on their own are 44px tall or more at ${width}px`, async ({ page }) => {
+    test(`links, buttons and question rows that stand on their own are 44px tall or more at ${width}px`, async ({ page }) => {
+      test.setTimeout(180_000);
+      expect(tapPages.length).toBeGreaterThan(45);
       await page.setViewportSize({ width, height: 900 });
       const short = [];
       for (const route of tapPages) {
         await gotoLocal(page, route);
-        const found = await page.locator('a[href]').evaluateAll((links) => links
+        const found = await page.locator('a[href], button, summary').evaluateAll((links) => links
           // Links inside a sentence are the one exception: a link in a paragraph, or one whose
           // own parent has words of its own beside it. A title alone in a heading or a bullet
           // that is only a link is pressed on its own, so it is checked.
@@ -300,7 +303,7 @@ test.describe('after review', () => {
             return !words;
           })
           .filter((a) => a.getClientRects().length > 0)
-          .map((a) => ({ text: a.textContent.trim().slice(0, 40), h: a.getBoundingClientRect().height }))
+          .map((a) => ({ text: `${a.tagName.toLowerCase()} ${a.textContent.trim().slice(0, 40)}`, h: a.getBoundingClientRect().height }))
           .filter((l) => l.h < 43.5));
         for (const l of found) short.push(`${route} "${l.text}" ${Math.round(l.h)}px`);
       }
@@ -343,6 +346,79 @@ test.describe('after review', () => {
     const fromPage = decode(read('download/index.html').match(/data-link="([^"]+)"/)[1]);
     expect(fromScript).toBe(fromPage);
     expect(new URL(fromScript).searchParams.get('ct')).toBe('site_download_qr');
+  });
+});
+
+test.describe('targets that stay in their line', () => {
+  const spots = [
+    ['/bible-verses-for-sleep/', 'nav[aria-label="Jump to a section"] li'],
+    ['/bedtime-prayers-for-adults/', 'nav[aria-label="Prayers on this page"] li'],
+    ['/', 'section[aria-labelledby="brief-heading"] dt'],
+  ];
+  for (const width of [390, 1280]) {
+    test(`the jump lists and the facts titles keep their layout at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      for (const [route, sel] of spots) {
+        await gotoLocal(page, route);
+        const rows = await page.locator(sel).evaluateAll((items) => items.map((item) => {
+          const a = item.querySelector('a');
+          const rects = a ? [...a.getClientRects()] : [];
+          const box = a?.getBoundingClientRect();
+          const count = item.querySelector('span');
+          const words = item.getBoundingClientRect();
+          return {
+            hasLink: Boolean(a),
+            box: box && { top: box.top, bottom: box.bottom, left: box.left, right: box.right, h: box.height },
+            lastLineMid: rects.length ? (rects[rects.length - 1].top + rects[rects.length - 1].bottom) / 2 : null,
+            countMid: count ? (count.getBoundingClientRect().top + count.getBoundingClientRect().bottom) / 2 : null,
+            itemTop: words.top, itemBottom: words.bottom,
+          };
+        }));
+        const linked = rows.filter((r) => r.hasLink);
+        expect(linked.length, route).toBeGreaterThan(2);
+        for (const r of linked) expect(r.box.h, route).toBeGreaterThanOrEqual(44);
+        // No two links' targets overlap.
+        for (let i = 0; i < linked.length; i++) for (let j = i + 1; j < linked.length; j++) {
+          const a = linked[i].box, b = linked[j].box;
+          const overlap = a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+          expect(overlap, `${route} items ${i} and ${j}`).toBe(false);
+        }
+        // A count stays on the line of its question's last words.
+        for (const r of linked) if (r.countMid !== null) expect(Math.abs(r.countMid - r.lastLineMid), route).toBeLessThan(4);
+        if (route !== '/') {
+          // The gap between items is the same whether an item takes one line or two.
+          const gaps = rows.slice(1).map((r, i) => Math.round(r.itemTop - rows[i].itemBottom));
+          expect(new Set(gaps).size, `${route} gaps ${gaps}`).toBe(1);
+        } else {
+          // A linked title sits level with an unlinked one in the same row of cards.
+          const tops = await page.locator(sel).evaluateAll((items) => items.map((dt) => Math.round(dt.getBoundingClientRect().top)));
+          const textTops = await page.locator(sel).evaluateAll((items) => items.map((dt) => {
+            const walker = document.createTreeWalker(dt, NodeFilter.SHOW_TEXT);
+            let node; while ((node = walker.nextNode()) && !/\p{L}/u.test(node.textContent));
+            const r = document.createRange(); r.selectNodeContents(node);
+            return Math.round(r.getBoundingClientRect().top - dt.getBoundingClientRect().top);
+          }));
+          expect(new Set(textTops).size, `facts title offsets ${textTops}`).toBe(1);
+          expect(tops.length).toBe(6);
+        }
+      }
+    });
+  }
+
+  test('without JavaScript the phone header scrolls away with the page', async ({ browser }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    await gotoLocal(page, '/stories/genesis-creation-and-eden/');
+    await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; window.scrollTo(0, 1500); });
+    const box = await page.locator('body > header').boundingBox();
+    expect(box.y + box.height).toBeLessThanOrEqual(0);
+    await context.close();
+  });
+
+  test('the Spanish policy keeps its identifiers whole', () => {
+    const html = read('privacy/bible-bedtime-espanol-ios/index.html');
+    expect(html).not.toContain('break-all');
+    expect(html.match(/<code class="[^"]*break-words[^"]*">/g)).toHaveLength(2);
   });
 });
 
