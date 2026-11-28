@@ -111,11 +111,18 @@ const name = isSpanish ? 'Bible Bedtime' : 'Bible Bedtimes';
     header.addEventListener('focusout', (event) => {
       if (button.getAttribute('aria-expanded') === 'true' && !header.contains(event.relatedTarget) && event.relatedTarget) setOpen(false, false);
     });
+    // Where focus last landed. The wide layout's CSS can hide the menu, and the
+    // browser drop its focus to the page, before the change below is reported;
+    // that drop fires no focusin, so this still says the menu.
+    let focusInMenu = false;
+    document.addEventListener('focusin', (event) => { focusInMenu = menu.contains(event.target); });
     // Close it when the window grows to the wide layout. If the focus was in
     // the menu, move it to the first link in the bar so it isn't lost.
     matchMedia('(min-width: 1024px)').addEventListener('change', (event) => {
       if (!event.matches || button.getAttribute('aria-expanded') !== 'true') return;
-      const hadFocus = menu.contains(document.activeElement);
+      const active = document.activeElement;
+      const dropped = !active || active === document.body;
+      const hadFocus = menu.contains(active) || (dropped && focusInMenu);
       setOpen(false, false);
       if (hadFocus) header.querySelector('nav[aria-label] a').focus();
     });

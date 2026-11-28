@@ -8,12 +8,14 @@ interface Props {
   lang?: string;
   /** Show Safari's Smart App Banner for the English iOS app. English pages only. */
   appBanner?: boolean;
+  /** The banner's app-argument: the address the app is handed when opened from it (story pages). */
+  appArgument?: string;
   noindex?: boolean;
   /** Leave out the canonical link (the 404 page has no address of its own). */
   noCanonical?: boolean;
 }
 
-const { title, description, canonical, lang = 'en', appBanner = lang.startsWith('en'), noindex = false, noCanonical = false } = Astro.props;
+const { title, description, canonical, lang = 'en', appBanner = lang.startsWith('en'), appArgument, noindex = false, noCanonical = false } = Astro.props;
 // Cloudflare Web Analytics: cookieless page-view counts. The token is a public beacon token.
 const cloudflareBeacon = `<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "81671c4a884c49d387b2ed2f8950cbcf"}'></script><!-- End Cloudflare Web Analytics -->`;
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
@@ -28,7 +30,7 @@ const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
     <meta name="description" content={description} />
     {!noCanonical && <link rel="canonical" href={canonicalUrl} />}
     {noindex && <meta name="robots" content="noindex, follow" />}
-    {appBanner && <meta name="apple-itunes-app" content="app-id=6773492861" />}
+    {appBanner && <meta name="apple-itunes-app" content={appArgument ? `app-id=6773492861, app-argument=${appArgument}` : 'app-id=6773492861'} />}
     <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-20261127.png" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon-20261127.png" />
     <meta property="og:type" content="website" />

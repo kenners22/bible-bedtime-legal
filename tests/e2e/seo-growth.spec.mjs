@@ -110,15 +110,23 @@ test.describe('story pages', () => {
 });
 
 test.describe('site-wide head and body tags', () => {
-  test('the Smart App Banner is on English pages only', () => {
+  test('the Smart App Banner is on English pages only, and a story page names its story', () => {
     const banner = '<meta name="apple-itunes-app" content="app-id=6773492861">';
+    let storyPages = 0;
     for (const file of astroPages) {
       const rel = path.relative(dist, file);
       const html = fs.readFileSync(file, 'utf8');
       const english = /<html lang="en/.test(html) && rel !== path.join('childrens-stories', 'index.html');
-      if (english) expect(html, rel).toContain(banner);
+      const story = rel.match(/^stories[\\/]([^\\/]+)[\\/]index\.html$/);
+      if (story) {
+        storyPages += 1;
+        expect(html, rel).toContain(`<meta name="apple-itunes-app" content="app-id=6773492861, app-argument=https://biblebedtime.uk/stories/${story[1]}/">`);
+      } else if (english) expect(html, rel).toContain(banner);
       else expect(html, rel).not.toContain('apple-itunes-app');
+      expect(html.match(/apple-itunes-app/g)?.length ?? 0, rel).toBeLessThanOrEqual(1);
     }
+    expect(storyPages).toBe(stories.length);
+    expect(read('stories/index.html')).toContain(banner);
     expect(read('index.html')).toContain(banner);
     expect(read('privacy/bible-bedtime-espanol-ios/index.html')).not.toContain('apple-itunes-app');
   });
