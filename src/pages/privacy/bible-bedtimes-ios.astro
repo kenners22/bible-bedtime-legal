@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const title = 'Bible Bedtimes iOS Privacy Policy';
+const description = 'How the Bible Bedtimes app for iPhone and iPad handles data, purchases, downloads and reminders.';
+const canonical = 'https://biblebedtime.uk/privacy/bible-bedtimes-ios/';
+const link = 'text-cream underline hover:text-gold-light';
+---
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <Header />
+  <main class="bg-night">
+    <article class="max-w-3xl min-w-0 mx-auto px-6 md:px-10 py-16 lg:py-20 [overflow-wrap:anywhere]">
+      <p class="text-cream/60 text-sm font-medium">Bible Bedtimes · iPhone and iPad</p>
+      <h1 class="font-serif font-medium text-cream text-4xl sm:text-5xl mt-2">Privacy policy</h1>
+      <p class="text-cream/60 text-sm mt-3">Last updated: 27 November 2026</p>
+
+      <p class="mt-7 text-cream/80 text-lg leading-relaxed">
+        This policy covers only the <strong>Bible Bedtimes</strong> app for iPhone
+        and iPad, with the bundle identifier
+        <code class="text-[0.9em] break-all">uk.biblebedtime</code>. Signpost Digital Ltd
+        is responsible for this app.
+      </p>
+
+      <h2 class="font-serif font-medium text-cream text-2xl mt-10">Summary</h2>
+      <p class="mt-3 text-cream/80 leading-relaxed">
+        You don’t need an account, and there is no sign-in. The app shows no
+        advertising, doesn’t track you across other apps or websites, and builds no
+        profile of you. It contains no third-party analytics or crash-reporting kit.
+        The current version of the app sends no usage counts.
+      </p>
+
+      <h2 class="font-serif font-medium text-cream text-2xl mt-10">What stays on your device</h2>
+      <p class="mt-3 text-cream/80 leading-relaxed">
+        The app keeps these on your iPhone or iPad: your appearance choice, the
+        stories and scriptures you save, the stories you played recently, where you
+        stopped in a story, your sleep timer and autoplay choices, whether you last
+        chose sound or video, a story you chose to hide from Tonight, whether the
+        reminder is on and its time, that you have seen the welcome screen, which
+        new stories you have already been shown, a count of finished stories used
+        to decide when to ask for a rating, and any audio you choose to download.
+        It also keeps a copy of the story list and of the daily scriptures it last
+        downloaded, so it can open without a connection.
+      </p>
+      <p class="mt-3 text-cream/80 leading-relaxed">
+        None of this is sent to us. Like any app’s settings, it can be part of your
+        own iPhone or iPad backup; downloaded audio is left out of backups. You can
+        remove a download from the story’s page in the app. Deleting the app removes
+        everything it stored.
+      </p>
+
+      <h2 class="font-serif font-medium text-cream text-2xl mt-10">Content, hosting and technical logs</h2>
+      <p class="mt-3 text-cream/80 leading-relaxed">
+        To show stories, audio, video, paintings and the daily scripture, the app
+        fetches them over HTTPS from our own content service. It adds nothing about
+        you to those requests: no name, email address, account, advertising
+        identifier or listening history.
+      </p>
+      <p class="mt-3 text-cream/80 leading-relaxed">
+        As with any web server, the content service and its network providers see
+        the technical details needed to deliver the content, such as your IP
+        address, the time and the file requested.
+      </p>
+
+      <h2 class="font-serif font-medium text-cream text-2xl mt-10">Subscriptions and payments</h2>
+      <p class="mt-3 text-cream/80 leading-relaxed">
+        Premium is sold through Apple’s in-app purchase system. Apple takes the
+        payment and holds your Apple account. The app learns from Apple which plan
+        you have and whether it is still active, so it can unlock Premium; it never
+        receives your card or bank details. Apple’s handling is covered by the
+        <a class={link} href="https://www.apple.com/legal/privacy/">Apple Privacy Policy</a>.
+      </p>
+
+      <h2 class="font-serif font-medium text-cream text-2xl mt-10">Reminders</h2>
+      <p class="mt-3 text-cream/80 leading-relaxed">
+        The daily scripture reminder is optional. It is set only after you give
+        permission, and your device schedules it itself. The app registers for no
+        push notifications and uses no push service of its own.
+      </p>
+
+      <h2 class="font-serif font-medium text-cream text-2xl mt-10">Ratings and sharing</h2>
+      <p class="mt-3 text-cream/80 leading-relaxed">
+        Now and then the app asks Apple to show its standard rating prompt. Apple
+        decides whether it appears, and any rating you give goes to Apple. When you
+        share a scripture or a prayer, the app passes its text and a link to the
+        App Store to your device’s share sheet. You choose where it goes; the app
+        isn’t told.
+      </p>
+
+      <h2 class="font-serif font-medium text-cream text-2xl mt-10">Children</h2>
+      <p class="mt-3 text-cream/80 leading-relaxed">
+        The app asks nobody for personal details.
+      </p>
+
+      <h2 class="font-serif font-medium text-cream text-2xl mt-10">Your choices and requests</h2>
+      <p class="mt-3 text-cream/80 leading-relaxed">
+        There is no account for us to delete. You can remove downloads in the app,
+        or delete the app to remove everything it stored, and you can manage or
+        cancel a subscription in your Apple account settings. For a privacy
+        question, a request about your data, or help, use our
+        <a class={link} href="/support/">support page</a>.
+      </p>
+
+      <h2 class="font-serif font-medium text-cream text-2xl mt-10">Changes</h2>
+      <p class="mt-3 text-cream/80 leading-relaxed">
+        We will update this policy before the app starts sending usage counts, or
+        adds analytics, advertising, accounts, push notifications or any other
+        material change to how it handles data. The date at the top shows the
+        current version.
+      </p>
+
+      <h2 class="font-serif font-medium text-cream text-2xl mt-10">Other policies</h2>
+      <ul class="mt-3 text-cream/80 leading-relaxed list-disc pl-5 space-y-2">
+        <li>
+          The Spanish app:
+          <a class={link} href="/privacy/bible-bedtime-espanol-ios/" lang="es">Política de privacidad de Bible Bedtime Español</a> (in Spanish).
+        </li>
+        <li>
+          This website and our publishing tools:
+          <a class={link} href="/privacy/">Privacy Policy</a>.
+        </li>
+      </ul>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

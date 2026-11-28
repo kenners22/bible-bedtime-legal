@@ -27,6 +27,7 @@ const astroRoutes = [
   '/stories/rest-listening-and-peace-1-hour/',
   '/terms/',
   '/privacy/',
+  '/privacy/bible-bedtimes-ios/',
   '/privacy/bible-bedtime-espanol-ios/',
 ];
 const englishChromeRoutes = astroRoutes.filter((route) => route !== '/privacy/bible-bedtime-espanol-ios/');

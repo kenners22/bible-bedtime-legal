@@ -35,7 +35,7 @@ import { guides } from '../data/guides';
       <ul class="space-y-2">
         <li><a href="/about/" class="hover:text-gold-light">{isSpanish ? 'Acerca de' : 'About'}</a></li>
         <li><a href="/terms/" class="hover:text-gold-light">{isSpanish ? 'Términos' : 'Terms'}</a></li>
-        <li><a href="/privacy/bible-bedtime-espanol-ios/" class="hover:text-gold-light">{isSpanish ? 'Privacidad de la app' : 'Privacy'}</a></li>
+        <li><a href={isSpanish ? '/privacy/bible-bedtime-espanol-ios/' : '/privacy/bible-bedtimes-ios/'} class="hover:text-gold-light">{isSpanish ? 'Privacidad de la app' : 'Privacy'}</a></li>
         <li><a href="/support/" class="hover:text-gold-light">{isSpanish ? 'Ayuda' : 'Support'}</a></li>
       </ul>
     </nav>
