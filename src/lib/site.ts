@@ -9,7 +9,7 @@ export const SITE = {
   // The site's earlier name and its domain, so both point to the app.
   alternateName: ['Bible Bedtime', 'biblebedtime.uk'],
   url: 'https://biblebedtime.uk/',
-  logo: 'https://biblebedtime.uk/assets/bible-bedtime-logo-20260520.png',
+  logo: 'https://biblebedtime.uk/assets/bible-bedtimes-mark-20261127.png',
   // The contact route the Support, Privacy and Terms pages give.
   tiktok: 'https://www.tiktok.com/@biblebedtimestories22',
   appStore: APP_STORE_LISTING,

@@ -2,42 +2,195 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Local fonts sized to the web fonts' widths, shown until those load. */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 107.5%;
+  ascent-override: 90%;
+  descent-override: 22.5%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Cormorant Fallback';
+  src: local('Georgia'), local('Times New Roman'), local('Liberation Serif');
+  size-adjust: 97%;
+  ascent-override: 100%;
+  descent-override: 31%;
+  line-gap-override: 0%;
+}
+
 @layer base {
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
+    /* The header stays at the top, so in-page links land below it. */
+    scroll-padding-top: 76px;
   }
 
   body {
     @apply font-sans bg-night text-cream;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+  @media (min-width: 640px) {
+    body { font-size: 18px; line-height: 1.7; }
   }
 
   h1, h2, h3, h4 {
     @apply font-serif text-cream;
     letter-spacing: 0;
   }
+
+  :focus-visible {
+    outline: 2px solid #E4C36F;
+    outline-offset: 3px;
+  }
 }
 
 @layer components {
+  /* One page width: 1180px, 20px sides on a phone, 56px on a wide screen. */
+  .wrap {
+    @apply max-w-page mx-auto w-full px-5 sm:px-10 lg:px-14;
+  }
+  /* The reading column inside it, set at the left. */
+  .measure {
+    max-width: 800px;
+  }
+
   .btn {
-    @apply inline-flex items-center justify-center font-semibold transition-colors duration-150;
+    @apply inline-flex items-center justify-center text-center font-semibold rounded-full transition-colors duration-150;
+    min-height: 52px;
+    padding: 0.85rem 1.75rem;
+    font-size: 17px;
+    line-height: 1.2;
   }
-  /* Gold pill, matching the app's primary "Play Story" / "Watch free" buttons. */
+  /* The app's gold button: a pill, navy words, the same gold that deepens at its foot. */
   .btn-gold {
-    @apply btn bg-gradient-to-b from-gold-light to-gold text-parchment-ink shadow-lg shadow-black/25 hover:from-gold hover:to-gold-deep hover:text-parchment-ink;
+    @apply btn text-parchment-ink shadow-lg shadow-black/25;
+    background: linear-gradient(180deg, #F0D88E 0%, #D7A84A 55%, #A97825 100%);
   }
+  .btn-gold:hover {
+    background: linear-gradient(180deg, #E4C36F 0%, #C99A3E 55%, #946821 100%);
+  }
+  /* A second button: outlined, never filled. */
   .btn-outline {
-    @apply btn bg-white/5 text-cream border border-cream/25 hover:bg-white/10 hover:border-cream/45;
+    @apply btn bg-transparent text-cream border border-cream/40 hover:bg-white/[0.06] hover:border-cream/60;
   }
   .eyebrow {
-    @apply text-gold uppercase tracking-[0.22em] text-xs font-semibold;
+    @apply text-gold-light uppercase font-semibold;
+    font-size: 13px;
+    line-height: 1.2;
+    letter-spacing: 0.16em;
   }
-  /* Parchment card, like the app's Scripture card. */
+  .small {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  /* The one cream card a page: the app's Scripture card. */
   .parchment-card {
-    @apply bg-parchment text-parchment-ink rounded-3xl shadow-2xl shadow-black/30;
+    @apply text-parchment-ink shadow-2xl shadow-black/30;
+    background: linear-gradient(180deg, #F3E7D3, #E4D4BA);
+    border-radius: 22px;
   }
+  /* Verses after the first sit on a night panel: navy, cream words, a gold rule. */
+  .night-panel {
+    background: #102A46;
+    color: #F3E7D3;
+    border-left: 2px solid #D7A84A;
+    border-radius: 0 22px 22px 0;
+  }
+  /* One card shape everywhere. */
   .panel {
-    @apply bg-night-raised/60 border border-white/[0.08] rounded-3xl;
+    @apply bg-night-raised border border-cream/[0.12];
+    border-radius: 22px;
   }
+  .pill-link {
+    @apply inline-flex items-center rounded-full border border-cream/40 px-[18px] text-cream hover:border-gold-light hover:text-gold-light;
+    min-height: 44px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .h1-page {
+    @apply font-serif font-medium text-cream;
+    font-size: 40px;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  .h2-page {
+    @apply font-serif font-medium text-cream;
+    font-size: 32px;
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+  .h3-page {
+    @apply font-serif font-semibold text-cream;
+    font-size: 24px;
+    line-height: 1.15;
+  }
+  @media (min-width: 640px) {
+    .h1-page { font-size: 56px; line-height: 1.06; }
+    .h2-page { font-size: 44px; line-height: 1.1; }
+  }
+  .lead {
+    @apply text-cream/[0.82];
+    font-size: 18px;
+    line-height: 1.55;
+  }
+  @media (min-width: 640px) {
+    .lead { font-size: 20px; line-height: 1.6; }
+  }
+  .crumbs {
+    @apply text-cream/70;
+    font-size: 15px;
+  }
+  .crumbs a {
+    @apply underline underline-offset-[3px] decoration-1 hover:text-gold-light;
+    display: inline-block;
+    padding: 10px 0;
+  }
+  a.inline {
+    @apply text-gold-light underline underline-offset-[3px] hover:text-gold;
+  }
+  /* A hero band with a painting faint behind it, fading into the page. */
+  .band {
+    @apply relative isolate overflow-hidden border-b border-cream/[0.12];
+  }
+  .band-art {
+    @apply absolute inset-0 -z-20 h-full w-full object-cover;
+    opacity: 0.3;
+  }
+  .band-art-blur {
+    filter: blur(40px);
+    transform: scale(1.25);
+  }
+  .band-wash {
+    @apply absolute inset-0 -z-10;
+    background:
+      linear-gradient(90deg, rgba(11, 31, 54, 0.7) 0%, rgba(11, 31, 54, 0) 65%),
+      linear-gradient(180deg, rgba(11, 31, 54, 0.35) 0%, #0B1F36 100%);
+  }
+}
+
+/* A link that stands on its own (not inside a sentence): a target at least
+   44px tall, without changing its words or where it sits. */
+.tap {
+  display: inline-flex !important;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* The same 44px target for a link that must stay in its line (a count after
+   it, a bullet beside it, a title level with its neighbours): padding above
+   and below the words, which leaves the line itself as it was. The words'
+   own box is about 1.2em tall. */
+.tap-line {
+  padding-top: max(0px, calc(22.5px - 0.6em));
+  padding-bottom: max(0px, calc(22.5px - 0.6em));
+}
+/* A list of such links: items far enough apart that two links' targets
+   never overlap, and the same gap whether an item takes one line or two. */
+.tap-list > li + li {
+  margin-top: 18px !important;
 }

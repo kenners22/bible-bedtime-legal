@@ -21,6 +21,7 @@ import {
   themes,
   partsOf,
   relatedTo,
+  storyArt,
 } from '../../lib/stories';
 
 export function getStaticPaths() {
@@ -78,53 +79,71 @@ const jsonLd = [
   </Fragment>
   <Header />
   <main>
-    <section class="relative isolate overflow-hidden border-b border-white/[0.08]">
-      <img src="/assets/app/hero-shepherd-dusk-900.webp" alt="" width="720" height="405" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-30" />
-      <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-b from-night/70 via-night/85 to-night"></div>
-      <div class="max-w-3xl mx-auto px-6 md:px-10 pt-10 pb-14 md:pt-14 md:pb-16">
-        <nav aria-label="Breadcrumb" class="text-sm text-cream/60">
-          <a href="/" class="hover:text-gold-light">Home</a>
-          <span aria-hidden="true" class="mx-2">/</span>
-          <a href="/stories/" class="hover:text-gold-light">Stories</a>
-          <span aria-hidden="true" class="mx-2">/</span>
-          <span aria-current="page">{story.title}</span>
-        </nav>
-        <p class="eyebrow mt-8">{section.label} · {story.reference}</p>
-        <h1 class="mt-4 font-medium leading-[1.05] text-[40px] sm:text-[54px]">{story.title}</h1>
-        <p class="mt-6 text-lg md:text-xl leading-relaxed text-cream/80">{story.description}</p>
+    <section class="band">
+      <img src={storyArt(story.id, 'blur')} alt="" width="64" height="36" class="band-art band-art-blur" />
+      <div aria-hidden="true" class="band-wash"></div>
+      <div class="wrap story-hero pt-[30px] pb-10 sm:pt-14 sm:pb-14">
+        <div class="story-t">
+          <nav aria-label="Breadcrumb" class="crumbs">
+            <a href="/">Home</a>
+            <span aria-hidden="true" class="mx-2.5">/</span>
+            <a href="/stories/">Stories</a>
+            <span aria-hidden="true" class="mx-2.5">/</span>
+            <span aria-current="page">{story.title}</span>
+          </nav>
+          <p class="eyebrow mt-4 sm:mt-6">{section.label} · {story.reference}</p>
+          <h1 class="h1-page mt-4">{story.title}</h1>
+          <p class="lead mt-4 sm:mt-[22px]">{story.description}</p>
 
-        <dl class="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
-          <div class="panel px-4 py-3">
-            <dt class="text-cream/60">Bible passage</dt>
-            <dd class="mt-1 font-semibold text-cream">{story.reference}</dd>
-          </div>
-          <div class="panel px-4 py-3">
-            <dt class="text-cream/60">Length</dt>
-            <dd class="mt-1 font-semibold text-cream">{length}</dd>
-          </div>
-          <div class="panel px-4 py-3 col-span-2 sm:col-span-1">
-            <dt class="text-cream/60">In the app</dt>
-            <dd class="mt-1 font-semibold text-cream">{free ? 'Free' : 'Premium'}</dd>
-          </div>
-        </dl>
-
-        <div class="mt-8 flex flex-wrap items-center gap-4">
-          <a href={listen} class="btn-gold rounded-full px-6 py-3.5">Listen in the app</a>
-          <a href="/stories/" class="btn-outline rounded-full px-6 py-3.5">All stories</a>
+          <dl class="mt-[22px] sm:mt-7 grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+            <div class="panel px-[18px] py-3.5">
+              <dt class="small text-cream/70">Bible passage</dt>
+              <dd class="mt-1 font-semibold text-cream">{story.reference}</dd>
+            </div>
+            <div class="panel px-[18px] py-3.5">
+              <dt class="small text-cream/70">Length</dt>
+              <dd class="mt-1 font-semibold text-cream">{length}</dd>
+            </div>
+            <div class="panel px-[18px] py-3.5 col-span-2 sm:col-span-1">
+              <dt class="small text-cream/70">In the app</dt>
+              <dd class="mt-1 font-semibold text-cream">{free ? 'Free' : 'Premium'}</dd>
+            </div>
+          </dl>
         </div>
-        <p class="mt-4 text-sm text-cream/65">
-          {free
-            ? 'One of three complete stories that are free in Bible Bedtimes for iPhone and iPad, with a sleep timer.'
-            : 'Part of Bible Bedtimes Premium for iPhone and iPad. The app is free to download, and you can play a two-minute sample of this story first.'}
-        </p>
+
+        <div class="story-b mt-[26px] sm:mt-7 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-[14px]">
+          <a href={listen} class="btn-gold">Listen in the app</a>
+          <a href="/stories/" class="btn-outline">All stories</a>
+        </div>
+
+        <img
+          src={storyArt(story.id, 1040)}
+          srcset={`${storyArt(story.id, 480)} 480w, ${storyArt(story.id, 1040)} 1040w`}
+          sizes="(min-width: 1024px) 520px, 100vw"
+          alt={`Painting for ${story.title}`}
+          width="1040"
+          height="585"
+          fetchpriority="high"
+          class="story-art mt-6 lg:mt-0 aspect-video w-full rounded-[22px] border border-cream/[0.12] object-cover shadow-xl shadow-black/40"
+        />
+
+        <div class="story-p">
+          <p class="mt-4 small text-cream/[0.82]">
+            {free
+              ? 'One of three complete stories that are free in Bible Bedtimes for iPhone and iPad, with a sleep timer.'
+              : 'Free to download. You can play a 2-minute sample of this story first.'}
+          </p>
+          <p class="story-find mt-2 pt-3 border-t border-cream/[0.12] small text-cream/[0.82]">After you install: open Stories and choose {story.title}.</p>
+        </div>
       </div>
     </section>
 
-    <div class="max-w-3xl mx-auto px-6 md:px-10 py-14 md:py-16">
+    <div class="wrap py-10 sm:py-16">
+      <div class="measure">
       {passage && (
         <section aria-labelledby="passage-heading">
-          <h2 id="passage-heading" class="font-serif font-medium text-3xl sm:text-4xl text-cream">From the passage</h2>
-          <p class="mt-3 text-cream/75 leading-relaxed">
+          <h2 id="passage-heading" class="h2-page">From the passage</h2>
+          <p class="mt-3.5 text-cream/[0.82]">
             {isLong(story)
               ? `A few lines from one of the passages behind this hour-long listen, in the King James Version.`
               : `A few lines from ${story.reference}, in the King James Version. The story retells the whole account.`}
@@ -135,36 +154,54 @@ const jsonLd = [
 
       {parts.length > 0 && (
         <section aria-labelledby="parts-heading" class="mt-14">
-          <h2 id="parts-heading" class="font-serif font-medium text-3xl sm:text-4xl text-cream">What this listen draws on</h2>
-          <p class="mt-3 text-cream/75 leading-relaxed">This hour-long listen weaves together passages that also have their own single stories in the app:</p>
+          <h2 id="parts-heading" class="h2-page">What this listen draws on</h2>
+          <p class="mt-3.5 text-cream/[0.82]">This hour-long listen weaves together passages that also have their own single stories in the app:</p>
           <ul class="mt-5 grid gap-3">
             {parts.map((p) => (
-              <li><a href={storyHref(p)} class="panel block px-5 py-4 hover:border-gold/40 transition-colors"><span class="font-serif text-xl text-cream">{p.title}</span> <span class="text-sm text-cream/60">· {p.reference}</span></a></li>
+              <li><a href={storyHref(p)} class="panel flex items-center gap-4 p-3 pr-5 hover:border-gold/50 transition-colors"><img src={storyArt(p.id, 480)} alt="" width="480" height="270" loading="lazy" decoding="async" class="w-[104px] shrink-0 aspect-video rounded-[14px] object-cover" /><span><span class="h3-page !text-[21px]">{p.title}</span> <span class="small text-cream/70">· {p.reference}</span></span></a></li>
             ))}
           </ul>
         </section>
       )}
 
       {storyThemes.length > 0 && (
-        <p class="mt-10 text-sm text-cream/65"><span class="font-semibold text-cream/80">Themes:</span> {storyThemes.join(', ')}</p>
+        <p class="mt-7 small text-cream/[0.82]"><span class="font-semibold text-cream">Themes:</span> {storyThemes.join(', ')}</p>
       )}
 
       <section aria-labelledby="related-heading" class="mt-14">
-        <h2 id="related-heading" class="font-serif font-medium text-3xl sm:text-4xl text-cream">If you like this story</h2>
-        <ul class="mt-6 grid gap-4 sm:grid-cols-3">
+        <h2 id="related-heading" class="h2-page">If you like this story</h2>
+        <ul class="mt-[26px] grid gap-4 sm:gap-5 sm:grid-cols-3">
           {related.map((r) => (
             <li>
-              <a href={storyHref(r)} class="panel block h-full p-5 hover:border-gold/40 transition-colors">
-                <span class="block text-xs uppercase tracking-wider text-gold-light">{r.reference} · {lengthLabel(r)}</span>
-                <span class="mt-2 block font-serif text-xl text-cream">{r.title}</span>
-                <span class="mt-1 block text-sm text-cream/65">{isFree(r) ? 'Free' : 'Premium'}</span>
+              <a href={storyHref(r)} class="panel flex h-full flex-col gap-1.5 overflow-hidden pb-[18px] hover:border-gold/50 transition-colors">
+                <img src={storyArt(r.id, 480)} alt="" width="480" height="270" loading="lazy" decoding="async" class="mb-2 aspect-video w-full object-cover" />
+                <span class="block px-[18px] text-[13px] font-semibold tracking-[0.06em] text-gold-light">{r.reference} · {lengthLabel(r)}</span>
+                <span class="block px-[18px] h3-page">{r.title}</span>
+                <span class="block px-[18px] small text-cream/[0.82]">{isFree(r) ? 'Free' : 'Premium'}</span>
               </a>
             </li>
           ))}
         </ul>
-        <p class="mt-8 text-cream/75">More for the evening: <a class="text-gold-light underline underline-offset-4" href="/bible-sleep-stories/">Bible sleep stories</a>, <a class="text-gold-light underline underline-offset-4" href="/psalms-for-sleep/">psalms for sleep</a> and <a class="text-gold-light underline underline-offset-4" href="/bible-verses-for-sleep/">Bible verses for sleep</a>.</p>
+        <p class="mt-7 text-cream/[0.82]">More for the evening: <a class="inline" href="/bible-sleep-stories/">Bible sleep stories</a>, <a class="inline" href="/psalms-for-sleep/">psalms for sleep</a> and <a class="inline" href="/bible-verses-for-sleep/">Bible verses for sleep</a>.</p>
       </section>
+      </div>
     </div>
   </main>
   <Footer />
 </BaseLayout>
+
+<style>
+  @media (min-width: 1024px) {
+    .story-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 520px;
+      grid-template-areas: 't a' 'b a' 'p a';
+      column-gap: 56px;
+      align-items: start;
+    }
+    .story-t { grid-area: t; }
+    .story-b { grid-area: b; }
+    .story-p { grid-area: p; }
+    .story-art { grid-area: a; align-self: center; }
+  }
+</style>

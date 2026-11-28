@@ -137,18 +137,18 @@ const faqs = [
 
   <nav aria-label="Jump to a section" class="panel mt-8 px-6 py-5">
     <p class="font-semibold text-cream">Jump to</p>
-    <ul class="bullets !mt-2">
-      {groups.map((g) => <li><a class="inline" href={`#${g.id}`}>{g.question}</a> <span class="text-cream/55">({g.verses.length})</span></li>)}
+    <ul class="bullets tap-list !mt-2">
+      {groups.map((g) => <li><a class="inline tap-line" href={`#${g.id}`}>{g.question}</a>&nbsp;<span class="text-cream/70">({g.verses.length})</span></li>)}
     </ul>
   </nav>
 
-  {groups.map((g) => (
-    <section id={g.id} class="scroll-mt-24">
+  {groups.map((g, gi) => (
+    <section id={g.id}>
       <h2>{g.question}</h2>
       <p>{g.lead}</p>
-      {g.verses.map((v) => (
+      {g.verses.map((v, vi) => (
         <>
-          <Verse ref={v.ref} />
+          <Verse ref={v.ref} kind={gi === 0 && vi === 0 ? 'lamp' : 'night'} />
           {v.note && <p>{v.note}</p>}
         </>
       ))}

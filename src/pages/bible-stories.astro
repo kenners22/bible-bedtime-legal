@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import kjv from '../data/kjv.json';
 import { stories, storyHref, sections, sectionOf, isFree } from '../lib/stories';
 import { abs } from '../lib/site';
+import { appStoreLink } from '../lib/appstore';
 
 const total = stories.length;
 const free = stories.filter(isFree);
@@ -55,68 +56,73 @@ const breadcrumbJsonLd = {
   </Fragment>
   <Header />
   <main>
-    <section class="relative bg-night overflow-hidden">
-      <div class="max-w-page mx-auto px-6 md:px-10 pt-10 pb-14 lg:pt-16 lg:pb-20 max-w-3xl">
+    <section class="band">
+      <img src="/assets/app/hero-shepherd-dusk-900.webp" alt="" width="720" height="405" class="band-art band-art-blur" />
+      <div aria-hidden="true" class="band-wash"></div>
+      <div class="wrap pt-[30px] pb-10 sm:pt-14 sm:pb-16"><div class="measure">
         <p class="eyebrow">Bible Stories</p>
-        <h1 class="mt-4 font-serif font-medium text-cream leading-[1.05] tracking-tight text-[40px] sm:text-[52px] lg:text-[60px]">
-          Timeless Stories,<br />Retold for Today
+        <h1 class="h1-page mt-4">
+          Timeless stories,<br />retold for today
         </h1>
-        <p class="mt-6 text-cream/75 text-lg leading-relaxed">
+        <p class="lead mt-4 sm:mt-[22px]">
           From the first light of Creation to the road to Emmaus, the stories of Scripture
           carry hope across generations. Bible Bedtimes retells {total} of them calmly, to
           listen to at the end of the day, and {free.length} are free.
         </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/download/" class="btn-gold rounded-full px-6 py-4 text-[15px]">
-            Listen in the App
+        <div class="mt-[26px] sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-[14px]">
+          <a href={appStoreLink('site_bible_stories')} class="btn-gold">
+            Download on the App Store
           </a>
-          <a href="/stories/" class="btn-outline rounded-full px-6 py-4 text-[15px]">
+          <a href="/stories/" class="btn-outline">
             Browse all {total} stories
           </a>
         </div>
-      </div>
+      </div></div>
     </section>
 
-    <section aria-labelledby="collections-heading" class="bg-night pb-20">
-      <div class="max-w-page mx-auto px-6 md:px-10">
-        <h2 id="collections-heading" class="font-serif font-medium text-cream text-center text-3xl sm:text-4xl mb-12">
-          Explore the Collections
+    <section aria-labelledby="collections-heading" class="bg-night pt-10 sm:pt-16 pb-[52px] sm:pb-16">
+      <div class="wrap">
+        <h2 id="collections-heading" class="h2-page mb-8 sm:mb-10">
+          Explore the collections
         </h2>
         <ul class="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {collections.map((item) => (
-            <li class="bg-night-raised/60 border border-white/[0.08] rounded-2xl p-7 flex flex-col gap-3">
-              <h3 class="font-serif font-semibold text-cream text-xl"><a href={`/stories/#${item.id}`} class="hover:text-gold-light">{item.title}</a> <span class="font-sans text-sm font-normal text-cream/55">· {item.count}</span></h3>
-              <p class="text-cream/70 text-[15px] leading-relaxed">{item.description}</p>
-              <p class="text-[15px] text-cream/70">Including {item.examples.map((e, i) => <>{i > 0 && (i === item.examples.length - 1 ? ' and ' : ', ')}<a href={storyHref(e)} class="text-gold-light underline underline-offset-4">{e.title}</a></>)}.</p>
+            <li class="panel p-7 flex flex-col gap-3">
+              <h3 class="h3-page"><a href={`/stories/#${item.id}`} class="tap hover:text-gold-light">{item.title}</a> <span class="font-sans small font-normal text-cream/70">· {item.count}</span></h3>
+              <p class="text-cream/[0.82]">{item.description}</p>
+              <p class="text-cream/[0.82]">Including {item.examples.map((e, i) => <>{i > 0 && (i === item.examples.length - 1 ? ' and ' : ', ')}<a href={storyHref(e)} class="inline">{e.title}</a></>)}.</p>
             </li>
           ))}
         </ul>
       </div>
     </section>
 
-    <section aria-labelledby="faq-heading" class="bg-night pb-20">
-      <div class="max-w-3xl mx-auto px-6 md:px-10">
-        <h2 id="faq-heading" class="font-serif font-medium text-cream text-3xl sm:text-4xl">Questions</h2>
-        <div class="mt-6 divide-y divide-white/[0.08] border-y border-white/[0.08]">
+    <section aria-labelledby="faq-heading" class="bg-night pb-[52px] sm:pb-[88px]">
+      <div class="wrap"><div class="measure">
+        <h2 id="faq-heading" class="h2-page">Questions</h2>
+        <div class="mt-5 divide-y divide-cream/[0.12] border-y border-cream/[0.12]">
           {faqs.map((f) => (
-            <details class="group py-5">
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 font-serif text-xl text-cream">
+            <details class="group py-2">
+              <summary class="flex min-h-[56px] cursor-pointer list-none items-center justify-between gap-5 font-serif font-semibold text-[21px] sm:text-2xl leading-tight text-cream">
                 {f.q}
-                <span aria-hidden="true" class="text-gold transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
+                <span aria-hidden="true" class="text-gold-light transition-transform group-open:rotate-45 text-2xl leading-none">+</span>
               </summary>
-              <p class="mt-3 text-cream/75 leading-relaxed">{f.a}</p>
+              <p class="mt-2 mb-3 text-cream/[0.82]">{f.a}</p>
             </details>
           ))}
         </div>
       </div>
+      </div>
     </section>
 
-    <section aria-label="Verse" class="bg-night-deep text-cream py-6 text-center">
-      <p class="font-serif italic text-base sm:text-lg">
+    <section aria-label="Verse" class="bg-night-deep text-cream border-t border-cream/[0.12]">
+      <div class="wrap py-6 text-center">
+      <p class="font-serif italic text-[20px] sm:text-[22px] leading-snug">
         <span aria-hidden="true" class="text-gold-light mr-2">☾</span>
         &ldquo;{lamp.text}&rdquo;
         <span class="text-gold-light font-semibold not-italic ml-2">— {lamp.reference} (KJV)</span>
       </p>
+      </div>
     </section>
   </main>
   <Footer />

@@ -20,9 +20,12 @@ font / colour decisions, and do **not** delete any `tiktok*.txt` files.
     meta, canonical)
   - `public/` — passthrough static (CNAME, assets, legacy HTML pages,
     TikTok verification txts)
-- **Design tokens:** see `tailwind.config.mjs`. Navy `#06142a`, cream
-  `#f7eddc`, gold `#d4a14a`. Serif headings = Cormorant Garamond,
-  body = Inter (both via Google Fonts).
+- **Design tokens:** see `tailwind.config.mjs` and `src/styles/global.css`.
+  The colours are the app's own (its default Navy & Warm Gold look): page
+  `#0B1F36`, bands and footer `#071426`, cards `#102A46`, words `#F8F3E8`,
+  gold `#D7A84A` (small gold words `#E4C36F`), cream card `#F3E7D3` with
+  navy words. Serif headings = Cormorant Garamond, body = Inter (both via
+  Google Fonts), each with a size-matched local fallback.
 
 ## Routes and where they come from
 
@@ -32,6 +35,7 @@ font / colour decisions, and do **not** delete any `tiktok*.txt` files.
 | `/stories/`, `/stories/<id>/` | `src/pages/stories/` + `src/lib/stories.ts` | One page per story in `src/data/catalog-snapshot.json` |
 | `/childrens-stories/`  | `src/pages/childrens-stories.astro`          | Retired. Forwards to `/stories/` (meta refresh + canonical) |
 | `/terms/`              | `src/pages/terms.astro`                      | Legal |
+| any unknown address    | `src/pages/404.astro` → `dist/404.html`      | GitHub Pages serves it for a wrong address. Not indexed, not in the sitemap |
 | `/privacy/`            | `src/pages/privacy.astro`                    | Legal |
 | `/app/`                | `public/app/index.html` (legacy static)      | Legacy. Don't rewrite. |
 | `/platform-info/`      | `public/platform-info/index.html`            | The page TikTok approved. Preserved unchanged. |
@@ -102,10 +106,12 @@ makes the test pass below cheapest, and document your choice.
    on any route at any breakpoint. Hero photo on `/` should fade on
    its **left** edge (not bottom). Navy band's top wave should
    overlap the bottom of the hero photo at ≥ lg breakpoint.
-9. **Header consistency.** Stacked "Bible / Bedtime" wordmark renders
-   identically on `/`, `/childrens-stories/`, `/terms/`, `/privacy/`.
-   Logo is `/assets/bible-bedtime-logo-20260520.png`. Same 6-link nav,
-   same gold "Start Free" button.
+9. **Header consistency.** "Bible Bedtimes" on one line renders
+   identically on every English page. Logo is
+   `/assets/bible-bedtimes-mark-20261127.webp`. Same five links, same gold
+   "Get the app" button. The header stays at the top at every width; under
+   1024px the links are in a menu (button with `aria-expanded`, Escape
+   closes it).
 10. **Footer consistency.** Same footer on every Astro-rendered page.
 11. **CNAME file.** `dist/CNAME` exists and contains exactly
     `biblebedtime.uk`.
@@ -129,8 +135,11 @@ makes the test pass below cheapest, and document your choice.
 - **Don't delete or rename** anything in `public/` except after
   explicit user approval. The TikTok verification `.txt` files and
   `/platform-info/` content matter for TikTok app approval.
-- **Don't change** colours, fonts, brand wordmark style, or hero
-  layout decisions. Those are user-approved.
+- **Don't change** fonts or the home page's opening panel layout. Those
+  are approved by the site owner. The colours and the wordmark changed
+  once, approved by the site owner on 27 November 2026: the navy and gold
+  now match the app's, and the header name is "Bible Bedtimes" on one
+  line. Don't change them again without the same approval.
 - **Don't add a new framework.** Pick a test runner that works with
   the existing Astro/React setup (Vitest or Playwright are both
   fine). If something heavier is needed, surface it and ask.
@@ -151,3 +160,19 @@ When done, produce a short report:
 
 Stop before opening a PR or pushing. Hand the report back to the user
 and let them decide what to fix and when.
+
+## Tests as they stand
+
+`npm test` builds and runs the three specs above plus
+`tests/e2e/site-look.spec.mjs` (the one-line name, the header and its
+menu, download button wording, one cream card a page, story paintings, the
+comparison table, the download page's price and scan code, the 404 page).
+Picture baselines in `tests/baseline/` are only rewritten with
+`UPDATE_BASELINE=1 npm test`; to remake only some, add
+`--grep "<route> has no horizontal scrollbar"`. The Lighthouse test is slow
+(about three minutes) and its performance scores depend on the machine and
+the network to Google Fonts; skip it with `npx playwright test
+--grep-invert lighthouse` when you only need the rest.
+
+The scan code on `/download/` is `public/assets/download-qr-20261127.svg`,
+made by `scripts/download-qr.sh` (needs `qrencode`).

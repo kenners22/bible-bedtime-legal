@@ -107,10 +107,12 @@ const faqs = [
   crumb="Christian sleep apps compared"
   campaign="site_compare"
   faqs={faqs}
+  wide
   datePublished="2026-11-18"
   ctaHeading="Try Bible Bedtimes tonight"
   ctaText="Calm Bible stories and Psalms read aloud, with hour-long stories and all-night listening. Free to download, with three complete stories free."
 >
+  <section class="measure">
   <h2>What makes Bible Bedtimes different</h2>
   <ul class="bullets">
     <li><strong>Stories and Psalms, not meditations or a reading plan.</strong> Each episode is a calm retelling of a named passage, such as <a class="inline" href="/stories/jesus-calms-the-storm/">Jesus Calms the Storm</a> (Mark 4:35–41) or <a class="inline" href="/stories/psalm-23-the-shepherd/">Psalm 23 — The Shepherd</a>, rather than a guided meditation or a chapter a night. The Daily Scripture passage is King James text; the stories are retellings, not word-for-word readings.</li>
@@ -123,20 +125,55 @@ const faqs = [
   <h2>The six apps, side by side</h2>
   <p>App names, developers, prices and age ratings are as shown on each app’s US App Store page in November 2026. Features and prices change, so check the App Store before you subscribe.</p>
 
+  </section>
+
+  <div class="compare-table panel mt-8 hidden lg:block overflow-hidden">
+    <table class="w-full table-fixed border-collapse small text-cream/[0.82]">
+      <caption class="sr-only">The six apps, side by side</caption>
+      <thead class="bg-night-deep">
+        <tr>
+          <th scope="col" class="w-[19%] eyebrow text-left px-[18px] pt-4 pb-3.5">App</th>
+          <th scope="col" class="eyebrow text-left px-[18px] pt-4 pb-3.5">What it is</th>
+          <th scope="col" class="eyebrow text-left px-[18px] pt-4 pb-3.5">For sleep</th>
+          <th scope="col" class="eyebrow text-left px-[18px] pt-4 pb-3.5">Price</th>
+          <th scope="col" class="w-[9%] eyebrow text-left px-[18px] pt-4 pb-3.5">Age rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        {[ours, ...others].map((app) => (
+          <tr class:list={['border-t border-cream/[0.12] align-top', app === ours && 'ours bg-night-deep']}>
+            <th scope="row" class="text-left font-normal px-[18px] py-[18px]">
+              <span class="block font-serif font-semibold text-[21px] leading-[1.15] text-cream">{app.name}</span>
+              <span class="mt-1.5 block text-cream/70">{app.developer}</span>
+              <a class="inline tap mt-1" href={app.href} rel={app === ours ? undefined : 'nofollow noopener'}>{app.name} on the App Store</a>
+            </th>
+            <td class="px-[18px] py-[18px]">{app.what}</td>
+            <td class="px-[18px] py-[18px]">{app.sleep}</td>
+            <td class="px-[18px] py-[18px]">{app.price}</td>
+            <td class="px-[18px] py-[18px] font-semibold text-cream">{app.rating}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="compare-cards measure lg:hidden">
   {[ours, ...others].map((app) => (
-    <section class="panel mt-6 p-6 sm:p-7" aria-labelledby={`app-${app.name.replace(/[^a-z]+/gi, '-').toLowerCase()}`}>
+    <section class:list={['panel mt-4 first:mt-[26px] px-[22px] pt-[22px] pb-6', app === ours && 'ours']} aria-labelledby={`app-${app.name.replace(/[^a-z]+/gi, '-').toLowerCase()}`}>
       <h3 id={`app-${app.name.replace(/[^a-z]+/gi, '-').toLowerCase()}`} class="!mt-0">{app.name}</h3>
-      <div class="mt-1 text-sm text-cream/60">{app.developer}</div>
-      <dl class="mt-4 grid gap-3 text-[15px] leading-relaxed">
-        <div><dt class="font-semibold text-cream">What it is</dt><dd class="text-cream/75">{app.what}</dd></div>
-        <div><dt class="font-semibold text-cream">For sleep</dt><dd class="text-cream/75">{app.sleep}</dd></div>
-        <div><dt class="font-semibold text-cream">Price</dt><dd class="text-cream/75">{app.price}</dd></div>
-        <div><dt class="font-semibold text-cream">Age rating</dt><dd class="text-cream/75">{app.rating}</dd></div>
+      <div class="mt-1 small text-cream/70">{app.developer}</div>
+      <dl class="mt-4 grid gap-3 small">
+        <div><dt class="font-semibold text-cream">What it is</dt><dd class="mt-0.5 text-cream/[0.82]">{app.what}</dd></div>
+        <div><dt class="font-semibold text-cream">For sleep</dt><dd class="mt-0.5 text-cream/[0.82]">{app.sleep}</dd></div>
+        <div><dt class="font-semibold text-cream">Price</dt><dd class="mt-0.5 text-cream/[0.82]">{app.price}</dd></div>
+        <div><dt class="font-semibold text-cream">Age rating</dt><dd class="mt-0.5 text-cream/[0.82]">{app.rating}</dd></div>
       </dl>
-      <a class="inline mt-4 inline-block text-[15px]" href={app.href} rel={app === ours ? undefined : 'nofollow noopener'}>{app.name} on the App Store</a>
+      <a class="inline tap mt-2 small" href={app.href} rel={app === ours ? undefined : 'nofollow noopener'}>{app.name} on the App Store</a>
     </section>
   ))}
+  </div>
 
+  <section class="measure">
   <h2>Which one suits you?</h2>
   <ul class="bullets">
     <li><strong>Guided Christian meditation:</strong> Abide, Hallow and Glorify are built around it.</li>
@@ -145,4 +182,10 @@ const faqs = [
     <li><strong>A general sleep and relaxation app:</strong> Calm.</li>
     <li><strong>Calm Bible stories and Psalms read aloud, all night if you like, for you or the whole family:</strong> Bible Bedtimes. Start with the <a class="inline" href="/bible-sleep-stories/">Bible sleep stories</a> or <a class="inline" href="/psalms-for-sleep/">Psalms for sleep</a>.</li>
   </ul>
+  </section>
 </GuideLayout>
+
+<style>
+  .compare-table tr.ours > th { border-left: 2px solid #D7A84A; }
+  .compare-cards .ours { border-left: 2px solid #D7A84A; border-top-left-radius: 0; border-bottom-left-radius: 0; }
+</style>

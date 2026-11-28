@@ -23,8 +23,12 @@ const astroRoutes = [
   '/bible-bedtime-stories-for-kids/',
   '/christian-sleep-app-comparison/',
   '/stories/',
+  '/stories/genesis-creation-and-eden/',
   '/stories/jesus-calms-the-storm/',
+  '/stories/daniel-lions-den/',
   '/stories/rest-listening-and-peace-1-hour/',
+  '/support/',
+  '/404.html',
   '/terms/',
   '/privacy/',
   '/privacy/bible-bedtimes-ios/',
@@ -33,6 +37,8 @@ const astroRoutes = [
 const englishChromeRoutes = astroRoutes.filter((route) => route !== '/privacy/bible-bedtime-espanol-ios/');
 const allRoutes = [...astroRoutes, '/app/', '/platform-info/', '/callback/'];
 const viewports = [
+  { width: 320, height: 800 },
+  { width: 360, height: 800 },
   { width: 375, height: 900 },
   { width: 768, height: 1024 },
   { width: 1280, height: 900 },
@@ -64,9 +70,17 @@ test.describe('rendered pages', () => {
 
         expect(overflow.scrollWidth).toBeLessThanOrEqual(overflow.clientWidth + 1);
 
+        // On a phone the header's menu button sits wholly inside the page.
+        const menuButton = page.locator('body > header .menu-btn');
+        if (viewport.width < 1024 && await menuButton.count()) {
+          const box = await menuButton.boundingBox();
+          expect(box.x + box.width, 'menu button right edge').toBeLessThanOrEqual(overflow.clientWidth);
+          expect(Math.round(box.height)).toBeGreaterThanOrEqual(44);
+        }
+
         // Baselines are only rewritten on demand (UPDATE_BASELINE=1 npm test),
         // never as a side effect of a normal run.
-        if (viewport.width !== 1440 && process.env.UPDATE_BASELINE) {
+        if ([375, 768, 1280].includes(viewport.width) && process.env.UPDATE_BASELINE) {
           await page.screenshot({
             path: path.join(baselineDir, `${safeName(route)}-${viewport.width}.png`),
             fullPage: true,
@@ -85,20 +99,24 @@ test.describe('rendered pages', () => {
       const ctaBox = await cta.boundingBox();
       expect(ctaBox.y + ctaBox.height).toBeLessThanOrEqual(viewport.height);
 
-      const phone = page.locator('.hero-phones img[src="/assets/app/01-tonight.webp"]');
+      const phone = page.locator('.hero-phones img[src="/assets/app/app-tonight-20261127.webp"]');
       await expect(phone).toBeVisible();
       expect(await phone.evaluate((img) => img.complete && img.naturalWidth > 0)).toBe(true);
     });
   }
 
-  test('download preview falls back to the exact local logo if Apple artwork is unavailable', async ({ page }) => {
-    await page.route('https://is1-ssl.mzstatic.com/**', (route) => route.abort());
+  test('the download page shows a picture of the app kept on this site', async ({ page }) => {
+    const external = [];
+    page.on('request', (request) => {
+      if (request.resourceType() === 'image' && !request.url().startsWith(localOrigin)) external.push(request.url());
+    });
+    await page.setViewportSize({ width: 1280, height: 900 });
     await gotoLocal(page, '/download/');
 
-    const preview = page.locator('main img').first();
-    await expect(preview).toHaveAttribute('src', '/assets/bible-bedtime-logo-20260520.webp');
-    await expect(preview).toHaveAttribute('alt', 'Bible Bedtimes moon and book logo');
+    const preview = page.locator('main img[src="/assets/app/app-tonight-20261127.webp"]');
     await expect(preview).toBeVisible();
+    expect(await preview.evaluate((img) => img.complete && img.naturalWidth > 0)).toBe(true);
+    expect(external).toEqual([]);
   });
 
   test('Astro pages share the same header and footer chrome', async ({ page }) => {
@@ -111,6 +129,7 @@ test.describe('rendered pages', () => {
         header: await page.locator('body > header').evaluate((element) => element.innerHTML.replace(/\s+/g, ' ').trim()),
         footer: await page.locator('body > footer').evaluate((element) => element.innerHTML.replace(/\s+/g, ' ').trim()),
         logo: await page.locator('body > header img').first().getAttribute('src'),
+        name: await page.locator('body > header .brand-name').textContent(),
         navLinks: await page.locator('body > header nav[aria-label="Primary"] a').evaluateAll((links) => links.map((link) => link.getAttribute('href'))),
         startFreeHref: await page.locator('body > header > div > a.btn-gold').getAttribute('href'),
       });
@@ -119,7 +138,8 @@ test.describe('rendered pages', () => {
     for (const snapshot of snapshots) {
       expect(snapshot.header, snapshot.route).toBe(snapshots[0].header);
       expect(snapshot.footer, snapshot.route).toBe(snapshots[0].footer);
-      expect(snapshot.logo, snapshot.route).toBe('/assets/bible-bedtime-logo-20260520.webp');
+      expect(snapshot.logo, snapshot.route).toBe('/assets/bible-bedtimes-mark-20261127.webp');
+      expect(snapshot.name, snapshot.route).toBe('Bible Bedtimes');
       expect(snapshot.navLinks, snapshot.route).toEqual([
         '/bible-stories/',
         '/daily-scriptures/',

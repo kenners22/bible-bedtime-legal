@@ -166,3 +166,6 @@ export function relatedTo(s: Story, count = 3): Story[] {
     .slice(0, count)
     .map((x) => x.o);
 }
+
+/** A story's own painting, kept on this site as WebP: 1040 wide for its page, 480 for cards and lists, and a tiny blurred copy for the band behind its title. */
+export const storyArt = (id: string, size: 1040 | 480 | 'blur' = 480) => `/assets/stories/${id}-${size}-20261127.webp`;

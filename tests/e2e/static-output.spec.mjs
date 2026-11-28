@@ -33,6 +33,17 @@ const requiredAssets = [
   '/assets/app/story-genesis.webp',
   '/assets/app/story-joseph.webp',
   '/assets/app/story-storm.webp',
+  '/assets/bible-bedtimes-mark-20261127.png',
+  '/assets/bible-bedtimes-mark-20261127.webp',
+  '/assets/favicon-20261127.png',
+  '/assets/apple-touch-icon-20261127.png',
+  '/assets/download-qr-20261127.svg',
+  '/assets/app/app-tonight-20261127.webp',
+  '/assets/app/app-daily-teaching-20261127.webp',
+  '/assets/app/app-stories-20261127.webp',
+  '/assets/app/app-genesis-20261127.webp',
+  '/assets/app/app-now-playing-20261127.webp',
+  '/assets/app/app-offline-audio-20261127.webp',
 ];
 
 const fontPages = [
@@ -215,8 +226,11 @@ test.describe('static output contract', () => {
     expect(home).toContain('href="/download/"');
     expect(download).toContain(listing);
     expect(download).toContain('Three complete stories');
-    expect(download).not.toMatch(/Android|5-star|free trial/i);
-    expect(download).toContain("this.src='/assets/bible-bedtime-logo-20260520.webp'");
+    expect(download).not.toMatch(/Android|5-star/i);
+    // The one mention of a trial is the site's own price line, as on the home page.
+    expect(download.match(/free trial/gi)).toHaveLength(1);
+    expect(download).toContain('£4.99 / $4.99 a month or £34.99 / $34.99 a year, each with a 2-week free trial. Apple shows your local price before you subscribe.');
+    expect(download).not.toContain('mzstatic.com');
     expect(legacy).toContain('Open TikTok');
     expect(spanishPrivacy).toContain('Empieza gratis');
   });
