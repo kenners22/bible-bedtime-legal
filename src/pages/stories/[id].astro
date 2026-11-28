@@ -3,6 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Verse from '../../components/Verse.astro';
+import SamplePlayer from '../../components/SamplePlayer.astro';
+import { sampleFor } from '../../lib/samples';
 import { appStoreLink } from '../../lib/appstore';
 import { ORGANIZATION_ID, SITE, abs } from '../../lib/site';
 import {
@@ -40,6 +42,7 @@ const storyThemes = themes(story);
 const parts = partsOf(story);
 const related = relatedTo(story);
 const listen = appStoreLink(campaignFor(story), productPageFor(story));
+const sample = sampleFor(story.id);
 
 const title = `${story.title} — Bible Sleep Story | Bible Bedtimes`;
 const fullDescription = `${story.description} A ${length} ${free ? 'free ' : ''}audio story from ${story.reference} in the Bible Bedtimes app.`;
@@ -73,7 +76,7 @@ const jsonLd = [
   },
 ];
 ---
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} appArgument={url}>
   <Fragment slot="head">
     {jsonLd.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
   </Fragment>
@@ -115,6 +118,8 @@ const jsonLd = [
           <a href={listen} class="btn-gold">Listen in the app</a>
           <a href="/stories/" class="btn-outline">All stories</a>
         </div>
+
+        {sample && <div class="story-s mt-3.5 sm:mt-[18px]"><SamplePlayer sample={sample} title={story.title} /></div>}
 
         <img
           src={storyArt(story.id, 1040)}
@@ -195,12 +200,13 @@ const jsonLd = [
     .story-hero {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 520px;
-      grid-template-areas: 't a' 'b a' 'p a';
+      grid-template-areas: 't a' 'b a' 's a' 'p a';
       column-gap: 56px;
       align-items: start;
     }
     .story-t { grid-area: t; }
     .story-b { grid-area: b; }
+    .story-s { grid-area: s; }
     .story-p { grid-area: p; }
     .story-art { grid-area: a; align-self: center; }
   }

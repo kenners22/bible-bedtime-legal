@@ -1,0 +1,143 @@
+---
+// A story's two-minute sample: a round gold play button, a thin progress line
+// and the time left. Nothing loads until play is pressed, nothing plays by
+// itself, and pressing again pauses. Without JavaScript the card stays hidden.
+import { type Sample, clock } from '../lib/samples';
+
+interface Props { sample: Sample; title: string }
+const { sample, title } = Astro.props;
+const total = clock(sample.seconds);
+---
+<div class="sample panel" data-sample data-seconds={sample.seconds} hidden>
+  <button
+    type="button"
+    class="sample-play"
+    data-state="paused"
+    data-play-label={`Play the first two minutes of ${title}`}
+    data-pause-label={`Pause the first two minutes of ${title}`}
+    aria-label={`Play the first two minutes of ${title}`}
+  >
+    <svg class="sample-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" fill="currentColor" /></svg>
+    <svg class="sample-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="5" width="4" height="14" rx="1.2" fill="currentColor" /><rect x="13.5" y="5" width="4" height="14" rx="1.2" fill="currentColor" /></svg>
+  </button>
+  <div class="sample-m">
+    <p class="h3-page">Hear the first two minutes</p>
+    <span class="sample-track" aria-hidden="true"><i data-sample-fill></i></span>
+  </div>
+  <p class="sample-time small"><span class="sr-only">Time left: </span><span data-sample-time data-total={total}>{total}</span></p>
+  <p class="sample-error small" data-sample-error role="status"></p>
+  <audio preload="none" src={sample.src} data-sample-audio></audio>
+</div>
+
+<script>
+  const ERROR = 'The sample didn’t load. Try again, or listen in the app.';
+  const clock = (seconds: number) => {
+    const s = Math.max(0, Math.ceil(seconds));
+    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  };
+
+  for (const card of document.querySelectorAll<HTMLElement>('[data-sample]')) {
+    const button = card.querySelector<HTMLButtonElement>('.sample-play')!;
+    const audio = card.querySelector<HTMLAudioElement>('[data-sample-audio]')!;
+    const fill = card.querySelector<HTMLElement>('[data-sample-fill]')!;
+    const time = card.querySelector<HTMLElement>('[data-sample-time]')!;
+    const error = card.querySelector<HTMLElement>('[data-sample-error]')!;
+    const fallback = Number(card.dataset.seconds) || 120;
+    const length = () => (Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : fallback);
+
+    const show = (playing: boolean) => {
+      button.dataset.state = playing ? 'playing' : 'paused';
+      button.setAttribute('aria-label', (playing ? button.dataset.pauseLabel : button.dataset.playLabel)!);
+    };
+    const reset = () => {
+      show(false);
+      fill.style.width = '0%';
+      time.textContent = time.dataset.total!;
+    };
+    const tick = () => {
+      if (audio.paused && audio.currentTime === 0) return reset();
+      const at = Math.min(audio.currentTime, length());
+      fill.style.width = `${(at / length()) * 100}%`;
+      time.textContent = clock(length() - at);
+    };
+    const fail = () => {
+      reset();
+      error.textContent = ERROR;
+    };
+
+    button.addEventListener('click', () => {
+      if (!audio.paused) {
+        audio.pause();
+        return;
+      }
+      if (error.textContent) {
+        // Pressing play after a failure tries again.
+        error.textContent = '';
+        audio.load();
+      }
+      show(true);
+      audio.play().catch((e) => {
+        if (e?.name !== 'AbortError') fail();
+      });
+    });
+    audio.addEventListener('play', () => show(true));
+    audio.addEventListener('pause', () => show(false));
+    audio.addEventListener('timeupdate', tick);
+    audio.addEventListener('ended', () => {
+      audio.currentTime = 0;
+      reset();
+    });
+    audio.addEventListener('error', fail);
+    card.hidden = false;
+  }
+</script>
+
+<style>
+  .sample {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 16px;
+    max-width: 520px;
+    padding: 14px 20px 14px 14px;
+  }
+  .sample[hidden] { display: none; }
+  .sample-play {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 9999px;
+    color: #071426;
+    background: radial-gradient(circle at 50% 35%, #F0D88E, #D7A84A 60%, #A97825);
+    box-shadow: 0 8px 26px rgba(215, 168, 74, 0.35);
+  }
+  .sample-play:focus-visible { outline: 2px solid #F8F3E8; outline-offset: 3px; }
+  .sample-play svg { width: 22px; height: 22px; }
+  .sample-icon-play { margin-left: 3px; }
+  .sample-play[data-state='paused'] .sample-icon-pause,
+  .sample-play[data-state='playing'] .sample-icon-play { display: none; }
+  .sample-track {
+    display: block;
+    height: 4px;
+    margin-top: 12px;
+    overflow: hidden;
+    border-radius: 9999px;
+    background: rgba(248, 243, 232, 0.22);
+  }
+  .sample-track i {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: #D7A84A;
+  }
+  .sample-time {
+    color: rgba(248, 243, 232, 0.82);
+    font-variant-numeric: tabular-nums;
+  }
+  .sample-error {
+    grid-column: 1 / -1;
+    color: rgba(248, 243, 232, 0.82);
+  }
+  .sample-error:not(:empty) { margin-top: 10px; }
+</style>
