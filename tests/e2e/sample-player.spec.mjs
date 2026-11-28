@@ -117,7 +117,7 @@ test.describe('the player, on a test build with a stand-in sample', () => {
     expect(sounds.some((u) => u.endsWith('/test-sample.m4a'))).toBe(true);
     await expect(page.locator('[data-sample-time]')).not.toHaveText('2:00');
 
-    await page.waitForTimeout(400);
+    await expect.poll(() => page.locator('[data-sample] audio').evaluate((a) => a.currentTime)).toBeGreaterThan(0);
     await button.click();
     await expect(button).toHaveAttribute('data-state', 'paused');
     await expect(button).toHaveAttribute('aria-label', `Play the first two minutes of ${TITLE}`);
@@ -138,7 +138,7 @@ test.describe('the player, on a test build with a stand-in sample', () => {
     await button.focus();
     await page.keyboard.press('Enter');
     await expect(page.locator('[data-sample] button')).toHaveAttribute('data-state', 'playing');
-    await page.waitForTimeout(400);
+    await expect.poll(() => page.locator('[data-sample] audio').evaluate((a) => a.currentTime)).toBeGreaterThan(0);
     await page.keyboard.press('Space');
     await expect(page.locator('[data-sample] button')).toHaveAttribute('data-state', 'paused');
     await expectHeld(page);
@@ -156,6 +156,20 @@ test.describe('the player, on a test build with a stand-in sample', () => {
     await expect(page.locator('[data-sample-time]')).toHaveText('2:00');
     await expect(page.locator('[data-sample-fill]')).toHaveAttribute('style', /width: 0%/);
     expect(await page.locator('[data-sample] audio').evaluate((a) => ({ paused: a.paused, at: a.currentTime }))).toEqual({ paused: true, at: 0 });
+  });
+
+  test('after a failed load and a return from the cache, the next press tries again', async ({ page }) => {
+    const sounds = await open(page, MISSING);
+    const button = page.locator('[data-sample] button');
+    const line = page.locator('[data-sample-error]');
+    await button.click();
+    await expect(line).not.toBeEmpty();
+    await expect.poll(() => sounds.length).toBe(1);
+    await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })));
+    await expect(line).toBeEmpty();
+    await button.click();
+    await expect.poll(() => sounds.length).toBe(2);
+    await expect(line).toHaveText('The sample didn’t load. Try again, or listen in the app.');
   });
 
   test('the play button is at least 44 by 44', async ({ page }) => {
@@ -213,7 +227,6 @@ test.describe('the player, on a test build with a stand-in sample', () => {
         await page.goto(`${origin}${WITH}`, { waitUntil: 'load' });
         if (origin === SAMPLE) {
           await expect(page.locator('[data-sample]')).toBeHidden();
-          await expect(page.locator('[data-sample] button')).not.toBeFocused();
         }
         heights.push(await page.evaluate(() => [document.documentElement.scrollHeight, document.querySelector('.story-p').getBoundingClientRect().top]));
       }

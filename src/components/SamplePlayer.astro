@@ -71,9 +71,9 @@ const total = clock(sample.seconds);
         audio.pause();
         return;
       }
-      if (error.textContent) {
+      error.textContent = '';
+      if (audio.error) {
         // Pressing play after a failure tries again.
-        error.textContent = '';
         audio.load();
       }
       show(true);
