@@ -333,6 +333,21 @@ test.describe('after review', () => {
     await expect(page.locator('body > header nav[aria-label="Primary"] a').first()).toBeFocused();
   });
 
+  test('widening the window after the menu link lost focus to the page still lands focus in the header', async ({ page }) => {
+    // The browser can hide the menu (wide-layout CSS) and drop its focus to
+    // the page before the layout change is reported. Do that drop by hand.
+    await page.setViewportSize({ width: 390, height: 844 });
+    await gotoLocal(page, '/');
+    await page.locator('body > header .menu-btn').click();
+    await expect(page.locator('#site-menu a').first()).toBeFocused();
+    await page.evaluate(() => document.activeElement.blur());
+    expect(await page.evaluate(() => document.activeElement === document.body)).toBe(true);
+    await expect(page.locator('#site-menu')).toBeVisible();
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await expect(page.locator('#site-menu')).toBeHidden();
+    await expect(page.locator('body > header nav[aria-label="Primary"] a').first()).toBeFocused();
+  });
+
   test('the 404 page has no canonical address', () => {
     const html = read('404.html');
     expect(html).not.toContain('rel="canonical"');
