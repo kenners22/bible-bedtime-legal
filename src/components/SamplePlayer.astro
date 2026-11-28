@@ -1,7 +1,8 @@
 ---
 // A story's two-minute sample: a round gold play button, a thin progress line
 // and the time left. Nothing loads until play is pressed, nothing plays by
-// itself, and pressing again pauses. Without JavaScript the card stays hidden.
+// itself, and pressing again pauses. Without JavaScript the card stays hidden
+// and takes no room (its margin is its own, so it goes with it).
 import { type Sample, clock } from '../lib/samples';
 
 interface Props { sample: Sample; title: string }
@@ -88,6 +89,14 @@ const total = clock(sample.seconds);
       reset();
     });
     audio.addEventListener('error', fail);
+    // Shown again from the back-forward cache: back at rest.
+    window.addEventListener('pageshow', (e) => {
+      if (!e.persisted) return;
+      audio.pause();
+      if (audio.currentTime) audio.currentTime = 0;
+      error.textContent = '';
+      reset();
+    });
     card.hidden = false;
   }
 </script>
@@ -99,7 +108,11 @@ const total = clock(sample.seconds);
     align-items: center;
     column-gap: 16px;
     max-width: 520px;
+    margin-top: 14px;
     padding: 14px 20px 14px 14px;
+  }
+  @media (min-width: 640px) {
+    .sample { margin-top: 18px; }
   }
   .sample[hidden] { display: none; }
   .sample-play {

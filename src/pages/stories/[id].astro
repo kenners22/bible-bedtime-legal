@@ -119,7 +119,7 @@ const jsonLd = [
           <a href="/stories/" class="btn-outline">All stories</a>
         </div>
 
-        {sample && <div class="story-s mt-3.5 sm:mt-[18px]"><SamplePlayer sample={sample} title={story.title} /></div>}
+        {sample && <div class="story-s"><SamplePlayer sample={sample} title={story.title} /></div>}
 
         <img
           src={storyArt(story.id, 1040)}

@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "indexnow": "node scripts/indexnow-submit.mjs",
-    "build:sample": "SAMPLES_FILE=tests/fixtures/samples.json astro build --outDir dist-sample && cp tests/fixtures/sample-1s.m4a dist-sample/test-sample.m4a"
+    "build:sample": "SAMPLES_FILE=tests/fixtures/samples.json astro build --outDir dist-sample && cp tests/fixtures/sample-10s.m4a dist-sample/test-sample.m4a"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.0",

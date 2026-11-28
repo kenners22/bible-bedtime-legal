@@ -1,8 +1,8 @@
 // The two-minute sample player on story pages.
 // The shipped list (src/data/samples.json) is empty, so the real site shows no
 // player. The player itself is checked on a test-only build (dist-sample, made
-// by `npm run build:sample`) that lists a one-second stand-in for one story and
-// a missing file for another.
+// by `npm run build:sample`) that lists a ten-second quiet stand-in for one
+// story and a missing file for another.
 import { AxeBuilder } from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import fs from 'node:fs';
@@ -16,6 +16,17 @@ const WITH = '/stories/genesis-creation-and-eden/';
 const MISSING = '/stories/noah-ark-and-rain/';
 const WITHOUT = '/stories/david-and-goliath/';
 const TITLE = 'Genesis — Creation and Eden';
+const catalog = JSON.parse(fs.readFileSync(path.join(root, 'src/data/catalog-snapshot.json'), 'utf8'));
+
+// The sound is really paused: well short of its end, and not moving.
+async function expectHeld(page) {
+  const audio = page.locator('[data-sample] audio');
+  await expect.poll(() => audio.evaluate((a) => a.currentTime)).toBeGreaterThan(0);
+  const at = await audio.evaluate((a) => a.currentTime);
+  expect(at).toBeLessThan(8);
+  await page.waitForTimeout(600);
+  expect(await audio.evaluate((a) => ({ paused: a.paused, ended: a.ended, at: a.currentTime }))).toEqual({ paused: true, ended: false, at });
+}
 
 function listHtml(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
@@ -46,6 +57,18 @@ test.describe('the shipped site', () => {
       expect(html, rel).not.toContain('Hear the first two minutes');
     }
     expect(fs.existsSync(path.join(dist, 'test-sample.m4a'))).toBe(false);
+  });
+
+  test('every listed sample is a known story and two minutes long', () => {
+    const list = JSON.parse(fs.readFileSync(path.join(root, 'src/data/samples.json'), 'utf8'));
+    const ids = new Set(catalog.stories.map((st) => st.id));
+    expect(Array.isArray(list)).toBe(true);
+    for (const entry of list) {
+      expect(ids.has(entry.id), entry.id).toBe(true);
+      expect(typeof entry.src, entry.id).toBe('string');
+      // The resting time comes from the list and the count from the file: keep them the same.
+      expect(entry.seconds, entry.id).toBe(120);
+    }
   });
 
   test('a sample adds nothing to the title, description, headings or structured data', () => {
@@ -92,16 +115,18 @@ test.describe('the player, on a test build with a stand-in sample', () => {
     await expect(button).toHaveAttribute('data-state', 'playing');
     await expect(button).toHaveAttribute('aria-label', `Pause the first two minutes of ${TITLE}`);
     expect(sounds.some((u) => u.endsWith('/test-sample.m4a'))).toBe(true);
+    await expect(page.locator('[data-sample-time]')).not.toHaveText('2:00');
 
+    await page.waitForTimeout(400);
     await button.click();
     await expect(button).toHaveAttribute('data-state', 'paused');
     await expect(button).toHaveAttribute('aria-label', `Play the first two minutes of ${TITLE}`);
-    expect(await page.locator('[data-sample] audio').evaluate((a) => a.paused)).toBe(true);
+    await expectHeld(page);
 
-    // The stand-in is one second long: the time counts down from it, then the card goes back to the start.
+    // Play on to the end (the stand-in is ten seconds): the card goes back to the start.
     await button.click();
-    await expect(page.locator('[data-sample-time]')).not.toHaveText('2:00');
-    await expect(button).toHaveAttribute('data-state', 'paused', { timeout: 5_000 });
+    await expect(button).toHaveAttribute('data-state', 'playing');
+    await expect(button).toHaveAttribute('data-state', 'paused', { timeout: 15_000 });
     await expect(page.locator('[data-sample-time]')).toHaveText('2:00');
     await expect(page.locator('[data-sample-fill]')).toHaveAttribute('style', /width: 0%/);
     await expect(page.locator('[data-sample-error]')).toBeEmpty();
@@ -113,9 +138,34 @@ test.describe('the player, on a test build with a stand-in sample', () => {
     await button.focus();
     await page.keyboard.press('Enter');
     await expect(page.locator('[data-sample] button')).toHaveAttribute('data-state', 'playing');
+    await page.waitForTimeout(400);
     await page.keyboard.press('Space');
     await expect(page.locator('[data-sample] button')).toHaveAttribute('data-state', 'paused');
+    await expectHeld(page);
     await expect(page.locator('.sample-time')).toContainText('Time left:');
+  });
+
+  test('shown again from the back-forward cache, the card is at rest', async ({ page }) => {
+    await open(page, WITH);
+    const button = page.locator('[data-sample] button');
+    await button.click();
+    await expect(page.locator('[data-sample-time]')).not.toHaveText('2:00');
+    await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })));
+    await expect(button).toHaveAttribute('data-state', 'paused');
+    await expect(button).toHaveAttribute('aria-label', `Play the first two minutes of ${TITLE}`);
+    await expect(page.locator('[data-sample-time]')).toHaveText('2:00');
+    await expect(page.locator('[data-sample-fill]')).toHaveAttribute('style', /width: 0%/);
+    expect(await page.locator('[data-sample] audio').evaluate((a) => ({ paused: a.paused, at: a.currentTime }))).toEqual({ paused: true, at: 0 });
+  });
+
+  test('the play button is at least 44 by 44', async ({ page }) => {
+    for (const width of [390, 1280]) {
+      await page.setViewportSize({ width, height: 900 });
+      await open(page, WITH);
+      const box = await page.locator('[data-sample] button').boundingBox();
+      expect(box.width, `width at ${width}`).toBeGreaterThanOrEqual(44);
+      expect(box.height, `height at ${width}`).toBeGreaterThanOrEqual(44);
+    }
   });
 
   test('a sample that fails to load says so in a line and leaves the page alone', async ({ page }) => {
@@ -149,6 +199,28 @@ test.describe('the player, on a test build with a stand-in sample', () => {
       expect(scroll).toBeLessThanOrEqual(0);
     });
   }
+
+  test('without JavaScript a page with a sample looks like one without', async ({ browser }) => {
+    const context = await browser.newContext({ javaScriptEnabled: false });
+    const page = await context.newPage();
+    await page.route('https://fonts.googleapis.com/**', (r) => r.abort());
+    await page.route('https://fonts.gstatic.com/**', (r) => r.abort());
+    await page.route('https://static.cloudflareinsights.com/**', (r) => r.abort());
+    for (const width of [390, 1280]) {
+      await page.setViewportSize({ width, height: 900 });
+      const heights = [];
+      for (const origin of [SAMPLE, 'http://127.0.0.1:18765']) {
+        await page.goto(`${origin}${WITH}`, { waitUntil: 'load' });
+        if (origin === SAMPLE) {
+          await expect(page.locator('[data-sample]')).toBeHidden();
+          await expect(page.locator('[data-sample] button')).not.toBeFocused();
+        }
+        heights.push(await page.evaluate(() => [document.documentElement.scrollHeight, document.querySelector('.story-p').getBoundingClientRect().top]));
+      }
+      expect(heights[0], `at ${width}`).toEqual(heights[1]);
+    }
+    await context.close();
+  });
 
   test('a story page with the player has no serious or critical axe violations', async ({ page }) => {
     await open(page, WITH);
